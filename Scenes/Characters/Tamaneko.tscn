@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://bj451chfshy60"]
+
+[ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
+[ext_resource type="Script" path="res://Scenes/Characters/Tamaneko.gd" id="1_f3r72"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://1ytr7uyodqdu" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimTree.tres" id="2_3jctt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_431j6"]
+radius = 7.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nfg3u"]
+load_path = "res://.godot/imported/Tamaneko3.png-efb6294364875292ab337238379a15bf.ctex"
+
+[sub_resource type="Animation" id="Animation_crerl"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3kl86"]
+_data = {
+"RESET": SubResource("Animation_crerl")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4tng"]
+radius = 23.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_axiqn"]
+radius = 60.0
+
+[node name="Tamaneko" type="CharacterBody2D" groups=["player"]]
+collision_mask = 15
+script = ExtResource("1_f3r72")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CircleShape2D_431j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("CompressedTexture2D_nfg3u")
+hframes = 10
+vframes = 14
+frame = 31
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Animations" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_3kl86"),
+"AnimPlayer": ExtResource("1_dn12y")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_3kl86"),
+"AnimPlayer": ExtResource("1_dn12y")
+}
+tree_root = ExtResource("2_3jctt")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/Idle = false
+parameters/conditions/Swing = false
+parameters/conditions/Throw = false
+parameters/conditions/Walk = false
+parameters/Idle/blend_position = Vector2(0, 0)
+"parameters/Swing Katana/blend_position" = Vector2(0, 0)
+"parameters/Throw Shuriken/blend_position" = Vector2(0, 0)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="RegenerationTimer" type="Timer" parent="Timers"]
+wait_time = 5.0
+autostart = true
+
+[node name="Areas" type="Node2D" parent="."]
+
+[node name="Hurtbox" type="Area2D" parent="Areas"]
+rotation = 3.14159
+collision_layer = 32
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
+shape = SubResource("CircleShape2D_t4tng")
+
+[node name="Detectionbox" type="Area2D" parent="Areas"]
+collision_layer = 64
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
+shape = SubResource("CircleShape2D_axiqn")
+
+[connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
