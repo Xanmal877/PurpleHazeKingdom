@@ -11,7 +11,7 @@ var maxHealth: int = 100
 var maxStamina: int = 100
 var maxMana: int = 100
 
-var speed: int = 60
+var speed: int = 120
 var damage: int = 20
 
 var direction
@@ -21,6 +21,7 @@ var lastDirection
 @onready var regenerationtimer = $Timers/RegenerationTimer
 @onready var Animation_Player = $Animations/AnimationPlayer
 @onready var Animation_Tree = $Animations/AnimationTree
+@onready var camera = $Camera2D
 
 #endregion
 
@@ -47,15 +48,20 @@ func _physics_process(_delta):
 #region Movement
 
 func Movement():
-	direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
+	direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if direction != Vector2.ZERO and isAttacking == false:
-		velocity = direction * speed
+		if abs(direction.x) > abs(direction.y):
+			direction.y = 0
+		else:
+			direction.x = 0
+		velocity = direction.normalized() * speed
 		WalkingAnim(true)
 		lastDirection = direction
 	else:
 		velocity = Vector2.ZERO
 		WalkingAnim(false)
 	UpdateBlend()
+
 
 #endregion
 

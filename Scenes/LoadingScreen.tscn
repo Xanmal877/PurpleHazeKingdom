@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvh34us2wa1gh"]
+
+[ext_resource type="Script" path="res://Scenes/LoadingScreen.gd" id="1_ohlxl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aldfx"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nis32"]
+bg_color = Color(0, 0, 1, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_asx38"]
+bg_color = Color(0.52549, 0, 0.52549, 1)
+border_blend = true
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+
+[node name="LoadingScreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_ohlxl")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aldfx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 146.0
+offset_top = 258.0
+offset_right = 1022.0
+offset_bottom = 370.0
+theme_override_styles/background = SubResource("StyleBoxFlat_nis32")
+theme_override_styles/fill = SubResource("StyleBoxFlat_asx38")
+fill_mode = 1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
