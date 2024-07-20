@@ -3,16 +3,22 @@ extends CharacterBody2D
 
 #region Variables
 
-var health: int = 100
-var stamina: int = 100
-var mana: int = 100
+@onready var tamaneko = $"."
 
-var maxHealth: int = 100
-var maxStamina: int = 100
-var maxMana: int = 100
+var health: int = 20
+var stamina: int = 20
 
-var speed: int = 120
+var maxHealth: int = 20
+var maxStamina: int = 20
+
+var speed: int = 60
+var normalSpeed: int = 60
+var sneakSpeed: int = (speed / 2)
+
 var damage: int = 20
+var normalDamage: int = 20
+var sneakDamage: int = (normalDamage * 4)
+
 
 var direction
 var lastDirection
@@ -23,6 +29,9 @@ var lastDirection
 @onready var Animation_Tree = $Animations/AnimationTree
 @onready var camera = $Camera2D
 
+@onready var healthbar = $UI/VBoxContainer/Healthbar
+@onready var staminabar = $UI/VBoxContainer/Staminabar
+
 #endregion
 
 
@@ -32,14 +41,15 @@ func _ready():
 	pass
 
 
-
 func _process(_delta):
-	pass
+	healthbar.value = health
+	staminabar.value = stamina
 
 
 func _physics_process(_delta):
 	Movement()
 	Attack()
+	Stealth()
 	move_and_slide()
 
 #endregion
@@ -61,6 +71,39 @@ func Movement():
 		velocity = Vector2.ZERO
 		WalkingAnim(false)
 	UpdateBlend()
+
+
+#endregion
+
+
+#region Sneaking
+
+var sneak: bool = false
+@onready var charactersprite = $Sprite2D
+@onready var sneak_timer = $Timers/SneakTimer
+
+func Stealth():
+	if Input.is_action_just_pressed("Sneak"):
+		sneak = !sneak
+		print(sneak)
+		tamaneko.set_collision_layer_value(1, !sneak)
+		SneakCost()
+
+
+func SneakCost():
+		if sneak and stamina >= 1:
+			charactersprite.self_modulate = Color(1,1,1,0.35)
+			speed = sneakSpeed
+			damage = sneakDamage
+			sneak_timer.start(0.4)
+			stamina -= 1
+		else:
+			charactersprite.self_modulate = Color(1,1,1,1)
+			damage = normalDamage
+			speed = normalSpeed
+			sneak = false
+			sneak_timer.stop()
+		print(stamina)
 
 
 #endregion
@@ -99,8 +142,8 @@ func DamageEnemy(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
 		enemy.health -= damage
-		if enemy != null:
-			Knockback(enemy, body)
+		#if enemy != null:
+			#Knockback(enemy, body)
 		if enemy != null and enemy.health <= 0:
 			enemy.queue_free()
 
@@ -166,9 +209,8 @@ func RegenerationTimeout():
 	if health < maxHealth:
 		health += 1
 	if stamina < maxStamina:
-		stamina += 1
-	if mana < maxMana:
-		mana += 1
+		stamina += 5
 
 #endregion
+
 

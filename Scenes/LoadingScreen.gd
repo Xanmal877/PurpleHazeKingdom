@@ -6,11 +6,11 @@ extends CanvasLayer
 
 func _ready():
 	get_tree().paused = true
-	timer.wait_time = randi_range(1,5)
+	timer.wait_time = 0.5
 	timer.start()
 
 
-func _process(delta):
+func _process(_delta):
 	progress_bar.max_value = timer.wait_time
 	progress_bar.value = timer.time_left
 

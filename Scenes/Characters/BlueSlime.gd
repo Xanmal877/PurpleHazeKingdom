@@ -5,13 +5,11 @@ class_name BlueSlime extends CharacterBody2D
 
 #region Variables
 
-var health: int = 100
+var health: int = 60
 var stamina: int = 100
-var mana: int = 100
 
-var maxHealth: int = 100
+var maxHealth: int = 60
 var maxStamina: int = 100
-var maxMana: int = 100
 
 var speed: int = 20
 var chaseSpeed: int = 40
@@ -43,6 +41,11 @@ func _ready():
 func _process(_delta):
 	healthbar.value = health
 	healthbar.max_value = maxHealth
+	if tama.sneak == true and currentState == COMBAT:
+		EnemyArray.erase(tama)
+		currentState = IDLE
+		ui.hide()
+		StateMachine()
 
 
 func _physics_process(delta):
@@ -148,6 +151,7 @@ func DamageEnemy(body):
 		combat_timer.start(0.4)
 		combat_timer.one_shot = false
 
+
 func InCombat():
 	if player != null:
 		player.health -= damage
@@ -162,6 +166,7 @@ func Combat():
 			if enemy != null:
 				enemyTarget = enemy
 				NavAgent.target_position = enemyTarget.global_position
+
 
 func EnemyLost(body):
 	if body.is_in_group("player") or body.is_in_group("ally"):
@@ -192,7 +197,8 @@ func MakePath():
 	elif currentState == COMBAT:
 		direction = to_local(NavAgent.get_next_path_position()).normalized()
 		velocity = direction * chaseSpeed
-		NavAgent.target_position = enemyTarget.global_position
+		if enemyTarget != null:
+			NavAgent.target_position = enemyTarget.global_position
 
 
 #endregion

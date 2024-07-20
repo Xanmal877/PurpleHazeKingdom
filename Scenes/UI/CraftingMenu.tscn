@@ -1,0 +1,141 @@
+[gd_scene load_steps=9 format=3 uid="uid://dieqoq4wow5a4"]
+
+[ext_resource type="Script" path="res://Scenes/UI/CraftingMenu.gd" id="1_mvb4h"]
+[ext_resource type="Texture2D" uid="uid://qn2lviuxfm6h" path="res://Assets/Items/Potions/LiteHealthPotion.png" id="1_rphfs"]
+[ext_resource type="Texture2D" uid="uid://tm2prsloq0le" path="res://Assets/Items/Potions/LiteStaminaPotion.png" id="2_iuie1"]
+[ext_resource type="Texture2D" uid="uid://bnw8y0dswskkt" path="res://Assets/Items/Potions/LiteManaPotion.png" id="4_7g66t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t36je"]
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsilj"]
+bg_color = Color(0.321569, 0, 0.321569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pvrbb"]
+bg_color = Color(0, 0, 0.67451, 0.619608)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kmepn"]
+
+[node name="CraftingMenu" type="CanvasLayer"]
+script = ExtResource("1_mvb4h")
+
+[node name="MainWindow" type="Panel" parent="."]
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t36je")
+
+[node name="PotionsAlchemy" type="Panel" parent="MainWindow"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qsilj")
+
+[node name="Panel" type="Panel" parent="MainWindow/PotionsAlchemy"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pvrbb")
+
+[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Potions and Alchemy"
+label_settings = SubResource("LabelSettings_kmepn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow/PotionsAlchemy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.265
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion"]
+texture_filter = 1
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+texture_normal = ExtResource("1_rphfs")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Health Potion"
+
+[node name="StaminaPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion"]
+texture_filter = 1
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+texture_normal = ExtResource("2_iuie1")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Stamina Potion"
+
+[node name="ManaPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion"]
+texture_filter = 1
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+texture_normal = ExtResource("4_7g66t")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Stamina Potion"
+
+[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion/TextureButton" to="." method="HealthPotionPressed"]
+[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion/TextureButton" to="." method="StaminaPotionPressed"]
+[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion/TextureButton" to="." method="ManaPotionPressed"]

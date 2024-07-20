@@ -3,7 +3,6 @@ extends Area2D
 @onready var shuriken = $"."
 @onready var shurikentimeout = $ShurikenTimeout
 @onready var player = get_tree().get_first_node_in_group("player")
-var Damage = 5
 
 var Direction
 var velocity = Vector2.RIGHT
@@ -24,14 +23,17 @@ func _physics_process(delta):
 	velocity = Direction * throwSpeed
 
 
-signal hitenemy
 func EnemyHit(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
-		var damageDealt = max(1, player.damage + Damage)
-		enemy.stats.Health -= damageDealt
-		if enemy.stats.Health <= 0:
-			player.CurrentXP += enemy.stats.XPValue
+		enemy.health -= 1
+		if enemy.currentState != enemy.COMBAT:
+			enemy.EnemyArray.append(player)
+			enemy.currentState = enemy.COMBAT
+			enemy.StateMachine()
+			enemy.ui.show()
+		if enemy.health <= 0:
+			#player.CurrentXP += enemy.stats.XPValue
 			enemy.queue_free()
 		queue_free()
 	else:
@@ -46,6 +48,6 @@ func ShurikenLeftScreen():
 	queue_free()
 
 
-func TileMapEntered(_body):
-	if is_in_group("Tilemap"):
+func TileMapEntered(body):
+	if body.is_in_group("Tilemap"):
 		queue_free()

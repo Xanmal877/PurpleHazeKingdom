@@ -9,7 +9,6 @@ func _ready():
 	add_child(LS)
 
 
-
 const ROUTE_1 = preload("res://Scenes/Zones/Route1.tscn")
 func Route1(body):
 	if body.is_in_group("player"):
