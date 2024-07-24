@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://d303nj0m0gsrj"]
+
+[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Spritesheets/Locations/Forest/apple-icon.png" id="1_k8wcm"]
+[ext_resource type="Script" path="res://Scenes/Tools/Items/ItemResource.gd" id="2_bmfbx"]
+
+[resource]
+script = ExtResource("2_bmfbx")
+name = "Slime Goo"
+description = ""
+image = ExtResource("1_k8wcm")
+amount = 1

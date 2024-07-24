@@ -19,6 +19,7 @@ var damage: int = 20
 var normalDamage: int = 20
 var sneakDamage: int = (normalDamage * 4)
 
+var inventory: Array[ItemResource]
 
 var direction
 var lastDirection
@@ -29,8 +30,8 @@ var lastDirection
 @onready var Animation_Tree = $Animations/AnimationTree
 @onready var camera = $Camera2D
 
-@onready var healthbar = $UI/VBoxContainer/Healthbar
-@onready var staminabar = $UI/VBoxContainer/Staminabar
+@onready var healthbar = $UI/HBoxContainer/Bars/Healthbar
+@onready var staminabar = $UI/HBoxContainer/Bars/Staminabar
 
 #endregion
 
@@ -51,6 +52,13 @@ func _physics_process(_delta):
 	Attack()
 	Stealth()
 	move_and_slide()
+
+
+func _input(_event):
+	UseHealthPotion()
+	OpenMenus()
+	UseStaminaPotion()
+
 
 #endregion
 
@@ -118,24 +126,26 @@ func EnemyDetected(body):
 		enemyArray.append(body)
 
 
+var inmenu: bool = false
 var isAttacking: bool = false
-const SHURIKEN = preload("res://Scenes/Weapons/Shuriken.tscn")
+const SHURIKEN = preload("res://Scenes/Tools/Weapons/Shuriken.tscn")
 func Attack():
-	if Input.is_action_pressed("SwingKatana") and !isAttacking:
-		SwingKatanaAnim(true)
-		isAttacking = true
-		await get_tree().create_timer(0.5).timeout
-		isAttacking = false
-	elif Input.is_action_pressed("ThrowShuriken") and stamina >= 5 and !isAttacking:
-		ThrowShurikenAnim(true)
-		var shuriken = SHURIKEN.instantiate()
-		shuriken.player = $"."
-		add_child(shuriken)
-		shuriken.global_position = self.global_position
-		stamina -= 5
-		isAttacking = true
-		await get_tree().create_timer(0.5).timeout
-		isAttacking = false
+	if !isAttacking and inmenu == false:
+		if Input.is_action_pressed("SwingKatana"):
+			SwingKatanaAnim(true)
+			isAttacking = true
+			await get_tree().create_timer(0.5).timeout
+			isAttacking = false
+		elif Input.is_action_pressed("ThrowShuriken") and stamina >= 5:
+			ThrowShurikenAnim(true)
+			var shuriken = SHURIKEN.instantiate()
+			shuriken.player = $"."
+			add_child(shuriken)
+			shuriken.global_position = self.global_position
+			stamina -= 5
+			isAttacking = true
+			await get_tree().create_timer(0.5).timeout
+			isAttacking = false
 
 
 func DamageEnemy(body):
@@ -145,12 +155,72 @@ func DamageEnemy(body):
 		#if enemy != null:
 			#Knockback(enemy, body)
 		if enemy != null and enemy.health <= 0:
+			enemy.DropItem()
 			enemy.queue_free()
 
 
 func EnemyLost(body):
 	if body.is_in_group("enemy"):
 		enemyArray.erase(body)
+
+#endregion
+
+
+#region ItemSlots
+
+@onready var inventoryui = $UI/Inventory
+@onready var crafting_menu = $UI/CraftingMenu
+func OpenMenus():
+	if Input.is_action_just_pressed("Inventory"):
+		if inventoryui.visible == false:
+			inventoryui.visible = true
+		else:
+			inventoryui.visible = false
+	if Input.is_action_just_pressed("CraftingTable"):
+		if crafting_menu.visible == false:
+			crafting_menu.visible = true
+		else:
+			crafting_menu.visible = false
+		
+	if inventoryui.visible or crafting_menu.visible:
+		inmenu = true
+	else:
+		inmenu = false
+
+
+
+
+
+
+func UseHealthPotion():
+	if Input.is_action_just_pressed("Slot 1"):
+		for i in inventory:
+			if i.name == "Health Potion":
+				if i.amount > 0:
+					health += 5
+					i.amount -= 1
+					print(i.name, ":  ", i.amount)
+
+
+func UseStaminaPotion():
+	if Input.is_action_just_pressed("Slot 2"):
+		for i in inventory:
+			if i.name == "Stamina Potion":
+				if i.amount > 0:
+					stamina += 5
+					i.amount -= 1
+					#print(i.name, ":  ", i.amount)
+
+
+#func UseManaPotion():
+	#for i in inventory:
+		#if i.name == "Health Potion":
+			#if i.amount > 0:
+				#mana += 5
+				#i.amount -= 1
+				#print(i.name, ":  ", i.amount)
+
+
 
 #endregion
 
@@ -212,5 +282,4 @@ func RegenerationTimeout():
 		stamina += 5
 
 #endregion
-
 

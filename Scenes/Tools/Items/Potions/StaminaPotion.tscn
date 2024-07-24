@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://xlgkorfa5a12"]
+
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Items/Item.tscn" id="1_vp0io"]
+[ext_resource type="Texture2D" uid="uid://tm2prsloq0le" path="res://Assets/Items/Potions/LiteStaminaPotion.png" id="2_havar"]
+[ext_resource type="Resource" uid="uid://d0ex3letm3mlx" path="res://Scenes/Tools/Items/Potions/StaminaPotion.tres" id="2_vkltj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s5v7w"]
+
+[node name="StaminaPotion" instance=ExtResource("1_vp0io")]
+item = ExtResource("2_vkltj")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_s5v7w")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_havar")

@@ -203,3 +203,9 @@ func MakePath():
 
 #endregion
 
+const SLIME_GOO = preload("res://Scenes/Tools/Items/slime_goo.tscn")
+func DropItem():
+	var goo = SLIME_GOO.instantiate()
+	get_parent().call_deferred("add_child", goo)
+	goo.global_position = global_position
+

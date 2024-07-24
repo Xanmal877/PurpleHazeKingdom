@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://81e15sxa2kql"]
+
+[ext_resource type="Script" path="res://Scenes/Tools/Items/ItemResource.gd" id="1_3gijo"]
+
+[resource]
+script = ExtResource("1_3gijo")
+name = "Mana Potion"
+description = "123456"
+amount = 1

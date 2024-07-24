@@ -22,10 +22,7 @@ bg_color = Color(0, 0, 0.67451, 0.619608)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kmepn"]
 
-[node name="CraftingMenu" type="CanvasLayer"]
-script = ExtResource("1_mvb4h")
-
-[node name="MainWindow" type="Panel" parent="."]
+[node name="CraftingMenu" type="Panel"]
 custom_minimum_size = Vector2(800, 600)
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,8 +36,9 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t36je")
+script = ExtResource("1_mvb4h")
 
-[node name="PotionsAlchemy" type="Panel" parent="MainWindow"]
+[node name="PotionsAlchemy" type="Panel" parent="."]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 1
 anchors_preset = 10
@@ -48,7 +46,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qsilj")
 
-[node name="Panel" type="Panel" parent="MainWindow/PotionsAlchemy"]
+[node name="Panel" type="Panel" parent="PotionsAlchemy"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
 anchors_preset = 10
@@ -57,7 +55,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pvrbb")
 
-[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/Panel"]
+[node name="Label" type="Label" parent="PotionsAlchemy/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +67,7 @@ label_settings = SubResource("LabelSettings_kmepn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow/PotionsAlchemy"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PotionsAlchemy"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.265
@@ -79,29 +77,29 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="HealthPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+[node name="HealthPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion"]
+[node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/HealthPotion"]
 texture_filter = 1
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 texture_normal = ExtResource("1_rphfs")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion"]
+[node name="Label" type="Label" parent="PotionsAlchemy/HBoxContainer/HealthPotion"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Health Potion"
 
-[node name="StaminaPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+[node name="StaminaPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion"]
+[node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/StaminaPotion"]
 texture_filter = 1
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -110,18 +108,18 @@ size_flags_vertical = 2
 texture_normal = ExtResource("2_iuie1")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion"]
+[node name="Label" type="Label" parent="PotionsAlchemy/HBoxContainer/StaminaPotion"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Stamina Potion"
 
-[node name="ManaPotion" type="VBoxContainer" parent="MainWindow/PotionsAlchemy/HBoxContainer"]
+[node name="ManaPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextureButton" type="TextureButton" parent="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion"]
+[node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/ManaPotion"]
 texture_filter = 1
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -130,12 +128,14 @@ size_flags_vertical = 2
 texture_normal = ExtResource("4_7g66t")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion"]
+[node name="Label" type="Label" parent="PotionsAlchemy/HBoxContainer/ManaPotion"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Stamina Potion"
 
-[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/HealthPotion/TextureButton" to="." method="HealthPotionPressed"]
-[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/StaminaPotion/TextureButton" to="." method="StaminaPotionPressed"]
-[connection signal="pressed" from="MainWindow/PotionsAlchemy/HBoxContainer/ManaPotion/TextureButton" to="." method="ManaPotionPressed"]
+[node name="CraftingMenu" type="CanvasLayer" parent="."]
+
+[connection signal="pressed" from="PotionsAlchemy/HBoxContainer/HealthPotion/TextureButton" to="." method="HealthPotionPressed"]
+[connection signal="pressed" from="PotionsAlchemy/HBoxContainer/StaminaPotion/TextureButton" to="CraftingMenu" method="StaminaPotionPressed"]
+[connection signal="pressed" from="PotionsAlchemy/HBoxContainer/ManaPotion/TextureButton" to="CraftingMenu" method="ManaPotionPressed"]

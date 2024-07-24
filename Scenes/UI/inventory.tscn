@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqtu20alqlysd"]
+
+[ext_resource type="Script" path="res://Scenes/UI/inventory.gd" id="1_4gw2p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1eyq"]
+bg_color = Color(0, 0.580392, 1, 0.545098)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0.54902, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Inventory" type="Panel" groups=["inventory"]]
+anchors_preset = -1
+anchor_left = 0.0147569
+anchor_top = 0.0941358
+anchor_right = 0.327999
+anchor_bottom = 0.865196
+offset_right = 1.14505
+offset_bottom = -1.64673
+grow_vertical = 2
+scale = Vector2(0.996837, 1.00331)
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1eyq")
+script = ExtResource("1_4gw2p")
+metadata/_edit_use_anchors_ = true
+
+[node name="InventoryGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+metadata/_edit_use_anchors_ = true

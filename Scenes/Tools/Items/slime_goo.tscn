@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy283vkot22mh"]
+
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Items/Item.tscn" id="1_n4w3o"]
+[ext_resource type="Resource" uid="uid://d303nj0m0gsrj" path="res://Scenes/Tools/Items/slime_goo.tres" id="2_vek61"]
+[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Spritesheets/Locations/Forest/apple-icon.png" id="2_y8j6t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gq2wk"]
+radius = 4.12311
+
+[node name="SlimeGoo" instance=ExtResource("1_n4w3o")]
+item = ExtResource("2_vek61")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_gq2wk")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_y8j6t")

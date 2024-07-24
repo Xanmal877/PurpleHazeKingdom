@@ -258,7 +258,7 @@ texture = ExtResource("3_ttn15")
 flip_h = true
 hframes = 7
 vframes = 5
-frame = 2
+frame = 3
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3
