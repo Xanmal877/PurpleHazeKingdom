@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name TamanekoClass extends CharacterBody2D
 
 
 #region Variables
@@ -11,19 +11,21 @@ var stamina: int = 20
 var maxHealth: int = 20
 var maxStamina: int = 20
 
-var speed: int = 60
-var normalSpeed: int = 60
+var speed: int = 120
+var normalSpeed: int = 120
+@warning_ignore("integer_division")
 var sneakSpeed: int = (speed / 2)
 
 var damage: int = 20
 var normalDamage: int = 20
 var sneakDamage: int = (normalDamage * 4)
 
-var inventory: Array[ItemResource]
+@onready var inventory = $UI/Inventory
+
+var questTab: Array[MissionResource]
 
 var direction
 var lastDirection
-
 
 @onready var regenerationtimer = $Timers/RegenerationTimer
 @onready var Animation_Player = $Animations/AnimationPlayer
@@ -57,7 +59,7 @@ func _physics_process(_delta):
 func _input(_event):
 	UseHealthPotion()
 	OpenMenus()
-	UseStaminaPotion()
+	#UseStaminaPotion()
 
 
 #endregion
@@ -188,15 +190,11 @@ func OpenMenus():
 		inmenu = false
 
 
-
-
-
-
 func UseHealthPotion():
 	if Input.is_action_just_pressed("Slot 1"):
-		for i in inventory:
+		for i in inventory.Items:
 			if i.name == "Health Potion":
-				if i.amount > 0:
+				if i.amount > 0 and health != maxHealth:
 					health += 5
 					i.amount -= 1
 					print(i.name, ":  ", i.amount)
@@ -204,12 +202,12 @@ func UseHealthPotion():
 
 func UseStaminaPotion():
 	if Input.is_action_just_pressed("Slot 2"):
-		for i in inventory:
+		for i in inventory.Items:
 			if i.name == "Stamina Potion":
 				if i.amount > 0:
 					stamina += 5
 					i.amount -= 1
-					#print(i.name, ":  ", i.amount)
+					print(i.name, ":  ", i.amount)
 
 
 #func UseManaPotion():
@@ -248,6 +246,20 @@ func UpdateBlend():
 #endregion
 
 
+#region Quest
+
+var QuestGiverhere: bool = false
+func DetectQuestGiver(body):
+	if body.is_in_group("QuestGiver"):
+		var NPC = body
+		print(NPC)
+		QuestGiverhere = true
+		NPC.quest_slot.visible = true
+
+
+#endregion
+
+
 #region Other
 
 #const GAME_OVER = preload("res://Scenes/GUI/Menus/GameOver.tscn")
@@ -276,8 +288,8 @@ func Knockback(enemy, body):
 
 
 func RegenerationTimeout():
-	if health < maxHealth:
-		health += 1
+	#if health < maxHealth:
+		#health += 1
 	if stamina < maxStamina:
 		stamina += 5
 

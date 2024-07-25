@@ -7,8 +7,7 @@ const HEALTH_POTION = preload("res://Scenes/Tools/Items/Potions/HealthPotion.tsc
 const STAMINA_POTION = preload("res://Scenes/Tools/Items/Potions/StaminaPotion.tscn")
 
 func HealthPotionPressed():
-	var inventory = player.inventory
-	print(player.inventory)
+	var inventory = player.inventory.Items
 	for i in inventory:
 		if i.name == "Slime Goo":
 			if i.amount >= 2:

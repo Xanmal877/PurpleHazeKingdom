@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxu4imnysgp6d"]
+[gd_scene load_steps=9 format=3 uid="uid://bxu4imnysgp6d"]
 
 [ext_resource type="TileSet" uid="uid://s53tu530ys8s" path="res://Assets/Tilesets/Forest Tileset.tres" id="1_23ice"]
 [ext_resource type="PackedScene" uid="uid://dmij8h2ybyidq" path="res://Scenes/Characters/Blueslime.tscn" id="2_jyoqb"]
 [ext_resource type="Script" path="res://Scenes/Zones/Route1.gd" id="2_rxlj4"]
+[ext_resource type="PackedScene" uid="uid://ds7n2x4rvmbko" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tscn" id="4_xgbnr"]
+[ext_resource type="PackedScene" uid="uid://dk8trkthe8kqv" path="res://Scenes/Characters/NPC.tscn" id="5_snt6d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkugm"]
 size = Vector2(20, 80)
@@ -83,6 +85,15 @@ polygon = PackedVector2Array(0, 12, 1, 670, 1153, 657, 1152, 2, -7, -1, -8, -26,
 
 [node name="TrellarkSpawn" type="Marker2D" parent="."]
 position = Vector2(25, 40)
+
+[node name="Branch" parent="." instance=ExtResource("4_xgbnr")]
+position = Vector2(34, 356)
+
+[node name="Branch2" parent="." instance=ExtResource("4_xgbnr")]
+position = Vector2(110, 351)
+
+[node name="NPC" parent="." instance=ExtResource("5_snt6d")]
+position = Vector2(23, 386)
 
 [connection signal="body_entered" from="Village" to="." method="ToVillage"]
 [connection signal="body_entered" from="TrellarkForest" to="." method="ToTrellarkForest"]

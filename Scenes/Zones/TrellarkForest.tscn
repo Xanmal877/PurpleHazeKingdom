@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://1mn2ih66a4ls"]
+[gd_scene load_steps=6 format=3 uid="uid://1mn2ih66a4ls"]
 
 [ext_resource type="TileSet" uid="uid://s53tu530ys8s" path="res://Assets/Tilesets/Forest Tileset.tres" id="1_c48sm"]
 [ext_resource type="Script" path="res://Scenes/Zones/TrellarkForest.gd" id="2_n5a4u"]
 [ext_resource type="PackedScene" uid="uid://dmij8h2ybyidq" path="res://Scenes/Characters/Blueslime.tscn" id="3_8f58q"]
+[ext_resource type="PackedScene" uid="uid://ds7n2x4rvmbko" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tscn" id="4_67tr1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuu5x"]
 size = Vector2(31, 10)
@@ -19,7 +20,7 @@ layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_n5a4u")
 
 [node name="Route1" type="Area2D" parent="."]
-position = Vector2(1032, 646)
+position = Vector2(1032, 654)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Route1"]
 position = Vector2(0.5, 5)
@@ -82,5 +83,83 @@ position = Vector2(853, 442)
 
 [node name="BlueSlime14" parent="Slimes" instance=ExtResource("3_8f58q")]
 position = Vector2(914, 50)
+
+[node name="Branches" type="Node2D" parent="."]
+
+[node name="Branch" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(726, 141)
+
+[node name="Branch2" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(377, 336)
+
+[node name="Branch3" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(735, 290)
+
+[node name="Branch4" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(412, 168)
+
+[node name="Branch5" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(1032, 102)
+
+[node name="Branch6" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(662, 513)
+
+[node name="Branch7" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(431, 616)
+
+[node name="Branch8" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(798, 627)
+
+[node name="Branch9" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(302, 529)
+
+[node name="Branch10" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(259, 384)
+
+[node name="Branch11" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(142, 194)
+
+[node name="Branch12" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(135, 60)
+
+[node name="Branch13" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(417, 48)
+
+[node name="Branch14" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(995, 388)
+
+[node name="Branch15" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(1133, 574)
+
+[node name="Branch16" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(61, 544)
+
+[node name="Branch17" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(22, 419)
+
+[node name="Branch18" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(96, 319)
+
+[node name="Branch19" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(21, 155)
+
+[node name="Branch20" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(41, 63)
+
+[node name="Branch21" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(1029, 524)
+
+[node name="Branch22" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(980, 617)
+
+[node name="Branch23" parent="Branches" instance=ExtResource("4_67tr1")]
+position = Vector2(1114, 632)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 15
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 12, 1, 670, 1153, 657, 1152, 2, -7, -1, -8, -26, 1162, -34, 1174, 36, 1172, 661, 1142, 679, -10, 680, -28, 649, -18, -3)
 
 [connection signal="body_entered" from="Route1" to="." method="Route1"]

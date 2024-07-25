@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk8trkthe8kqv"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/NPC.gd" id="1_0ofrx"]
+[ext_resource type="PackedScene" uid="uid://du666mowjveoi" path="res://Scenes/UI/Questing/QuestSlot.tscn" id="2_3585t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6db3c"]
+bg_color = Color(0, 0, 1, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_etu5h"]
+radius = 20.025
+
+[node name="NPC" type="CharacterBody2D" groups=["QuestGiver"]]
+collision_layer = 4
+collision_mask = 71
+script = ExtResource("1_0ofrx")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6db3c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_etu5h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="QuestSlot" parent="CanvasLayer" instance=ExtResource("2_3585t")]
+visible = false
+offset_left = -200.0
+offset_top = -300.0
+offset_right = 200.0
+offset_bottom = 300.0

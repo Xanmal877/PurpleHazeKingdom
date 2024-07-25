@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds7n2x4rvmbko"]
+
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Items/Item.tscn" id="1_orldt"]
+[ext_resource type="Resource" uid="uid://bcq4eqd8v362r" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tres" id="2_hnhe3"]
+[ext_resource type="Texture2D" uid="uid://cx4be1qko1oo8" path="res://Assets/Items/Resources/Branch.png" id="2_x87nm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_anqm0"]
+radius = 9.05539
+
+[node name="Branch" instance=ExtResource("1_orldt")]
+item = ExtResource("2_hnhe3")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_anqm0")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_x87nm")

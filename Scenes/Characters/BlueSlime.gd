@@ -203,7 +203,7 @@ func MakePath():
 
 #endregion
 
-const SLIME_GOO = preload("res://Scenes/Tools/Items/slime_goo.tscn")
+const SLIME_GOO = preload("res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tscn")
 func DropItem():
 	var goo = SLIME_GOO.instantiate()
 	get_parent().call_deferred("add_child", goo)

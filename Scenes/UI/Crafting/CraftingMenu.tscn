@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dieqoq4wow5a4"]
 
-[ext_resource type="Script" path="res://Scenes/UI/CraftingMenu.gd" id="1_mvb4h"]
+[ext_resource type="Script" path="res://Scenes/UI/Crafting/CraftingMenu.gd" id="1_mvb4h"]
 [ext_resource type="Texture2D" uid="uid://qn2lviuxfm6h" path="res://Assets/Items/Potions/LiteHealthPotion.png" id="1_rphfs"]
 [ext_resource type="Texture2D" uid="uid://tm2prsloq0le" path="res://Assets/Items/Potions/LiteStaminaPotion.png" id="2_iuie1"]
 [ext_resource type="Texture2D" uid="uid://bnw8y0dswskkt" path="res://Assets/Items/Potions/LiteManaPotion.png" id="4_7g66t"]

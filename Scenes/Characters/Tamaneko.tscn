@@ -3,8 +3,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
 [ext_resource type="Script" path="res://Scenes/Characters/Tamaneko.gd" id="1_f3r72"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://1ytr7uyodqdu" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimTree.tres" id="2_3jctt"]
-[ext_resource type="PackedScene" uid="uid://dieqoq4wow5a4" path="res://Scenes/UI/CraftingMenu.tscn" id="5_uei5l"]
-[ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/inventory.tscn" id="7_vwsd6"]
+[ext_resource type="PackedScene" uid="uid://dieqoq4wow5a4" path="res://Scenes/UI/Crafting/CraftingMenu.tscn" id="5_uei5l"]
+[ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="7_vwsd6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_431j6"]
 radius = 7.0
@@ -14,6 +14,30 @@ load_path = "res://.godot/imported/Tamaneko3.png-efb6294364875292ab337238379a15b
 
 [sub_resource type="Animation" id="Animation_crerl"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Areas/Hurtbox:monitoring")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Areas/Hurtbox:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3kl86"]
 _data = {
@@ -134,6 +158,8 @@ wait_time = 0.4
 rotation = 3.14159
 collision_layer = 32
 collision_mask = 6
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
 shape = SubResource("CircleShape2D_t4tng")
@@ -181,8 +207,10 @@ value = 10.0
 visible = false
 
 [node name="CraftingMenu" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("5_uei5l")]
+visible = false
 player = NodePath("../..")
 
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
 [connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]
 [connection signal="body_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
+[connection signal="body_entered" from="Areas/Detectionbox" to="." method="DetectQuestGiver"]
