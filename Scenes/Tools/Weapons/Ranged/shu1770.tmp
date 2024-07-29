@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://o5ytkcqoaocj"]
+
+[ext_resource type="PackedScene" uid="uid://b2fkyte1jfbu1" path="res://Scenes/Tools/Weapons/Ranged/Projectile.tscn" id="1_7xduc"]
+[ext_resource type="Texture2D" uid="uid://c0chxsiq6dorr" path="res://Assets/Weapons and Armor/Weapons2.png" id="2_aehfk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ds10h"]
+radius = 16.6667
+
+[node name="Shuriken" groups=["rotating"] instance=ExtResource("1_7xduc")]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_ds10h")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_aehfk")
+region_enabled = true
+
+[node name="Timeout" parent="." index="3"]
+wait_time = 2.0
+autostart = true

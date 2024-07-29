@@ -20,23 +20,23 @@ layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_n5a4u")
 
 [node name="Route1" type="Area2D" parent="."]
-position = Vector2(1032, 654)
+position = Vector2(1033, 650)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Route1"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_cuu5x")
+
+[node name="Master Udo\'s Home" type="Area2D" parent="."]
+position = Vector2(40, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Master Udo\'s Home"]
 position = Vector2(0.5, 5)
 shape = SubResource("RectangleShape2D_cuu5x")
 
-[node name="Area2D2" type="Area2D" parent="."]
-position = Vector2(40, 5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(0.5, 0)
-shape = SubResource("RectangleShape2D_cuu5x")
-
-[node name="Area2D3" type="Area2D" parent="."]
+[node name="unknown" type="Area2D" parent="."]
 position = Vector2(216, 650)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="unknown"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_cuu5x")
 
@@ -141,7 +141,7 @@ position = Vector2(22, 419)
 position = Vector2(96, 319)
 
 [node name="Branch19" parent="Branches" instance=ExtResource("4_67tr1")]
-position = Vector2(21, 155)
+position = Vector2(96, 244)
 
 [node name="Branch20" parent="Branches" instance=ExtResource("4_67tr1")]
 position = Vector2(41, 63)
@@ -160,6 +160,6 @@ collision_layer = 64
 collision_mask = 15
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(0, 12, 1, 670, 1153, 657, 1152, 2, -7, -1, -8, -26, 1162, -34, 1174, 36, 1172, 661, 1142, 679, -10, 680, -28, 649, -18, -3)
+polygon = PackedVector2Array(22, 10, 23, 135, 27, 521, 17, 654, 1, 670, 23, 649, 39, 654, 178, 654, 1016, 654, 1153, 657, 1155, 19, -1, 9, -8, -26, 1162, -34, 1174, 36, 1172, 661, 1142, 679, -10, 680, -28, 649, -18, -3, 4, 13)
 
 [connection signal="body_entered" from="Route1" to="." method="Route1"]

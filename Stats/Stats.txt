@@ -1,0 +1,17 @@
+
+
+var TamanekoStats: Dictionary = {
+	"health": 20,"stamina": 20,"mana": 20,"maxHealth": 20,"maxStamina": 20,"maxMana": 20,
+	"direction": Vector2(),"lastDirection": Vector2(),
+	"speed": 120,"normalSpeed": 120,"sneakSpeed": 60,
+	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,}
+
+
+var BSStats: Dictionary = {
+	"health": 60,"stamina": 0,"mana": 0,"maxHealth": 60,"maxStamina": 0,"maxMana": 0,
+	"direction": Vector2(),"lastDirection": Vector2(),
+	"speed": 20,"normalSpeed": 20,"chaseSpeed": 40,
+	"damage": 5,"normalDamage": 5,
+	}
+
+

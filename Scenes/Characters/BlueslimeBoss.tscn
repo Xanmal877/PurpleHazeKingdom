@@ -1,10 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://dmij8h2ybyidq"]
+[gd_scene load_steps=26 format=3 uid="uid://bsdqw0x8uy1tb"]
 
-[ext_resource type="Script" path="res://Scenes/Characters/BlueSlime.gd" id="2_n0hjf"]
-[ext_resource type="Texture2D" uid="uid://brbri6qakal0v" path="res://Assets/Spritesheets/Characters/Blue Slime/Spritesheet.png" id="3_ttn15"]
+[ext_resource type="Script" path="res://Scenes/Characters/BlueslimeBoss.gd" id="1_6n075"]
+[ext_resource type="Texture2D" uid="uid://brbri6qakal0v" path="res://Assets/Spritesheets/Characters/Blue Slime/Spritesheet.png" id="2_5mg4k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sedkg"]
-radius = 5.09902
+radius = 9.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2owh"]
 radius = 8.0
@@ -231,17 +231,18 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="BlueSlime" type="CharacterBody2D" groups=["enemy"]]
+[node name="BlueSlimeBoss" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
+scale = Vector2(5, 5)
 collision_layer = 2
 collision_mask = 111
 wall_min_slide_angle = 0.0
-script = ExtResource("2_n0hjf")
+script = ExtResource("1_6n075")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 y_sort_enabled = true
-texture = ExtResource("3_ttn15")
+texture = ExtResource("2_5mg4k")
 flip_h = true
 hframes = 7
 vframes = 5
@@ -338,7 +339,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
-text = "Blue Slime"
+text = "Big Blue bob"
 label_settings = SubResource("LabelSettings_idkqo")
 horizontal_alignment = 1
 

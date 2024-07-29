@@ -2,28 +2,32 @@ extends TileMap
 
 
 @onready var player = get_tree().get_first_node_in_group("player")
+@onready var spawn = $TrellarkSpawn
 
 
 #region The Runtimes
 
 func _ready():
-	player.camera.enabled = true
-	var LS = Global.LOADING_SCREEN.instantiate()
-	add_child(LS)
-	Global.set_camera_limits($".", player.camera)
+	if player != null:
+		player.camera.enabled = true
+		Global.set_camera_limits($".", player.camera)
+
 
 #endregion
 
-
+const STONE_EDGE_VILLAGE = preload("res://Scenes/Zones/StoneEdgeVillage.tscn")
 func ToVillage(body):
 	if body.is_in_group("player"):
-		pass
+		var zone = STONE_EDGE_VILLAGE.instantiate()
+		call_deferred("add_sibling", zone)
+		player.global_position = Vector2(50,150)
+		call_deferred("queue_free")
 
 
 func ToTrellarkForest(body):
 	if body.is_in_group("player"):
 		var zone = Global.TRELLARK_FOREST.instantiate()
-		get_parent().call_deferred("add_child", zone)
+		call_deferred("add_sibling", zone)
 		player.global_position = Vector2(1033,582)
 		call_deferred("queue_free")
 
@@ -31,7 +35,7 @@ func ToTrellarkForest(body):
 func ToSlimeFields(body):
 	if body.is_in_group("player"):
 		var zone = Global.SLIME_FIELD.instantiate()
-		get_parent().call_deferred("add_child", zone)
+		call_deferred("add_sibling", zone)
 		player.global_position = Vector2(30,55)
 		call_deferred("queue_free")
 

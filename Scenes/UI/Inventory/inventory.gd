@@ -24,7 +24,6 @@ func InventoryUpdate():
 
 
 func AddItemtoInventory(item: ItemResource):
-	print(Items.find(item))
 	var index = Items.find(item)
 	if index != -1:
 		item.amount += 1

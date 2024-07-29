@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ds7n2x4rvmbko"]
 
-[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Items/Item.tscn" id="1_orldt"]
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Item.tscn" id="1_orldt"]
 [ext_resource type="Resource" uid="uid://bcq4eqd8v362r" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tres" id="2_hnhe3"]
 [ext_resource type="Texture2D" uid="uid://cx4be1qko1oo8" path="res://Assets/Items/Resources/Branch.png" id="2_x87nm"]
 

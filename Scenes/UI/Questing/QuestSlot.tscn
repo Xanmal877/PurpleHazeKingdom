@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://du666mowjveoi"]
+[gd_scene load_steps=4 format=3 uid="uid://du666mowjveoi"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Questing/QuestSlot.gd" id="1_5o8fe"]
-[ext_resource type="Resource" uid="uid://cgeur7pgjt614" path="res://Scenes/UI/Questing/SlimeQuest1.tres" id="2_eo50a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7lcl"]
 draw_center = false
@@ -34,7 +33,6 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5o8fe")
-Quest = ExtResource("2_eo50a")
 
 [node name="Slot" type="Panel" parent="."]
 custom_minimum_size = Vector2(200, 250)

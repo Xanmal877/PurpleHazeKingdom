@@ -1,4 +1,4 @@
-class_name Slime extends CharacterBody2D
+class_name SlimeBoss extends CharacterBody2D
 
 
 @onready var tama = get_tree().get_first_node_in_group("player")
@@ -7,10 +7,10 @@ class_name Slime extends CharacterBody2D
 
 
 var stats: Dictionary = {
-	"health": 60,"stamina": 0,"mana": 0,"maxHealth": 60,"maxStamina": 0,"maxMana": 0,
+	"health": 500,"stamina": 20,"mana": 0,"maxHealth": 500,"maxStamina": 20,"maxMana": 0,
 	"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 20,"normalSpeed": 20,"chaseSpeed": 40,
-	"damage": 5,"normalDamage": 5,
+	"speed": 40,"normalSpeed": 40,"chaseSpeed": 60,
+	"damage": 20,"normalDamage": 20,
 	}
 
 
@@ -197,9 +197,16 @@ func MakePath():
 
 #endregion
 
+static var isBobdead: bool = false
+const WOODEN_SWORD = preload("res://Scenes/Tools/Weapons/Melee/Wooden Sword.tscn")
 const SLIME_GOO = preload("res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tscn")
 func DropItem():
 	var goo = SLIME_GOO.instantiate()
-	get_parent().call_deferred("add_child", goo)
+	var sword = WOODEN_SWORD.instantiate()
+	call_deferred("add_sibling", goo)
+	call_deferred("add_sibling", sword)
 	goo.global_position = global_position
+	sword.global_position = global_position
+	isBobdead = true
+
 

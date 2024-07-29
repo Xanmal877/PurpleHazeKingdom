@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dk8trkthe8kqv"]
+[gd_scene load_steps=4 format=3 uid="uid://dk8trkthe8kqv"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/NPC.gd" id="1_0ofrx"]
-[ext_resource type="PackedScene" uid="uid://du666mowjveoi" path="res://Scenes/UI/Questing/QuestSlot.tscn" id="2_3585t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6db3c"]
 bg_color = Color(0, 0, 1, 1)
@@ -14,6 +13,7 @@ corner_radius_bottom_left = 100
 radius = 20.025
 
 [node name="NPC" type="CharacterBody2D" groups=["QuestGiver"]]
+scale = Vector2(0.4, 0.4)
 collision_layer = 4
 collision_mask = 71
 script = ExtResource("1_0ofrx")
@@ -31,10 +31,3 @@ shape = SubResource("CircleShape2D_etu5h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="QuestSlot" parent="CanvasLayer" instance=ExtResource("2_3585t")]
-visible = false
-offset_left = -200.0
-offset_top = -300.0
-offset_right = 200.0
-offset_bottom = 300.0

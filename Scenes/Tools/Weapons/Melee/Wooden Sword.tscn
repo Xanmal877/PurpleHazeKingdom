@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://cv43yhl4p2uwb"]
+
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Item.tscn" id="1_50ti2"]
+[ext_resource type="Texture2D" uid="uid://bjecxux8cgcej" path="res://Assets/Weapons and Armor/weapons1.png" id="2_371b6"]
+[ext_resource type="Script" path="res://Scenes/Tools/ItemResource.gd" id="3_u1ltg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpg7j"]
+atlas = ExtResource("2_371b6")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="Resource" id="Resource_fu5kc"]
+script = ExtResource("3_u1ltg")
+name = "Wooden Sword"
+Type = "Weapon"
+description = "A Wooden Sword"
+image = SubResource("AtlasTexture_mpg7j")
+amount = 0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ss1l7"]
+radius = 2.09826
+height = 22.6164
+
+[node name="Wooden Sword" instance=ExtResource("1_50ti2")]
+item = SubResource("Resource_fu5kc")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+rotation = -0.754242
+shape = SubResource("CapsuleShape2D_ss1l7")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_371b6")
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 16)

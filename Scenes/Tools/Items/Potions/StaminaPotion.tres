@@ -1,11 +1,12 @@
 [gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://d0ex3letm3mlx"]
 
 [ext_resource type="Texture2D" uid="uid://tm2prsloq0le" path="res://Assets/Items/Potions/LiteStaminaPotion.png" id="1_hooe2"]
-[ext_resource type="Script" path="res://Scenes/Tools/Items/ItemResource.gd" id="1_qu0rp"]
+[ext_resource type="Script" path="res://Scenes/Tools/ItemResource.gd" id="1_qu0rp"]
 
 [resource]
 script = ExtResource("1_qu0rp")
 name = "Stamina Potion"
+Type = "Consumable"
 description = ""
 image = ExtResource("1_hooe2")
 amount = 1

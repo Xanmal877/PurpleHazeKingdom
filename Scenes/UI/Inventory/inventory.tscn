@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqtu20alqlysd"]
+[gd_scene load_steps=4 format=3 uid="uid://cqtu20alqlysd"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Inventory/inventory.gd" id="1_hsr4x"]
+[ext_resource type="PackedScene" uid="uid://dieqoq4wow5a4" path="res://Scenes/UI/Crafting/CraftingMenu.tscn" id="2_hxnrw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1eyq"]
 bg_color = Color(0, 0.580392, 1, 0.545098)
@@ -17,14 +18,14 @@ corner_radius_bottom_left = 10
 
 [node name="Inventory" type="Panel" groups=["inventory"]]
 anchors_preset = -1
-anchor_left = 0.194444
-anchor_top = 0.240741
-anchor_right = 0.570187
-anchor_bottom = 0.899146
-offset_left = 104.0
-offset_top = -48.0
-offset_right = 105.145
-offset_bottom = -49.6467
+anchor_left = 0.284722
+anchor_top = 0.166667
+anchor_right = 0.660267
+anchor_bottom = 0.824702
+offset_left = -308.0
+offset_top = 1.99979
+offset_right = -306.627
+offset_bottom = 0.593079
 grow_vertical = 2
 scale = Vector2(0.996837, 1.00331)
 theme_override_styles/panel = SubResource("StyleBoxFlat_f1eyq")
@@ -39,4 +40,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="CraftingMenu" parent="." instance=ExtResource("2_hxnrw")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.01741
+anchor_top = 0.0174918
+anchor_right = 2.05427
+anchor_bottom = 0.546904
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 1.52588e-05
 metadata/_edit_use_anchors_ = true
