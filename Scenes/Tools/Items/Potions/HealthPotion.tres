@@ -7,6 +7,7 @@
 script = ExtResource("1_m0838")
 name = "Health Potion"
 Type = "Consumable"
-description = "1234"
+description = "A Health Potion that heals you
+"
 image = ExtResource("1_s8rhp")
 amount = 1

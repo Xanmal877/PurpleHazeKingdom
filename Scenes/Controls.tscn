@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvk1dtb0aessq"]
+
+[ext_resource type="Script" path="res://Scenes/Controls.gd" id="1_02c5n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c607d"]
+bg_color = Color(0.298039, 0, 0.298039, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqams"]
+font_size = 46
+
+[sub_resource type="LabelSettings" id="LabelSettings_gcjgo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhrc2"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Controls" type="Panel"]
+custom_minimum_size = Vector2(300, 250)
+anchors_preset = -1
+anchor_left = 0.739583
+anchor_right = 1.0
+anchor_bottom = 0.490741
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_c607d")
+script = ExtResource("1_02c5n")
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_bqams")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.211346
+anchor_right = 1.0
+anchor_bottom = 0.856
+offset_top = 10.384
+grow_horizontal = 2
+grow_vertical = 0
+text = "Move = WASD
+Left Click = Swing Weapon
+Right Click = Throw Shuriken
+Shift = Dash
+C = Sneak
+Tab = Inventory
+1 = Health Potion
+2 = Stamina Potion"
+label_settings = SubResource("LabelSettings_gcjgo")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+anchor_left = 0.399999
+anchor_top = 0.86
+anchor_right = 0.546666
+anchor_bottom = 1.0
+offset_right = -1.52588e-05
+theme_override_styles/normal = SubResource("StyleBoxFlat_yhrc2")
+text = "Close"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

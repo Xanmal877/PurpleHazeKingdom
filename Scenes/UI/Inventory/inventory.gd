@@ -2,7 +2,7 @@ class_name InventoryClass extends Control
 
 var Items: Array[ItemResource]
 
-@onready var grid = $Grid
+@onready var grid = $Inventory/Grid
 @onready var player = get_tree().get_first_node_in_group("player")
 const SLOT = preload("res://Scenes/UI/Inventory/Slot.tscn")
 

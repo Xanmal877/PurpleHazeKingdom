@@ -10,6 +10,7 @@ region = Rect2(0, 48, 16, 16)
 
 [sub_resource type="Resource" id="Resource_fu5kc"]
 script = ExtResource("3_u1ltg")
+id = 0
 name = "Wooden Sword"
 Type = "Weapon"
 description = "A Wooden Sword"

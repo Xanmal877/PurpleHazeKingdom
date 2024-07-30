@@ -9,6 +9,7 @@ region = Rect2(0, 80, 16, 16)
 
 [resource]
 script = ExtResource("2_073ov")
+id = 0
 name = "Slime Goo"
 Type = "Craftable"
 description = "A piece of goo dropped from a slime"

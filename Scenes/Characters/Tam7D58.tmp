@@ -1,14 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=15 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
 [ext_resource type="Script" path="res://Scenes/Characters/Tamaneko.gd" id="1_f3r72"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://1ytr7uyodqdu" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimTree.tres" id="2_3jctt"]
-[ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/Tamaneko3.png" id="2_rdlu8"]
-[ext_resource type="PackedScene" uid="uid://bvk1dtb0aessq" path="res://Scenes/Controls.tscn" id="5_cnmmt"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="7_vwsd6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_431j6"]
 radius = 7.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nfg3u"]
+load_path = "res://.godot/imported/Tamaneko3.png-efb6294364875292ab337238379a15bf.ctex"
 
 [sub_resource type="Animation" id="Animation_crerl"]
 length = 0.001
@@ -35,9 +36,6 @@ radius = 33.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axiqn"]
 radius = 60.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_buhxi"]
-radius = 28.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbsm4"]
 draw_center = false
@@ -92,7 +90,6 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [node name="Tamaneko" type="CharacterBody2D" groups=["player"]]
-y_sort_enabled = true
 collision_mask = 111
 script = ExtResource("1_f3r72")
 
@@ -102,7 +99,7 @@ position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_431j6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_rdlu8")
+texture = SubResource("CompressedTexture2D_nfg3u")
 hframes = 10
 vframes = 14
 
@@ -164,11 +161,6 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
 shape = SubResource("CircleShape2D_axiqn")
 
-[node name="InteractBox" type="Area2D" parent="Areas"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/InteractBox"]
-shape = SubResource("CircleShape2D_buhxi")
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
@@ -203,8 +195,6 @@ value = 10.0
 
 [node name="Inventory" parent="UI" instance=ExtResource("7_vwsd6")]
 visible = false
-
-[node name="Controls" parent="UI" instance=ExtResource("5_cnmmt")]
 
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
 [connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]

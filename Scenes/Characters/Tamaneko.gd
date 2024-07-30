@@ -37,12 +37,12 @@ func _physics_process(_delta):
 	Attack()
 	Stealth()
 	Death()
+	UseHealthPotion()
+	UseStaminaPotion()
 	move_and_slide()
 
 
 func _input(_event):
-	UseHealthPotion()
-	UseStaminaPotion()
 	OpenMenus()
 
 #endregion
@@ -109,10 +109,10 @@ func SneakCost():
 @onready var dash_timer = $Timers/DashTimer
 var isDashing: bool = false
 func DashAbility():
-	if Input.is_action_just_pressed("Dash") and stats.stamina >= 10:
+	if Input.is_action_just_pressed("Dash") and stats.stamina >= 4:
 		isDashing = true
 		dash_timer.start(0.5)
-		stats.stamina -= 10
+		stats.stamina -= 4
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "modulate", Color(1,0.157,1,0.078), 0.2)
 		tween.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
@@ -202,7 +202,7 @@ func UseHealthPotion():
 		for i in inventory.Items:
 			if i.name == "Health Potion":
 				if i.amount > 0 and stats.health != stats.maxHealth:
-					stats.health += 5
+					stats.health += 10
 					i.amount -= 1
 
 
@@ -211,19 +211,8 @@ func UseStaminaPotion():
 		for i in inventory.Items:
 			if i.name == "Stamina Potion":
 				if i.amount > 0:
-					stats.stamina += 5
+					stats.stamina += 10
 					i.amount -= 1
-
-
-#func UseManaPotion():
-	#for i in inventory:
-		#if i.name == "Health Potion":
-			#if i.amount > 0:
-				#mana += 5
-				#i.amount -= 1
-				#print(i.name, ":  ", i.amount)
-
-
 
 #endregion
 
@@ -256,7 +245,6 @@ func UpdateBlend():
 var QuestGiverhere: bool = false
 func DetectQuestGiver(body):
 	if body.is_in_group("QuestGiver"):
-		var NPC = body
 		QuestGiverhere = true
 		#NPC.quest_slot.visible = true
 
@@ -268,25 +256,16 @@ func DetectQuestGiver(body):
 
 func Death():
 	if stats.health <= 0:
-		queue_free()
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://GameOver.tscn")
 
 func Knockback(enemy, body):
-	var pushback = Vector2(0, 0)
-	var KnockbackTween = get_tree().create_tween()
+	var direction = stats.lastDirection
+	var pushback = direction * Vector2(5, 5)
+	
+	if body.is_in_group("enemy") and enemy.is_inside_tree():
+		var KnockbackTween = get_tree().create_tween()
+		KnockbackTween.tween_property(enemy, "position", enemy.position + pushback, 0.2)
 
-	if stats.lastDirection == Vector2.LEFT:
-		pushback.x = -5
-	elif stats.lastDirection == Vector2.RIGHT:
-		pushback.x = 5
-	elif stats.lastDirection == Vector2.DOWN:
-		pushback.y = 5
-	elif stats.lastDirection == Vector2.UP:
-		pushback.y = -5
-
-	if body.is_in_group("enemy"):
-		if enemy.is_inside_tree():
-			KnockbackTween.tween_property(enemy, "position", enemy.position + pushback, 0.2)
 
 
 func RegenerationTimeout():
@@ -295,5 +274,4 @@ func RegenerationTimeout():
 			stats.stamina += 1
 
 #endregion
-
 

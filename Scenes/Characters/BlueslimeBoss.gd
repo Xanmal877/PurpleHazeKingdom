@@ -37,11 +37,11 @@ func _ready():
 func _process(_delta):
 	healthbar.value = stats.health
 	healthbar.max_value = stats.maxHealth
-	if tama.sneak == true and currentState == COMBAT:
-		EnemyArray.erase(tama)
-		currentState = IDLE
-		ui.hide()
-		StateMachine()
+	#if tama != null and tama.sneak == true and currentState == COMBAT:
+		#EnemyArray.erase(tama)
+		#currentState = IDLE
+		#ui.hide()
+		#StateMachine()
 
 
 func _physics_process(delta):

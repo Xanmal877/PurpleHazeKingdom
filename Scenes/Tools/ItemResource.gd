@@ -3,6 +3,7 @@ class_name ItemResource extends Resource
 
 
 @export_category("Item Info")
+@export var id : int
 @export var name : String
 @export var Type: String
 @export_multiline var description: String

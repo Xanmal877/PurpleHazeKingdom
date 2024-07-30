@@ -37,11 +37,11 @@ func _ready():
 func _process(_delta):
 	healthbar.value = stats.health
 	healthbar.max_value = stats.maxHealth
-	if tama.sneak == true and currentState == COMBAT:
-		EnemyArray.erase(tama)
-		currentState = IDLE
-		ui.hide()
-		StateMachine()
+	#if tama != null and tama.sneak == true and currentState == COMBAT:
+		#EnemyArray.erase(tama)
+		#currentState = IDLE
+		#ui.hide()
+		#StateMachine()
 
 
 func _physics_process(delta):
@@ -197,9 +197,14 @@ func MakePath():
 
 #endregion
 
+
+#region ItemDrops
+
 const SLIME_GOO = preload("res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tscn")
 func DropItem():
 	var goo = SLIME_GOO.instantiate()
 	get_parent().call_deferred("add_child", goo)
 	goo.global_position = global_position
+
+#endregion
 

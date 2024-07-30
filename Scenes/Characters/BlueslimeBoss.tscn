@@ -7,10 +7,10 @@
 radius = 9.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2owh"]
-radius = 8.0
+radius = 10.4307
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ux1o"]
-radius = 100.0
+radius = 60.0
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scr33"]
 
@@ -233,7 +233,7 @@ corner_radius_bottom_left = 30
 
 [node name="BlueSlimeBoss" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
-scale = Vector2(5, 5)
+scale = Vector2(2.5, 2.5)
 collision_layer = 2
 collision_mask = 111
 wall_min_slide_angle = 0.0
@@ -246,7 +246,6 @@ texture = ExtResource("2_5mg4k")
 flip_h = true
 hframes = 7
 vframes = 5
-frame = 2
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3

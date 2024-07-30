@@ -101,10 +101,6 @@ min_space = Vector2(-1.5, -1.5)
 max_space = Vector2(1.5, 1.5)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6yxvs"]
-advance_mode = 2
-advance_condition = &"Swing"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sxoad"]
 switch_mode = 2
 advance_mode = 2
@@ -128,15 +124,19 @@ advance_condition = &"Idle"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q3gqy"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ha1rb"]
+advance_mode = 2
+advance_condition = &"Swing"
+
 [resource]
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_ji4o5")
 states/Idle/position = Vector2(322, 143)
 states/Start/position = Vector2(190, 143)
 "states/Swing Katana/node" = SubResource("AnimationNodeBlendSpace2D_2ck3n")
-"states/Swing Katana/position" = Vector2(270, 240)
+"states/Swing Katana/position" = Vector2(322, 240)
 "states/Throw Shuriken/node" = SubResource("AnimationNodeBlendSpace2D_m4fms")
-"states/Throw Shuriken/position" = Vector2(475, 240)
+"states/Throw Shuriken/position" = Vector2(545, 240)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_8pgxw")
 states/Walk/position = Vector2(530, 143)
-transitions = ["Idle", "Swing Katana", SubResource("AnimationNodeStateMachineTransition_6yxvs"), "Swing Katana", "Idle", SubResource("AnimationNodeStateMachineTransition_sxoad"), "Idle", "Throw Shuriken", SubResource("AnimationNodeStateMachineTransition_wvl05"), "Throw Shuriken", "Idle", SubResource("AnimationNodeStateMachineTransition_sjrdr"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_q3gqy")]
-graph_offset = Vector2(-125, 12.2213)
+transitions = ["Swing Katana", "Idle", SubResource("AnimationNodeStateMachineTransition_sxoad"), "Idle", "Throw Shuriken", SubResource("AnimationNodeStateMachineTransition_wvl05"), "Throw Shuriken", "Idle", SubResource("AnimationNodeStateMachineTransition_sjrdr"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_q3gqy"), "Idle", "Swing Katana", SubResource("AnimationNodeStateMachineTransition_ha1rb")]
+graph_offset = Vector2(-349, -15.7787)

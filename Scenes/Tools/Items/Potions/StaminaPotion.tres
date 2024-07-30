@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_qu0rp")
+id = 1
 name = "Stamina Potion"
 Type = "Consumable"
 description = ""
