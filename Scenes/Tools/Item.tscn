@@ -35,6 +35,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[connection signal="body_entered" from="Area2D" to="." method="Pickup"]
 [connection signal="body_entered" from="Area2D" to="." method="BodyEntered"]
+[connection signal="body_entered" from="Area2D" to="." method="Pickup"]
 [connection signal="body_exited" from="Area2D" to="." method="BodyLeft"]

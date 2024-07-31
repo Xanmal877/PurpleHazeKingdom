@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dk8trkthe8kqv"]
+[gd_scene load_steps=5 format=3 uid="uid://dk8trkthe8kqv"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/NPC.gd" id="1_0ofrx"]
+[ext_resource type="PackedScene" uid="uid://b3jaquy8qb87x" path="res://Scenes/UI/Questing/Quests/Slimetrouble.tscn" id="2_s2ipt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6db3c"]
 bg_color = Color(0, 0, 1, 1)
@@ -31,3 +32,9 @@ shape = SubResource("CircleShape2D_etu5h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Slime Trouble" parent="CanvasLayer" instance=ExtResource("2_s2ipt")]
+offset_left = -3.0004
+offset_top = -10.0003
+offset_right = -2.99963
+offset_bottom = -9.99969

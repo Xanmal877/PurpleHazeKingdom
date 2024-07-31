@@ -40,4 +40,10 @@ func RemoveItemFromInventory(item: ItemResource):
 	RemoveItem.emit(item)
 	InventoryUpdate()
 
-
+func GetItem(itemname: String):
+	for i in Items:
+		if i.name == itemname:
+			return i
+		else:
+			return 0
+	return null

@@ -24,20 +24,4 @@ func BodyEntered(body):
 		player.inventory.AddItemtoInventory(item)
 		queue_free()
 		ItemPickedup.emit()
-		#inrangelabel.text = "Pickup (E)"
-		#inrangelabel.visible = true
-
-#func BodyLeft(body):
-	#if body.is_in_group("player"):
-		#player = null
-		#inrange = false
-		#inrangelabel.visible = false
-
-#func PickupItem():
-	#if Input.is_action_just_pressed("Interact") and inrange and player != null:
-		#print(player, inrange)
-		#player.inventory.AddItemtoInventory(item)
-		#queue_free()
-		#ItemPickedup.emit()
-
 

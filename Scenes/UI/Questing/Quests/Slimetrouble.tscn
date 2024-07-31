@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3jaquy8qb87x"]
+
+[ext_resource type="PackedScene" uid="uid://clm64tflaovfm" path="res://Scenes/UI/Questing/Quest.tscn" id="1_bptxg"]
+[ext_resource type="Resource" uid="uid://d1prnhdy3dtgf" path="res://Scenes/UI/Questing/Quests/SlimeTrouble.tres" id="2_lxrjx"]
+
+[node name="Slime Trouble" instance=ExtResource("1_bptxg")]
+offset_left = 150.0
+offset_top = 250.0
+offset_right = -150.0
+offset_bottom = -250.0
+Quest = ExtResource("2_lxrjx")

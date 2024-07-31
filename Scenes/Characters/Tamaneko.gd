@@ -3,16 +3,21 @@ extends CharacterBody2D
 
 #region Variables
 
+var attributes: Dictionary = {}
+
 var stats: Dictionary = {
-	"health": 20,"stamina": 20,"mana": 20,"maxHealth": 20,"maxStamina": 20,"maxMana": 20,
+	"health": 60,"stamina": 200,"mana": 100,"maxHealth": 60,"maxStamina": 200,"maxMana": 100,
 	"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 60,"normalSpeed": 60,"sneakSpeed": 40,"dashSpeed": 600,
+	"speed": 80,"normalSpeed": 60,"sneakSpeed": 40,"dashSpeed": 600,
 	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,}
 
 var questTab: Array[MissionResource]
 
 @onready var tamaneko = $"."
 @onready var inventory = $UI/Inventory
+@onready var quest_log = $UI/QuestLog
+
+
 @onready var regenerationtimer = $Timers/RegenerationTimer
 @onready var Animation_Player = $Animations/AnimationPlayer
 @onready var Animation_Tree = $Animations/AnimationTree
@@ -170,7 +175,6 @@ func DamageEnemy(body):
 			#Knockback(enemy, body)
 		if enemy != null and enemy.stats.health <= 0:
 			enemy.DropItem()
-			enemy.queue_free()
 			Slime.SlimesKilled += 1
 			print(enemy.SlimesKilled)
 
@@ -185,13 +189,20 @@ func EnemyLost(body):
 #region ItemSlots
 
 @onready var inventoryui = $UI/Inventory
+@onready var quest_logui = $UI/QuestLog
+
 func OpenMenus():
 	if Input.is_action_just_pressed("Inventory"):
 		if inventoryui.visible == false:
 			inventoryui.visible = true
 		else:
 			inventoryui.visible = false
-	if inventoryui.visible:
+	if Input.is_action_just_pressed("QuestLog"):
+		if quest_logui.visible == false:
+			quest_logui.visible = true
+		else:
+			quest_logui.visible = false
+	if inventoryui.visible or quest_logui.visible:
 		inmenu = true
 	else:
 		inmenu = false

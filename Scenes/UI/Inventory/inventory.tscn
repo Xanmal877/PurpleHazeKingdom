@@ -85,7 +85,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-columns = 3
+columns = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="CraftingMenu" type="Panel" parent="."]
@@ -135,9 +135,9 @@ vertical_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="CraftingMenu/PotionsAlchemy"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.235
+anchor_top = 0.234513
 anchor_right = 1.0
-anchor_bottom = 1.03
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true

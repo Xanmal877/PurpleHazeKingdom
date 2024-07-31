@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MissionResource" load_steps=3 format=3 uid="uid://d1prnhdy3dtgf"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Questing/MissionResource.gd" id="1_nej2e"]
+[ext_resource type="Resource" uid="uid://boinpof75udoj" path="res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tres" id="1_uu2al"]
+
+[resource]
+script = ExtResource("1_nej2e")
+QuestName = &"Slime Trouble"
+QuestDescription = "Slimes have become a problem recently and I am looking for someone to kill 10 of them for me. could you be that person?
+"
+requirements = ExtResource("1_uu2al")
+qty = 10

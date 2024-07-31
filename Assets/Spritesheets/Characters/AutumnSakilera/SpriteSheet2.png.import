@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jx10ksyhehkl"
-path="res://.godot/imported/SpriteSheet.png-84b31f9c55e2d2aa89e754e774c0cff4.ctex"
+uid="uid://ck6a8aur2qdsw"
+path="res://.godot/imported/SpriteSheet2.png-634fae596eb34f9b38eef44fa953eec3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet.png"
-dest_files=["res://.godot/imported/SpriteSheet.png-84b31f9c55e2d2aa89e754e774c0cff4.ctex"]
+source_file="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet2.png"
+dest_files=["res://.godot/imported/SpriteSheet2.png-634fae596eb34f9b38eef44fa953eec3.ctex"]
 
 [params]
 

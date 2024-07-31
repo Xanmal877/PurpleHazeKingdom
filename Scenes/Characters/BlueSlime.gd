@@ -37,11 +37,7 @@ func _ready():
 func _process(_delta):
 	healthbar.value = stats.health
 	healthbar.max_value = stats.maxHealth
-	#if tama != null and tama.sneak == true and currentState == COMBAT:
-		#EnemyArray.erase(tama)
-		#currentState = IDLE
-		#ui.hide()
-		#StateMachine()
+	DropItem()
 
 
 func _physics_process(delta):
@@ -130,7 +126,7 @@ func get_random_position_nearby():
 var EnemyArray: Array = []
 
 func EnemyDetected(body):
-	if body.is_in_group("player") or body.is_in_group("ally"):
+	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
 		EnemyArray.append(body)
 		currentState = COMBAT
 		StateMachine()
@@ -140,7 +136,7 @@ func EnemyDetected(body):
 @onready var combat_timer = $Timers/CombatTimer
 var player
 func DamageEnemy(body):
-	if body.is_in_group("player") or body.is_in_group("ally"):
+	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
 		player = body
 		combat_timer.start(0.4)
 		combat_timer.one_shot = false
@@ -163,7 +159,7 @@ func Combat():
 
 
 func EnemyLost(body):
-	if body.is_in_group("player") or body.is_in_group("ally"):
+	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
 		player = null
 		EnemyArray.erase(body)
 		currentState = IDLE
@@ -202,9 +198,11 @@ func MakePath():
 
 const SLIME_GOO = preload("res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tscn")
 func DropItem():
-	var goo = SLIME_GOO.instantiate()
-	get_parent().call_deferred("add_child", goo)
-	goo.global_position = global_position
+	if stats.health <= 0:
+		var goo = SLIME_GOO.instantiate()
+		get_parent().call_deferred("add_child", goo)
+		goo.global_position = global_position
+		queue_free()
 
 #endregion
 

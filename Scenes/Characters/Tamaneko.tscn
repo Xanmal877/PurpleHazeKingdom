@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=18 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
 [ext_resource type="Script" path="res://Scenes/Characters/Tamaneko.gd" id="1_f3r72"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://1ytr7uyodqdu" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimTree.tres" id="2_3jctt"]
 [ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/Tamaneko3.png" id="2_rdlu8"]
 [ext_resource type="PackedScene" uid="uid://bvk1dtb0aessq" path="res://Scenes/Controls.tscn" id="5_cnmmt"]
+[ext_resource type="PackedScene" uid="uid://b1xrdliwrt51d" path="res://Scenes/UI/Questing/Quest Menus/QuestLog.tscn" id="7_jlvmn"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="7_vwsd6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_431j6"]
@@ -91,9 +92,9 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[node name="Tamaneko" type="CharacterBody2D" groups=["player"]]
+[node name="Tamaneko" type="CharacterBody2D" groups=["Tamaneko", "player"]]
 y_sort_enabled = true
-collision_mask = 111
+collision_mask = 4207
 script = ExtResource("1_f3r72")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -205,6 +206,9 @@ value = 10.0
 visible = false
 
 [node name="Controls" parent="UI" instance=ExtResource("5_cnmmt")]
+
+[node name="QuestLog" parent="UI" instance=ExtResource("7_jlvmn")]
+visible = false
 
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
 [connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]

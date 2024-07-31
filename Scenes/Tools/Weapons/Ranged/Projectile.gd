@@ -8,7 +8,7 @@ var direction: Vector2
 
 @onready var projectile = $"."
 @onready var timeout = $Timeout
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player = get_tree().get_first_node_in_group("Tamaneko")
 
 #endregion
 

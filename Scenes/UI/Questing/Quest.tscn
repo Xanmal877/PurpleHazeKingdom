@@ -1,0 +1,82 @@
+[gd_scene load_steps=3 format=3 uid="uid://clm64tflaovfm"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Questing/Quest.gd" id="1_1bf6m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5qpxb"]
+font_size = 26
+
+[node name="Quest" type="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 500)
+anchors_preset = -1
+anchor_left = 0.369792
+anchor_top = 0.114198
+anchor_right = 0.630208
+anchor_bottom = 0.885802
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1bf6m")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+text = "Quest Title"
+label_settings = SubResource("LabelSettings_5qpxb")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="QuestDescription" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 235)
+layout_mode = 2
+text = "Slimes have become a problem recently and I am looking for someone to kill 10 of them for me. could you be that person?
+"
+label_settings = SubResource("LabelSettings_5qpxb")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Title2" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(300, 36)
+layout_mode = 2
+text = "Requirements"
+label_settings = SubResource("LabelSettings_5qpxb")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Accept" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 19.0
+offset_top = 420.0
+offset_right = 119.0
+offset_bottom = 470.0
+text = "Accept"
+
+[node name="Decline" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 161.0
+offset_top = 420.0
+offset_right = 261.0
+offset_bottom = 470.0
+text = "Decline"
+
+[connection signal="pressed" from="Accept" to="." method="_on_accept_pressed"]
+[connection signal="pressed" from="Decline" to="." method="_on_decline_pressed"]

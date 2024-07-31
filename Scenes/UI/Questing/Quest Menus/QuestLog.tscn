@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1xrdliwrt51d"]
 
-[ext_resource type="Script" path="res://Scenes/UI/Questing/QuestLog.gd" id="1_dwq5w"]
+[ext_resource type="Script" path="res://Scenes/UI/Questing/Quest Menus/QuestLog.gd" id="1_dwq5w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1eyq"]
 bg_color = Color(0.611765, 0.588235, 0.0980392, 0.545098)
@@ -29,7 +29,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f1eyq")
 script = ExtResource("1_dwq5w")
 metadata/_edit_use_anchors_ = true
 
-[node name="InventoryGrid" type="GridContainer" parent="."]
+[node name="Grid" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,3 +38,9 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 3
 metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
