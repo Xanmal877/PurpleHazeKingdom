@@ -15,3 +15,22 @@ var BSStats: Dictionary = {
 	}
 
 
+
+
+
+# Autumn Stats and Attributes
+
+var attributes: Dictionary = {
+	"Strength": 10,"Dexterity": 10,
+	"Constitution": 10,"Intelligence": 14,
+	"Wisdom": 10,"Charisma": 10
+	}
+
+
+var stats: Dictionary = {
+	"maxHealth": attributes.Constitution,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
+	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
+	"healthRegen": 5,"staminaRegen": 5,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
+	"speed": 30,"normalSpeed": 30,"sneakSpeed": 40,"dashSpeed": 50,
+	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
+	}

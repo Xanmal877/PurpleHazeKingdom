@@ -2,19 +2,27 @@ extends Area2D
 
 @onready var VoidBolt = $"."
 @onready var spelltimeout = $Timeout
-@onready var Sakilera = get_tree().get_first_node_in_group("Autumn")
-@onready var Tamaneko = get_tree().get_first_node_in_group("Tamaneko")
+
+@onready var user
+
+
 
 var Direction
-var velocity = Vector2.RIGHT
+var velocity = Vector2(0,0)
 var speed: int = 500
 var Damage = 60
 
 func _ready():
-	spelltimeout.start(0.6)
-	Direction = Sakilera.direction
-	print("Voidbolt Summoned")
-	
+	settarget()
+	spelltimeout.start(1)
+	global_position = user.global_position
+
+func settarget():
+	var target = user.target
+	if target != null:
+		var projectiledirection = (target.global_position - global_position).normalized()
+		Direction = projectiledirection
+		velocity = projectiledirection * speed
 
 
 func _physics_process(delta):

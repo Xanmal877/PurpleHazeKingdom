@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn.gd" id="1_vo3u4"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet3 (Primary).png" id="2_k7xpo"]
-[ext_resource type="AnimationLibrary" uid="uid://btlg3xumocprk" path="res://Assets/Spritesheets/Characters/AutumnSakilera/AnimPlayer2.0.res" id="3_6gg2n"]
+[ext_resource type="AnimationLibrary" uid="uid://btlg3xumocprk" path="res://Assets/Spritesheets/Characters/AnimPlayer2.0.res" id="3_6gg2n"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://ce3jws0105swk" path="res://Assets/Spritesheets/Characters/AutumnSakilera/AnimeTree.tres" id="4_pdpgd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
@@ -17,19 +17,21 @@ collision_mask = 111
 script = ExtResource("1_vo3u4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.11111, -12.2222)
 texture = ExtResource("2_k7xpo")
 flip_h = true
 hframes = 14
 vframes = 13
-frame = 99
+frame = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.833328, 13.3333)
+position = Vector2(0, 2.22222)
 shape = SubResource("RectangleShape2D_s1cxy")
 
 [node name="Areas" type="Node2D" parent="."]
 
 [node name="Detectionbox" type="Area2D" parent="Areas"]
+position = Vector2(0, -9.53674e-07)
 collision_layer = 64
 collision_mask = 6
 
@@ -57,12 +59,12 @@ parameters/conditions/Reset = false
 parameters/conditions/VoidBolt = false
 parameters/conditions/Walking = false
 parameters/CombatStance/blend_position = Vector2(-0.100157, 0.386878)
-parameters/Idle/blend_position = Vector2(0.338178, 0.746696)
+parameters/Idle/blend_position = Vector2(-0.0120001, 0.622302)
 parameters/VoidBolt/blend_position = Vector2(0, 0)
 parameters/Walking/blend_position = Vector2(0, 0)
 
 [node name="navagent" type="NavigationAgent2D" parent="."]
-path_max_distance = 10.0
+path_max_distance = 15.0
 path_postprocessing = 1
 debug_enabled = true
 
@@ -72,13 +74,9 @@ debug_enabled = true
 wait_time = 0.5
 autostart = true
 
-[node name="WeaponCooldownTimer" type="Timer" parent="Timers"]
-
 [node name="navtimer" type="Timer" parent="Timers"]
 wait_time = 0.5
 autostart = true
-
-[node name="Timer" type="Timer" parent="Timers"]
 
 [connection signal="body_entered" from="Areas/Detectionbox" to="." method="EnemyDetected"]
 [connection signal="body_exited" from="Areas/Detectionbox" to="." method="EnemyLost"]

@@ -7,17 +7,18 @@ extends CharacterBody2D
 
 var attributes: Dictionary = {
 	"Strength": 10,"Dexterity": 10,
-	"Constitution": 100,"Intelligence": 10,
+	"Constitution": 10,"Intelligence": 14,
 	"Wisdom": 10,"Charisma": 10
 	}
 
 
 var stats: Dictionary = {
-	"health": 100,"stamina": 60,"mana": 200,"maxHealth": 100,"maxStamina": 60,"maxMana": 200,
-	"healthRegen": 5,"staminaRegen": 5,"manaRegen": 10,
-	"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 60,"normalSpeed": 60,"sneakSpeed": 40,"dashSpeed": 600,
-	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,}
+	"maxHealth": attributes.Constitution,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
+	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
+	"healthRegen": 5,"staminaRegen": 5,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
+	"speed": 30,"normalSpeed": 30,"sneakSpeed": 40,"dashSpeed": 50,
+	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
+	}
 
 var direction
 var lastDirection
@@ -31,17 +32,9 @@ func _ready():
 	currentState = IDLE
 	StateMachine()
 
-
-func _process(_delta):
-	UpdateBlend()
-
 func _physics_process(_delta):
-	FollowTama()
 	move_and_slide()
-	if currentState == COMBAT:
-		velocity = Vector2.ZERO
-	if currentState != COMBAT:
-		CastVoidBoltAnim(false)
+
 
 #endregion
 
@@ -60,12 +53,10 @@ var currentState
 func StateMachine():
 	match currentState:
 		IDLE:
-			#print("Idle")
 			Idle()
 		FOLLOWTAMA:
 			FollowTama()
 		COMBAT:
-			print("Combat")
 			Combat()
 
 #endregion
@@ -73,36 +64,70 @@ func StateMachine():
 
 #region Idle State
 
-var IdleTime = randf_range(0.5,3)
+var IdleTime = randf_range(1,3)
 
 func Idle():
 	await get_tree().create_timer(IdleTime).timeout
 	currentState = FOLLOWTAMA
-	followTama = true
 	StateMachine()
+
 
 #endregion
 
 
 #region Follow State
 
-var followTama: bool = false
-
 func FollowTama():
-	if Tamaneko and followTama == true:
-		if global_position.distance_to(Tamaneko.global_position) <= 100:
-			navagent.target_position = Tamaneko.global_position
-		elif global_position.distance_to(Tamaneko.global_position) >= 300:
-			global_position = Tamaneko.global_position
+	if Tamaneko:
+		navagent.target_position = Tamaneko.global_position
+		if navagent.is_target_reachable():
+			pass
 		else:
-			navagent.target_position = global_position.direction_to(Tamaneko.global_position)
+			Idle()
+
+#endregion
+
+#endregion
+
+
+#region Navigation
+
+@onready var navtimer = $Timers/navtimer
+@onready var navagent = $navagent
+func MakePath():
+	if target != null:
+		currentState = COMBAT
+		StateMachine()
+		WalkingAnim(false)
+		UpdateBlend()
+		velocity = Vector2.ZERO
+		stats.speed = 0
+		navagent.target_position = global_position
+	elif target == null:
+		CombatStance(false)
+		CastVoidBoltAnim(false)
+		if currentState == FOLLOWTAMA and navagent.distance_to_target() >= 10 and navagent.is_target_reachable():
+			print("Follow Tama")
+			navagent.target_position = Tamaneko.global_position
+			direction = to_local(navagent.get_next_path_position()).normalized()
+			velocity = direction * stats.speed
+			stats.speed = stats.normalSpeed
+			WalkingAnim(true)
+			UpdateBlend()
+		else:
+			WalkingAnim(false)
+			UpdateBlend()
+			navagent.target_position = global_position
+			velocity = Vector2.ZERO
+			stats.speed = 0
+			currentState = IDLE
+			StateMachine()
 
 #endregion
 
 
 #region Combat State
 
-@onready var weaponcooldowntimer = $Timers/WeaponCooldownTimer
 
 #region Detection
 
@@ -113,71 +138,37 @@ func EnemyDetected(body):
 			EnemyArray.append(body)
 			if currentState != COMBAT:
 				currentState = COMBAT
-				CombatStance(true)
 				StateMachine()
 
 
 func EnemyLost(body):
 	if body.is_in_group("enemy"):
 		EnemyArray.erase(body)
-		if EnemyArray.size() == 0:
-			currentState = IDLE
-			stats.speed = stats.normalSpeed
-			CombatStance(false)
-			CastVoidBoltAnim(false)
-			await get_tree().create_timer(1).timeout
-			StateMachine()
 
 #endregion
 
 
 #region Combat
 
-var enemytarget
+var target
 func Combat():
+	currentState = COMBAT
 	for enemy in EnemyArray:
-		if enemy != null:
-			enemytarget = enemy
-			navagent.target_position = enemytarget.global_position
-			var enemyDistance = global_position.distance_to(enemytarget.global_position)
-			if enemytarget.stats.health <= 0:
-				EnemyArray.erase(enemytarget)
-				enemytarget.queue_free()
-				StateMachine()
-				break
-			if enemyDistance >= 20 and stats.mana >= 20:
-				CastVoidBoltAnim(true)
-				UpdateBlend()
-				break
-			elif enemyDistance < 20:
-				SwingVoidPunch()
-				UpdateBlend()
-				break
-	if enemytarget == null:
-		EnemyArray.erase(enemytarget)
-		CastVoidBoltAnim(false)
-		currentState = IDLE
-
-
-func SwingVoidPunch():
-	var enemyDistance = global_position.distance_to(enemytarget.global_position)
-	if enemyDistance < 30:
-		enemytarget.stats.health -= stats.spellDamage
-		#CastVoidPunchAnim(false)
-		currentState = IDLE
+		target = enemy
+		if target.stats.health <= 0:
+			EnemyArray.erase(enemy)
+		if stats.mana >= 20:
+			CombatStance(true)
+			await get_tree().create_timer(2.1).timeout
+			CastVoidBoltAnim(true)
 
 
 const VOID_BOLT = preload("res://Scenes/Tools/Weapons/Ranged/VoidBolt.tscn")
 func FireVoidBolt():
-	for enemy in EnemyArray:
-		if enemy != null and stats.mana >= 20:
-			var vbolt = VOID_BOLT.instantiate()
-			add_child(vbolt)
-			vbolt.global_position = global_position
-			var enemydirection = (enemytarget.global_position - global_position).normalized()
-			vbolt.velocity = enemydirection * vbolt.speed
-			stats.mana -= 20
-			break
+	var vbolt = VOID_BOLT.instantiate()
+	vbolt.user = self
+	add_child(vbolt)
+	
 
 
 func TakeDamage(body):
@@ -204,40 +195,6 @@ func RegenerationTimeout():
 
 #endregion
 
-#endregion
-
-
-#region Navigation
-
-@onready var navtimer = $Timers/navtimer
-@onready var navagent = $navagent
-func MakePath():
-	match  currentState:
-		IDLE:
-			WalkingAnim(false)
-			UpdateBlend()
-			velocity = Vector2.ZERO
-		FOLLOWTAMA:
-			direction = to_local(navagent.get_next_path_position()).normalized()
-			lastDirection = Tamaneko.global_position
-			velocity = direction * stats.speed
-			WalkingAnim(true)
-			UpdateBlend()
-			if navagent.distance_to_target() <= 30:
-				currentState = IDLE
-				StateMachine()
-		COMBAT:
-			if navagent.distance_to_target() >= 30:
-				WalkingAnim(false)
-				UpdateBlend()
-				CastVoidBoltAnim(true)
-				velocity = Vector2.ZERO
-			if enemytarget == null:
-				CastVoidBoltAnim(false)
-
-#endregion
-
-
 
 #region Animation
 
@@ -251,22 +208,17 @@ func WalkingAnim(value: bool):
 
 func CombatStance(value: bool):
 	Animation_Tree["parameters/conditions/Combat"] = value
-	Animation_Tree["parameters/conditions/Reset"] = not value
-#
-#func CastVoidPunchAnim(value: bool):
-	#Animation_Tree["parameters/conditions/VoidPunch"] = value
-	#Animation_Tree["parameters/conditions/Reset"] = not value
+
 
 func CastVoidBoltAnim(value: bool):
 	Animation_Tree["parameters/conditions/VoidBolt"] = value
 	Animation_Tree["parameters/conditions/Reset"] = not value
 
+
 func UpdateBlend():
 	Animation_Tree["parameters/Idle/blend_position"] = direction
 	Animation_Tree["parameters/Walking/blend_position"] = direction
-	#Animation_Tree["parameters/Reset/blend_position"] = direction
 	Animation_Tree["parameters/CombatStance/blend_position"] = direction
-	#Animation_Tree["parameters/VoidPunch/blend_position"] = direction
 	Animation_Tree["parameters/VoidBolt/blend_position"] = direction
 
 

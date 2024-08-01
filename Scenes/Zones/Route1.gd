@@ -33,6 +33,7 @@ func ToTrellarkForest(body):
 		call_deferred("add_sibling", zone)
 		player.global_position = Vector2(1033,582)
 		autumn.global_position = player.global_position + Vector2(10,0)
+		autumn.Idle()
 		call_deferred("queue_free")
 
 

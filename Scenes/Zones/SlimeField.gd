@@ -1,11 +1,12 @@
 extends TileMap
 
-
 @onready var player = get_tree().get_first_node_in_group("player")
+
+const LOADING_SCREEN = preload("res://Scenes/UI/LoadingScreen.tscn")
 
 func _ready():
 	Global.set_camera_limits($".", player.camera)
-	var LS = Global.LOADING_SCREEN.instantiate()
+	var LS = LOADING_SCREEN.instantiate()
 	add_child(LS)
 
 

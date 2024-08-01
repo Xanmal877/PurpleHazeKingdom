@@ -1,12 +1,9 @@
 extends Node
 
-const LOADING_SCREEN = preload("res://Scenes/LoadingScreen.tscn")
+const LOADING_SCREEN = preload("res://Scenes/UI/LoadingScreen.tscn")
 const TRELLARK_FOREST = preload("res://Scenes/Zones/TrellarkForest.tscn")
 const ROUTE_1 = preload("res://Scenes/Zones/Route1.tscn")
 const SLIME_FIELD = preload("res://Scenes/Zones/SlimeField.tscn")
-
-
-
 
 func set_camera_limits(tilemap: TileMap, camera: Camera2D):
 	var used_rect = tilemap.get_used_rect()

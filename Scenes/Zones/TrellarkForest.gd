@@ -3,12 +3,12 @@ extends TileMap
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var trellark_forest = $"."
 
-
+const LOADING_SCREEN = preload("res://Scenes/UI/LoadingScreen.tscn")
 
 func _ready():
 	player.camera.enabled = true
 	Global.set_camera_limits(trellark_forest, player.camera)
-	var LS = Global.LOADING_SCREEN.instantiate()
+	var LS = LOADING_SCREEN.instantiate()
 	add_child(LS)
 
 

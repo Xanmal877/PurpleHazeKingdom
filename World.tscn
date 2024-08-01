@@ -9,7 +9,7 @@ y_sort_enabled = true
 script = ExtResource("1_aes4r")
 
 [node name="Tamaneko" parent="." instance=ExtResource("1_strur")]
-position = Vector2(472, 136)
+position = Vector2(472, 251)
 
 [node name="Autumn" parent="." instance=ExtResource("3_irfvd")]
-position = Vector2(471, 186)
+position = Vector2(475, 352)

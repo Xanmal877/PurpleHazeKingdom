@@ -176,7 +176,7 @@ func DamageEnemy(body):
 		if enemy != null and enemy.stats.health <= 0:
 			enemy.DropItem()
 			Slime.SlimesKilled += 1
-			print(enemy.SlimesKilled)
+			print("Slimes Killed: ", str(enemy.SlimesKilled))
 
 
 func EnemyLost(body):
@@ -265,9 +265,10 @@ func DetectQuestGiver(body):
 
 #region Other
 
+
 func Death():
 	if stats.health <= 0:
-		get_tree().change_scene_to_file("res://GameOver.tscn")
+		get_tree().change_scene_to_file("res://Scenes/UI/GameOver.tscn")
 
 func Knockback(enemy, body):
 	var direction = stats.lastDirection
