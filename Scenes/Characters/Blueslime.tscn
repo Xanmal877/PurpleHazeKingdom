@@ -234,7 +234,7 @@ corner_radius_bottom_left = 30
 [node name="BlueSlime" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
 collision_layer = 2
-collision_mask = 111
+collision_mask = 109
 wall_min_slide_angle = 0.0
 script = ExtResource("2_n0hjf")
 
@@ -358,6 +358,7 @@ path_postprocessing = 1
 [connection signal="body_entered" from="Areas/Detectionbox" to="." method="EnemyDetected"]
 [connection signal="body_exited" from="Areas/Detectionbox" to="." method="EnemyLost"]
 [connection signal="timeout" from="Timers/Regeneration" to="." method="RegenTimer"]
+[connection signal="timeout" from="Timers/IdleTimer" to="." method="Idle"]
 [connection signal="timeout" from="Timers/StateTimeout" to="." method="StateMachine"]
 [connection signal="timeout" from="Timers/MakePath" to="." method="MakePath"]
 [connection signal="timeout" from="Timers/CombatTimer" to="." method="InCombat"]

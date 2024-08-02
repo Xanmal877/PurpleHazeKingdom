@@ -90,7 +90,8 @@ func Stealth():
 		tamaneko.set_collision_layer_value(1, !sneak)
 		SneakCost()
 
-@onready var regeneration_timer = $Timers/RegenerationTimer
+
+
 func SneakCost():
 		if sneak and stats.stamina >= 0.2:
 			charactersprite.self_modulate = Color(1,0.157,1,0.35)
@@ -279,7 +280,7 @@ func Knockback(enemy, body):
 		KnockbackTween.tween_property(enemy, "position", enemy.position + pushback, 0.2)
 
 
-
+@onready var regeneration_timer = $Timers/RegenerationTimer
 func RegenerationTimeout():
 	if !sneak and !isDashing:
 		if stats.stamina < stats.maxStamina:

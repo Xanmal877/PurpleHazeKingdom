@@ -1,17 +1,70 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=12 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn.gd" id="1_vo3u4"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet3 (Primary).png" id="2_k7xpo"]
 [ext_resource type="AnimationLibrary" uid="uid://btlg3xumocprk" path="res://Assets/Spritesheets/Characters/AnimPlayer2.0.res" id="3_6gg2n"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://ce3jws0105swk" path="res://Assets/Spritesheets/Characters/AutumnSakilera/AnimeTree.tres" id="4_pdpgd"]
+[ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="5_4kese"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
 size = Vector2(8.33332, 5.55556)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jj3f3"]
-radius = 100.0
+radius = 60.0
 
-[node name="Autumn" type="CharacterBody2D" groups=["Autumn"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix042"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tce1l"]
+bg_color = Color(0.760784, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_set1w"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdvmr"]
+bg_color = Color(0, 0.4, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="Autumn" type="CharacterBody2D" groups=["Autumn", "ally"]]
 scale = Vector2(0.9, 0.9)
 collision_mask = 111
 script = ExtResource("1_vo3u4")
@@ -22,7 +75,7 @@ texture = ExtResource("2_k7xpo")
 flip_h = true
 hframes = 14
 vframes = 13
-frame = 18
+frame = 19
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.22222)
@@ -33,7 +86,7 @@ shape = SubResource("RectangleShape2D_s1cxy")
 [node name="Detectionbox" type="Area2D" parent="Areas"]
 position = Vector2(0, -9.53674e-07)
 collision_layer = 64
-collision_mask = 6
+collision_mask = 70
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
 shape = SubResource("CircleShape2D_jj3f3")
@@ -66,7 +119,6 @@ parameters/Walking/blend_position = Vector2(0, 0)
 [node name="navagent" type="NavigationAgent2D" parent="."]
 path_max_distance = 15.0
 path_postprocessing = 1
-debug_enabled = true
 
 [node name="Timers" type="Node" parent="."]
 
@@ -78,6 +130,43 @@ autostart = true
 wait_time = 0.5
 autostart = true
 
+[node name="UI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -61.0
+offset_right = 361.0
+grow_vertical = 0
+
+[node name="Bars" type="VBoxContainer" parent="UI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Healthbar" type="ProgressBar" parent="UI/HBoxContainer/Bars"]
+custom_minimum_size = Vector2(250, 10)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_ix042")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tce1l")
+max_value = 20.0
+value = 10.0
+
+[node name="Staminabar" type="ProgressBar" parent="UI/HBoxContainer/Bars"]
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_set1w")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fdvmr")
+max_value = 20.0
+value = 10.0
+
+[node name="Inventory" parent="UI" instance=ExtResource("5_4kese")]
+visible = false
+
+[connection signal="area_entered" from="Areas/Detectionbox" to="." method="FindItems"]
 [connection signal="body_entered" from="Areas/Detectionbox" to="." method="EnemyDetected"]
 [connection signal="body_exited" from="Areas/Detectionbox" to="." method="EnemyLost"]
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]

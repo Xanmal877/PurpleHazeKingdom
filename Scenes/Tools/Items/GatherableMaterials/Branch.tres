@@ -5,7 +5,9 @@
 
 [resource]
 script = ExtResource("2_sgoo6")
+id = 1
 name = "Branch"
+Type = "Consumable"
 description = ""
 image = ExtResource("1_s2nio")
 amount = 1

@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=45 format=3 uid="uid://ce3jws0105swk"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=46 format=3 uid="uid://ce3jws0105swk"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yiq20"]
 animation = &"AnimPlayer2.0/Combat Stance FL"
@@ -214,6 +214,11 @@ advance_condition = &"Reset"
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2p4ev"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"Reset"
+
 [resource]
 states/CombatStance/node = SubResource("AnimationNodeBlendSpace2D_q4gxu")
 states/CombatStance/position = Vector2(367, 305.221)
@@ -226,5 +231,5 @@ states/VoidBolt/node = SubResource("AnimationNodeBlendSpace2D_2ck3n")
 states/VoidBolt/position = Vector2(155, 305.221)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8pgxw")
 states/Walking/position = Vector2(546, 143)
-transitions = ["Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Idle", "CombatStance", SubResource("AnimationNodeStateMachineTransition_yxa7e"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gurrx"), "CombatStance", "VoidBolt", SubResource("AnimationNodeStateMachineTransition_vow35"), "VoidBolt", "Reset", SubResource("AnimationNodeStateMachineTransition_ciia8"), "Reset", "Idle", SubResource("AnimationNodeStateMachineTransition_tw7cq")]
+transitions = ["Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Idle", "CombatStance", SubResource("AnimationNodeStateMachineTransition_yxa7e"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gurrx"), "CombatStance", "VoidBolt", SubResource("AnimationNodeStateMachineTransition_vow35"), "VoidBolt", "Reset", SubResource("AnimationNodeStateMachineTransition_ciia8"), "Reset", "Idle", SubResource("AnimationNodeStateMachineTransition_tw7cq"), "CombatStance", "Reset", SubResource("AnimationNodeStateMachineTransition_2p4ev")]
 graph_offset = Vector2(-349, 120.221)

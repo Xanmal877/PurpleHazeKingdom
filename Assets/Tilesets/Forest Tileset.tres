@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=44 format=3 uid="uid://s53tu530ys8s"]
+[gd_resource type="TileSet" load_steps=45 format=3 uid="uid://s53tu530ys8s"]
 
 [ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Spritesheets/Locations/Forest/apple-icon.png" id="1_ess57"]
 [ext_resource type="Texture2D" uid="uid://llnu5blcx6b1" path="res://Assets/Spritesheets/Locations/Forest/forest_objects.png" id="2_ce5dk"]
@@ -553,6 +553,13 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_gnfyx"]
 source_geometry_group_name = &"navigation_polygon_source_group"
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_6doft"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3tcw5"]
 source_geometry_group_name = &"navigation_polygon_source_group"
 
@@ -1055,10 +1062,15 @@ texture = ExtResource("3_23jmm")
 1:8/1 = 1
 1:8/1/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:8/1/physics_layer_0/angular_velocity = 0.0
+2:8/next_alternative_id = 2
 2:8/0 = 0
 2:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:8/0/physics_layer_0/angular_velocity = 0.0
 2:8/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_gnfyx")
+2:8/1 = 1
+2:8/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:8/1/physics_layer_0/angular_velocity = 0.0
+2:8/1/navigation_layer_0/polygon = SubResource("NavigationPolygon_6doft")
 3:8/0 = 0
 3:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:8/0/physics_layer_0/angular_velocity = 0.0

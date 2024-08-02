@@ -1,15 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdfqaxbmf3h8s"]
+[gd_scene load_steps=5 format=3 uid="uid://cdfqaxbmf3h8s"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_aes4r"]
 [ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Tamaneko.tscn" id="1_strur"]
+[ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
 [ext_resource type="PackedScene" uid="uid://c0br65xw5ls7u" path="res://Scenes/Characters/Autumn.tscn" id="3_irfvd"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_aes4r")
 
+[node name="RegionOne" parent="." instance=ExtResource("2_qjn5p")]
+
 [node name="Tamaneko" parent="." instance=ExtResource("1_strur")]
-position = Vector2(472, 251)
+position = Vector2(605, 791)
 
 [node name="Autumn" parent="." instance=ExtResource("3_irfvd")]
-position = Vector2(475, 352)
+position = Vector2(754, 784)

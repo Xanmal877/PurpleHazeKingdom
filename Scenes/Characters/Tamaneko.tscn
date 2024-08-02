@@ -205,6 +205,7 @@ value = 10.0
 visible = false
 
 [node name="Controls" parent="UI" instance=ExtResource("5_cnmmt")]
+visible = false
 
 [node name="QuestLog" parent="UI" instance=ExtResource("7_jlvmn")]
 visible = false

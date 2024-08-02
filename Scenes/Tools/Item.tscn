@@ -9,13 +9,14 @@ font = SubResource("SystemFont_dyxi2")
 font_size = 12
 outline_size = 1
 
-[node name="Item" type="Node2D"]
+[node name="Item" type="Node2D" groups=["Item"]]
 z_index = -1
 y_sort_enabled = true
 script = ExtResource("1_2i74q")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["Item"]]
 collision_layer = 64
+collision_mask = 69
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 
@@ -35,6 +36,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[connection signal="body_entered" from="Area2D" to="." method="BodyEntered"]
 [connection signal="body_entered" from="Area2D" to="." method="Pickup"]
+[connection signal="body_entered" from="Area2D" to="." method="BodyEntered"]
 [connection signal="body_exited" from="Area2D" to="." method="BodyLeft"]

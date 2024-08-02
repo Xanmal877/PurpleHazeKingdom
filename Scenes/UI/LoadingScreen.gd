@@ -6,10 +6,10 @@ extends CanvasLayer
 
 func _ready():
 	get_tree().paused = true
-	label.text = "Now Travelling..."
+	label.text = "Loading World"
 	var tween = get_tree().create_tween()
 	tween.tween_property(label, "self_modulate", Color(1,1,1,1), 1)
-	timer.wait_time = 1
+	timer.wait_time = 3
 	timer.start()
 
 

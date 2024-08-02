@@ -88,9 +88,12 @@ func Whatif():
 #region Idle
 
 var IdleTime = randf_range(1, 3)
+@onready var idle_timer = $Timers/IdleTimer
 
 func Idle():
 	await get_tree().create_timer(IdleTime).timeout
+	#idle_timer.start(IdleTime)
+	#await idle_timer.timeout
 	currentState = EXPLORE
 	StateMachine()
 
@@ -201,7 +204,7 @@ func DropItem():
 	if stats.health <= 0:
 		var goo = SLIME_GOO.instantiate()
 		get_parent().call_deferred("add_child", goo)
-		goo.global_position = global_position
+		goo.position = position
 		queue_free()
 
 #endregion

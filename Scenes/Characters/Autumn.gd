@@ -23,6 +23,10 @@ var stats: Dictionary = {
 var direction
 var lastDirection
 
+@onready var inventory = $UI/Inventory
+
+
+
 #endregion
 
 
@@ -87,6 +91,18 @@ func FollowTama():
 
 #endregion
 
+#region Pickup Items
+
+func FindItems(area):
+	if area.is_in_group("Item"):
+		var item = area.get_parent()
+		navagent.target_position = item.global_position
+		inventory.AddItemtoInventory(item.item)
+		item.queue_free()
+		
+
+#endregion
+
 #endregion
 
 
@@ -107,7 +123,6 @@ func MakePath():
 		CombatStance(false)
 		CastVoidBoltAnim(false)
 		if currentState == FOLLOWTAMA and navagent.distance_to_target() >= 10 and navagent.is_target_reachable():
-			print("Follow Tama")
 			navagent.target_position = Tamaneko.global_position
 			direction = to_local(navagent.get_next_path_position()).normalized()
 			velocity = direction * stats.speed
