@@ -5,6 +5,8 @@ class_name Slime extends CharacterBody2D
 
 #region Variables
 
+@onready var slimestealthpanel = $Areas/Detectionbox/StealthPanel
+
 
 var stats: Dictionary = {
 	"health": 60,"stamina": 0,"mana": 0,"maxHealth": 60,"maxStamina": 0,"maxMana": 0,
@@ -128,9 +130,11 @@ func get_random_position_nearby():
 
 var EnemyArray: Array = []
 
-func EnemyDetected(body):
-	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
-		EnemyArray.append(body)
+func EnemyDetected(area):
+	if area.get_parent().get_parent().is_in_group("Tamaneko") or area.get_parent().get_parent().is_in_group("Autumn"):
+		var player = area.get_parent().get_parent()
+		EnemyArray.append(player)
+		player.sneak = false
 		currentState = COMBAT
 		StateMachine()
 		ui.show()
@@ -141,6 +145,7 @@ var player
 func DamageEnemy(body):
 	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
 		player = body
+		
 		combat_timer.start(0.4)
 		combat_timer.one_shot = false
 
@@ -148,6 +153,7 @@ func DamageEnemy(body):
 func InCombat():
 	if player != null:
 		player.stats.health -= stats.damage
+		player.healthbar.Status()
 	else:
 		combat_timer.one_shot = true
 
@@ -161,10 +167,10 @@ func Combat():
 				NavAgent.target_position = enemyTarget.global_position
 
 
-func EnemyLost(body):
-	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
+func EnemyLost(area):
+	if area.get_parent().get_parent().is_in_group("Tamaneko") or area.get_parent().get_parent().is_in_group("Autumn"):
 		player = null
-		EnemyArray.erase(body)
+		EnemyArray.erase(area.get_parent().get_parent())
 		currentState = IDLE
 		StateMachine()
 		ui.hide()

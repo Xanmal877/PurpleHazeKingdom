@@ -12,7 +12,7 @@ script = ExtResource("1_aes4r")
 [node name="RegionOne" parent="." instance=ExtResource("2_qjn5p")]
 
 [node name="Tamaneko" parent="." instance=ExtResource("1_strur")]
-position = Vector2(605, 791)
+position = Vector2(447, 901)
 
 [node name="Autumn" parent="." instance=ExtResource("3_irfvd")]
-position = Vector2(754, 784)
+position = Vector2(543, 903)

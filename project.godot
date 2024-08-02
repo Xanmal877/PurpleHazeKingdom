@@ -118,6 +118,7 @@ QuestLog={
 2d_physics/layer_4="TileMap"
 2d_physics/layer_6="Hurtbox"
 2d_physics/layer_7="DetectionBox"
+2d_physics/layer_10="Interactions"
 
 [rendering]
 

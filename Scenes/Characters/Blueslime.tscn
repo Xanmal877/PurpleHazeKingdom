@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dmij8h2ybyidq"]
+[gd_scene load_steps=27 format=3 uid="uid://dmij8h2ybyidq"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/BlueSlime.gd" id="2_n0hjf"]
 [ext_resource type="Texture2D" uid="uid://brbri6qakal0v" path="res://Assets/Spritesheets/Characters/Blue Slime/Spritesheet.png" id="3_ttn15"]
@@ -11,6 +11,19 @@ radius = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ux1o"]
 radius = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6677"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.443137, 0.0196078, 0.443137, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scr33"]
 
@@ -234,7 +247,7 @@ corner_radius_bottom_left = 30
 [node name="BlueSlime" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
 collision_layer = 2
-collision_mask = 109
+collision_mask = 621
 wall_min_slide_angle = 0.0
 script = ExtResource("2_n0hjf")
 
@@ -264,10 +277,25 @@ shape = SubResource("CircleShape2D_g2owh")
 
 [node name="Detectionbox" type="Area2D" parent="Areas"]
 collision_layer = 64
-collision_mask = 7
+collision_mask = 518
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
 shape = SubResource("CircleShape2D_1ux1o")
+
+[node name="StealthPanel" type="Panel" parent="Areas/Detectionbox"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -41.0
+offset_right = 40.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y6677")
 
 [node name="Animations" type="Node2D" parent="."]
 
@@ -355,8 +383,8 @@ path_max_distance = 10.0
 path_postprocessing = 1
 
 [connection signal="body_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
-[connection signal="body_entered" from="Areas/Detectionbox" to="." method="EnemyDetected"]
-[connection signal="body_exited" from="Areas/Detectionbox" to="." method="EnemyLost"]
+[connection signal="area_entered" from="Areas/Detectionbox" to="." method="EnemyDetected"]
+[connection signal="area_exited" from="Areas/Detectionbox" to="." method="EnemyLost"]
 [connection signal="timeout" from="Timers/Regeneration" to="." method="RegenTimer"]
 [connection signal="timeout" from="Timers/IdleTimer" to="." method="Idle"]
 [connection signal="timeout" from="Timers/StateTimeout" to="." method="StateMachine"]

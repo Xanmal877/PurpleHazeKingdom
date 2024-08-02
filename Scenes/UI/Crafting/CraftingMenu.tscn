@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dieqoq4wow5a4"]
+[gd_scene load_steps=11 format=3 uid="uid://dieqoq4wow5a4"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Crafting/CraftingMenu.gd" id="1_mvb4h"]
 [ext_resource type="Texture2D" uid="uid://qn2lviuxfm6h" path="res://Assets/Items/Potions/LiteHealthPotion.png" id="1_rphfs"]
@@ -22,21 +22,35 @@ bg_color = Color(0, 0, 0.67451, 0.619608)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kmepn"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2muv"]
+bg_color = Color(0, 0, 0.537255, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_ibt6g"]
+font_size = 24
+font_color = Color(1, 0, 0, 1)
+
 [node name="CraftingMenu" type="Panel"]
 custom_minimum_size = Vector2(450, 225)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -100.0
-offset_right = 175.0
-offset_bottom = 100.0
+anchors_preset = -1
+anchor_left = 0.414063
+anchor_top = 0.174383
+anchor_right = 0.804688
+anchor_bottom = 0.521605
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t36je")
 script = ExtResource("1_mvb4h")
+metadata/_edit_use_anchors_ = true
 
 [node name="PotionsAlchemy" type="Panel" parent="."]
 custom_minimum_size = Vector2(0, 200)
@@ -71,15 +85,17 @@ vertical_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="PotionsAlchemy"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.235
+anchor_top = 0.234513
 anchor_right = 1.0
-anchor_bottom = 1.03
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="HealthPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
+custom_minimum_size = Vector2(145, 160)
 layout_mode = 2
+size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/HealthPotion"]
@@ -95,12 +111,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Health Potion
 Need:
-2 blue Goo"
+2 Slime Goo"
 horizontal_alignment = 1
 
 [node name="StaminaPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
+custom_minimum_size = Vector2(145, 160)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/StaminaPotion"]
@@ -118,12 +135,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Stamina Potion
 Need:
-2 Green Goo"
+2 Slime Goo"
 horizontal_alignment = 1
 
 [node name="ManaPotion" type="VBoxContainer" parent="PotionsAlchemy/HBoxContainer"]
+custom_minimum_size = Vector2(145, 160)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="TextureButton" type="TextureButton" parent="PotionsAlchemy/HBoxContainer/ManaPotion"]
@@ -142,11 +160,29 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Mana Potion (WIP)
 Need:
-2 purple Goo"
+2 Slime Goo"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CraftingMenu" type="CanvasLayer" parent="."]
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.00055
+offset_top = 2.99988
+offset_right = -1.00055
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_l2muv")
+text = "Crafting System: collect the items, click the item, pick it up!"
+label_settings = SubResource("LabelSettings_ibt6g")
+vertical_alignment = 1
+autowrap_mode = 3
 
 [connection signal="pressed" from="PotionsAlchemy/HBoxContainer/HealthPotion/TextureButton" to="." method="HealthPotionPressed"]
 [connection signal="pressed" from="PotionsAlchemy/HBoxContainer/StaminaPotion/TextureButton" to="." method="StaminaPotionPressed"]

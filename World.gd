@@ -1,5 +1,6 @@
 extends Node2D
 
+
 @onready var tamaneko = $Tamaneko
 @onready var region_one = $RegionOne
 

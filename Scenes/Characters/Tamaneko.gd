@@ -3,19 +3,24 @@ extends CharacterBody2D
 
 #region Variables
 
-var attributes: Dictionary = {}
+var attributes: Dictionary = {
+	"Strength": 10,"Dexterity": 14,
+	"Constitution": 10,"Intelligence": 10,
+	"Wisdom": 10,"Charisma": 10
+	}
 
 var stats: Dictionary = {
-	"health": 60,"stamina": 200,"mana": 100,"maxHealth": 60,"maxStamina": 200,"maxMana": 100,
-	"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 80,"normalSpeed": 60,"sneakSpeed": 40,"dashSpeed": 600,
-	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,}
+	"maxHealth": attributes.Constitution * 10,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
+	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
+	"healthRegen": 5,"staminaRegen": 20,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
+	"speed": 80,"normalSpeed": 80,"sneakSpeed": 40,"dashSpeed": 600,
+	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
+	}
 
-var questTab: Array[MissionResource]
+#var questTab: Array[MissionResource]
 
 @onready var tamaneko = $"."
 @onready var inventory = $UI/Inventory
-@onready var quest_log = $UI/QuestLog
 
 
 @onready var regenerationtimer = $Timers/RegenerationTimer
@@ -31,11 +36,6 @@ var questTab: Array[MissionResource]
 
 #region The Runtimes
 
-func _process(_delta):
-	healthbar.value = stats.health
-	staminabar.value = stats.stamina
-
-
 func _physics_process(_delta):
 	Movement()
 	DashAbility()
@@ -45,7 +45,6 @@ func _physics_process(_delta):
 	UseHealthPotion()
 	UseStaminaPotion()
 	move_and_slide()
-
 
 func _input(_event):
 	OpenMenus()
@@ -83,23 +82,34 @@ func Movement():
 var sneak: bool = false
 @onready var charactersprite = $Sprite2D
 @onready var sneak_timer = $Timers/SneakTimer
+@onready var stealth_panel = $Areas/StealthBox/StealthPanel
+@onready var SneakBox = $Areas/StealthBox/CollisionShape2D
 
 func Stealth():
 	if Input.is_action_just_pressed("Sneak"):
 		sneak = !sneak
-		tamaneko.set_collision_layer_value(1, !sneak)
+		print(SneakBox.shape.radius)
 		SneakCost()
-
 
 
 func SneakCost():
 		if sneak and stats.stamina >= 0.2:
+			SneakBox.shape.radius = 20
+			stealth_panel.visible = true
 			charactersprite.self_modulate = Color(1,0.157,1,0.35)
 			stats.speed = stats.sneakSpeed
 			stats.damage = stats.sneakDamage
 			sneak_timer.start(0.4)
 			stats.stamina -= 0.2
+			var slimegroup = get_tree().get_nodes_in_group("enemy")
+			for slime in slimegroup:
+				slime.slimestealthpanel.visible = true
 		else:
+			SneakBox.shape.radius = 80
+			stealth_panel.visible = false
+			var slimegroup = get_tree().get_nodes_in_group("enemy")
+			for slime in slimegroup:
+				slime.slimestealthpanel.visible = false
 			charactersprite.self_modulate = Color(1,1,1,1)
 			stats.damage = stats.normalDamage
 			stats.speed = stats.normalSpeed
@@ -115,14 +125,14 @@ func SneakCost():
 @onready var dash_timer = $Timers/DashTimer
 var isDashing: bool = false
 func DashAbility():
-	if Input.is_action_just_pressed("Dash") and stats.stamina >= 4:
+	if Input.is_action_just_pressed("Dash") and stats.stamina >= 20:
 		isDashing = true
 		dash_timer.start(0.5)
-		stats.stamina -= 4
+		stats.stamina -= 20
+		staminabar.Status()
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "modulate", Color(1,0.157,1,0.078), 0.2)
 		tween.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
-
 
 func DashTimeout():
 	isDashing = false
@@ -152,13 +162,17 @@ var isAttacking: bool = false
 const SHURIKEN = preload("res://Scenes/Tools/Weapons/Ranged/Shuriken.tscn")
 func Attack():
 	if !isAttacking and inmenu == false:
-		if Input.is_action_pressed("SwingKatana"):
+		if Input.is_action_pressed("SwingKatana") and stats.stamina >= 2:
 			SwingKatanaAnim(true)
+			stats.stamina -= 2
+			staminabar.Status()
 			isAttacking = true
 			await get_tree().create_timer(0.5).timeout
 			isAttacking = false
-		elif Input.is_action_pressed("ThrowShuriken"):
+		elif Input.is_action_pressed("ThrowShuriken") and stats.stamina >= 1:
 			ThrowShurikenAnim(true)
+			stats.stamina -= 1
+			staminabar.Status()
 			var shuriken = SHURIKEN.instantiate()
 			shuriken.player = $"."
 			add_sibling(shuriken)
@@ -166,14 +180,13 @@ func Attack():
 			isAttacking = true
 			await get_tree().create_timer(0.5).timeout
 			isAttacking = false
+			
 
 
 func DamageEnemy(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
 		enemy.stats.health -= stats.damage
-		#if enemy != null:
-			#Knockback(enemy, body)
 		if enemy != null and enemy.stats.health <= 0:
 			enemy.DropItem()
 			Slime.SlimesKilled += 1
@@ -184,13 +197,14 @@ func EnemyLost(body):
 	if body.is_in_group("enemy"):
 		enemyArray.erase(body)
 
+
 #endregion
 
 
 #region ItemSlots
 
 @onready var inventoryui = $UI/Inventory
-@onready var quest_logui = $UI/QuestLog
+
 
 func OpenMenus():
 	if Input.is_action_just_pressed("Inventory"):
@@ -198,12 +212,7 @@ func OpenMenus():
 			inventoryui.visible = true
 		else:
 			inventoryui.visible = false
-	if Input.is_action_just_pressed("QuestLog"):
-		if quest_logui.visible == false:
-			quest_logui.visible = true
-		else:
-			quest_logui.visible = false
-	if inventoryui.visible or quest_logui.visible:
+	if inventoryui.visible:
 		inmenu = true
 	else:
 		inmenu = false
@@ -252,18 +261,6 @@ func UpdateBlend():
 #endregion
 
 
-#region Quest
-
-var QuestGiverhere: bool = false
-func DetectQuestGiver(body):
-	if body.is_in_group("QuestGiver"):
-		QuestGiverhere = true
-		#NPC.quest_slot.visible = true
-
-
-#endregion
-
-
 #region Other
 
 
@@ -271,20 +268,12 @@ func Death():
 	if stats.health <= 0:
 		get_tree().change_scene_to_file("res://Scenes/UI/GameOver.tscn")
 
-func Knockback(enemy, body):
-	var direction = stats.lastDirection
-	var pushback = direction * Vector2(5, 5)
-	
-	if body.is_in_group("enemy") and enemy.is_inside_tree():
-		var KnockbackTween = get_tree().create_tween()
-		KnockbackTween.tween_property(enemy, "position", enemy.position + pushback, 0.2)
-
 
 @onready var regeneration_timer = $Timers/RegenerationTimer
 func RegenerationTimeout():
 	if !sneak and !isDashing:
 		if stats.stamina < stats.maxStamina:
-			stats.stamina += 1
-
+			stats.stamina += stats.staminaRegen
+			staminabar.Status()
 #endregion
 
