@@ -132,7 +132,7 @@ var EnemyArray: Array = []
 
 func EnemyDetected(area):
 	if area.get_parent().get_parent().is_in_group("Tamaneko") or area.get_parent().get_parent().is_in_group("Autumn"):
-		var player = area.get_parent().get_parent()
+		player = area.get_parent().get_parent()
 		EnemyArray.append(player)
 		player.sneak = false
 		currentState = COMBAT
@@ -145,7 +145,6 @@ var player
 func DamageEnemy(body):
 	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
 		player = body
-		
 		combat_timer.start(0.4)
 		combat_timer.one_shot = false
 

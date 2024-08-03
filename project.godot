@@ -18,6 +18,12 @@ config/features=PackedStringArray("4.2", "Mobile")
 
 Global="*res://Autoload/Global.gd"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/shadowed_variable=2
+gdscript/warnings/integer_division=0
+
 [dotnet]
 
 project/assembly_name="ProjectPSoftwarePurple"

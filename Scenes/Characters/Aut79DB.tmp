@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=14 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn.gd" id="1_vo3u4"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet3 (Primary).png" id="2_k7xpo"]
@@ -8,11 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="5_4kese"]
 [ext_resource type="PackedScene" uid="uid://cqpdjw2ewl454" path="res://Scenes/UI/StatBars/staminabar.tscn" id="6_ri2bu"]
 [ext_resource type="Script" path="res://Scenes/Btreeexp/Base/BTreeBase.gd" id="8_7d4p6"]
-[ext_resource type="Script" path="res://Scenes/Btreeexp/Composite/CompositeTree.gd" id="9_17y0m"]
+[ext_resource type="Script" path="res://Scenes/Btreeexp/Composite/Move.gd" id="9_17y0m"]
 [ext_resource type="Script" path="res://Scenes/Btreeexp/FollowTamaAction.gd" id="10_uvnt3"]
-[ext_resource type="Script" path="res://Scenes/Btreeexp/VoidBoltAction.gd" id="11_os4ur"]
 [ext_resource type="Script" path="res://Scenes/Btreeexp/IdleAction.gd" id="11_sydub"]
-[ext_resource type="Script" path="res://Scenes/Btreeexp/CombatStance.gd" id="12_td2he"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
 size = Vector2(8.33332, 5.55556)
@@ -20,7 +18,7 @@ size = Vector2(8.33332, 5.55556)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jj3f3"]
 radius = 60.0
 
-[node name="Autumn" type="CharacterBody2D" groups=["Autumn", "ally", "player"]]
+[node name="Autumn" type="CharacterBody2D" groups=["Autumn", "ally"]]
 scale = Vector2(0.9, 0.9)
 collision_mask = 111
 script = ExtResource("1_vo3u4")
@@ -31,7 +29,7 @@ texture = ExtResource("2_k7xpo")
 flip_h = true
 hframes = 14
 vframes = 13
-frame = 17
+frame = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -115,32 +113,17 @@ user = NodePath("../../../..")
 [node name="Inventory" parent="UI" instance=ExtResource("5_4kese")]
 visible = false
 
-[node name="BTreeBase" type="Node" parent="." node_paths=PackedStringArray("Character")]
+[node name="BTreeBase" type="Node" parent="."]
 script = ExtResource("8_7d4p6")
-Character = NodePath("..")
 
-[node name="Combat" type="Node" parent="BTreeBase" node_paths=PackedStringArray("Character")]
+[node name="Move" type="Node" parent="BTreeBase"]
 script = ExtResource("9_17y0m")
-Character = NodePath("../..")
 
-[node name="CombatStance" type="Node" parent="BTreeBase/Combat" node_paths=PackedStringArray("Character")]
-script = ExtResource("12_td2he")
-Character = NodePath("../../..")
-
-[node name="VoidBoltAction" type="Node" parent="BTreeBase/Combat/CombatStance" node_paths=PackedStringArray("Character")]
-script = ExtResource("11_os4ur")
-Character = NodePath("../../../..")
-
-[node name="Move" type="Node" parent="BTreeBase" node_paths=PackedStringArray("Character")]
-script = ExtResource("9_17y0m")
-Character = NodePath("../..")
+[node name="Idle" type="Node" parent="BTreeBase/Move"]
+script = ExtResource("11_sydub")
 
 [node name="FollowTama" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("Character")]
 script = ExtResource("10_uvnt3")
-Character = NodePath("../../..")
-
-[node name="Idle" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("Character")]
-script = ExtResource("11_sydub")
 Character = NodePath("../../..")
 
 [connection signal="area_entered" from="Areas/Detectionbox" to="." method="FindItems"]

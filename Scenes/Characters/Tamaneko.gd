@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Tamaneko extends CharacterBody2D
 
 
 #region Variables
@@ -93,14 +93,15 @@ func Stealth():
 
 
 func SneakCost():
-		if sneak and stats.stamina >= 0.2:
+		if sneak and stats.stamina >= 1:
 			SneakBox.shape.radius = 20
 			stealth_panel.visible = true
 			charactersprite.self_modulate = Color(1,0.157,1,0.35)
 			stats.speed = stats.sneakSpeed
 			stats.damage = stats.sneakDamage
 			sneak_timer.start(0.4)
-			stats.stamina -= 0.2
+			stats.stamina -= 1
+			staminabar.Status()
 			var slimegroup = get_tree().get_nodes_in_group("enemy")
 			for slime in slimegroup:
 				slime.slimestealthpanel.visible = true

@@ -60,6 +60,7 @@ collision_mask = 4719
 script = ExtResource("1_f3r72")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uhrje")
 
@@ -109,6 +110,7 @@ wait_time = 0.4
 one_shot = true
 
 [node name="Areas" type="Node2D" parent="."]
+visible = false
 
 [node name="Hurtbox" type="Area2D" parent="Areas"]
 visible = false
