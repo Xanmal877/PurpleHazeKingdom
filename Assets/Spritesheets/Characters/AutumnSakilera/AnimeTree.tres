@@ -1,49 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=45 format=3 uid="uid://ce3jws0105swk"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yiq20"]
-animation = &"AnimPlayer2.0/Combat Stance FL"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ltpyj"]
-animation = &"AnimPlayer2.0/Combat Stance FR"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6fpld"]
-animation = &"AnimPlayer2.0/Combat Stance BL"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uli2r"]
-animation = &"AnimPlayer2.0/Combat Stance BR"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dmth6"]
-animation = &"AnimPlayer2.0/Combat Stance Right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dnram"]
-animation = &"AnimPlayer2.0/Combat Stance Right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xuowl"]
-animation = &"AnimPlayer2.0/Combat Stance Left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6qlhd"]
-animation = &"AnimPlayer2.0/Combat Stance BR"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_q4gxu"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_yiq20")
-blend_point_0/pos = Vector2(-0.3, 0.3)
-blend_point_1/node = SubResource("AnimationNodeAnimation_ltpyj")
-blend_point_1/pos = Vector2(0.3, 0.3)
-blend_point_2/node = SubResource("AnimationNodeAnimation_6fpld")
-blend_point_2/pos = Vector2(-0.3, -0.3)
-blend_point_3/node = SubResource("AnimationNodeAnimation_uli2r")
-blend_point_3/pos = Vector2(0.3, -0.3)
-blend_point_4/node = SubResource("AnimationNodeAnimation_dmth6")
-blend_point_4/pos = Vector2(0, -1)
-blend_point_5/node = SubResource("AnimationNodeAnimation_dnram")
-blend_point_5/pos = Vector2(1, 0)
-blend_point_6/node = SubResource("AnimationNodeAnimation_xuowl")
-blend_point_6/pos = Vector2(-1, 0)
-blend_point_7/node = SubResource("AnimationNodeAnimation_6qlhd")
-blend_point_7/pos = Vector2(0, 1)
-min_space = Vector2(-1.5, -1.5)
-max_space = Vector2(1.5, 1.5)
-blend_mode = 1
+[gd_resource type="AnimationNodeStateMachine" load_steps=36 format=3 uid="uid://ce3jws0105swk"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8gas8"]
 animation = &"AnimPlayer2.0/Idle FL"
@@ -193,38 +148,34 @@ advance_condition = &"Walking"
 advance_mode = 2
 advance_condition = &"Idle"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yxa7e"]
-advance_mode = 2
-advance_condition = &"Combat"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gurrx"]
 advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vow35"]
-switch_mode = 2
-advance_mode = 2
-advance_condition = &"VoidBolt"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ciia8"]
 switch_mode = 2
 advance_mode = 2
-advance_condition = &"Reset"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tw7cq"]
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qe84s"]
+advance_mode = 2
+advance_condition = &"VoidBolt"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_svrfh"]
+advance_mode = 2
+advance_condition = &"VoidBolt"
+
 [resource]
-states/CombatStance/node = SubResource("AnimationNodeBlendSpace2D_q4gxu")
-states/CombatStance/position = Vector2(368, 305.221)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_ji4o5")
 states/Idle/position = Vector2(348, 143)
 states/Reset/node = SubResource("AnimationNodeAnimation_fby77")
 states/Reset/position = Vector2(236, 231.221)
 states/Start/position = Vector2(190, 143)
 states/VoidBolt/node = SubResource("AnimationNodeBlendSpace2D_2ck3n")
-states/VoidBolt/position = Vector2(155, 305.221)
+states/VoidBolt/position = Vector2(348, 289.221)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8pgxw")
 states/Walking/position = Vector2(546, 143)
-transitions = ["Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Idle", "CombatStance", SubResource("AnimationNodeStateMachineTransition_yxa7e"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gurrx"), "CombatStance", "VoidBolt", SubResource("AnimationNodeStateMachineTransition_vow35"), "VoidBolt", "Reset", SubResource("AnimationNodeStateMachineTransition_ciia8"), "Reset", "Idle", SubResource("AnimationNodeStateMachineTransition_tw7cq")]
-graph_offset = Vector2(-250, 115.221)
+transitions = ["Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_c0bpd"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_8d0i1"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gurrx"), "VoidBolt", "Reset", SubResource("AnimationNodeStateMachineTransition_ciia8"), "Reset", "Idle", SubResource("AnimationNodeStateMachineTransition_tw7cq"), "Idle", "VoidBolt", SubResource("AnimationNodeStateMachineTransition_qe84s"), "Walking", "VoidBolt", SubResource("AnimationNodeStateMachineTransition_svrfh")]
+graph_offset = Vector2(-231, 119.221)

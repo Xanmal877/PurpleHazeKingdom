@@ -14,10 +14,6 @@ config/name="ProjectPSoftwarePurple"
 run/main_scene="res://World.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 
-[autoload]
-
-Global="*res://Autoload/Global.gd"
-
 [debug]
 
 gdscript/warnings/unused_parameter=0

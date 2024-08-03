@@ -41,40 +41,39 @@ script = ExtResource("2_iibhx")
 [node name="NPC" type="Node2D" parent="RouteOne"]
 
 [node name="SlimeMarkers" type="Node2D" parent="RouteOne/NPC"]
-position = Vector2(13, 691)
 
 [node name="Marker2D" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(379, 155)
+position = Vector2(392, 853)
 
 [node name="Marker2D2" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(505, 79)
+position = Vector2(518, 777)
 
 [node name="Marker2D3" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(743, 111)
+position = Vector2(756, 809)
 
 [node name="Marker2D4" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(983, 77)
+position = Vector2(996, 775)
 
 [node name="Marker2D5" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(994, 443)
+position = Vector2(1007, 1141)
 
 [node name="Marker2D6" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(933, 628)
+position = Vector2(946, 1326)
 
 [node name="Marker2D7" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(721, 575)
+position = Vector2(734, 1273)
 
 [node name="Marker2D8" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(539, 484)
+position = Vector2(552, 1182)
 
 [node name="Marker2D9" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(366, 580)
+position = Vector2(379, 1278)
 
 [node name="Marker2D10" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(238, 521)
+position = Vector2(251, 1219)
 
 [node name="Marker2D11" type="Marker2D" parent="RouteOne/NPC/SlimeMarkers"]
-position = Vector2(163, 448)
+position = Vector2(176, 1146)
 
 [node name="Slimes" type="Node2D" parent="RouteOne/NPC"]
 

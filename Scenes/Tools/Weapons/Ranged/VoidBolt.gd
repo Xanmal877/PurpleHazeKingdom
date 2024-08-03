@@ -5,12 +5,11 @@ extends Area2D
 
 @onready var user
 
-
-
 var Direction
 var velocity = Vector2(0,0)
-var speed: int = 500
+var speed: int = 400
 var Damage = 60
+
 
 func _ready():
 	settarget()
@@ -26,6 +25,7 @@ func settarget():
 
 
 func _physics_process(delta):
+	settarget()
 	position += velocity * delta
 	rotate(400 * delta)
 

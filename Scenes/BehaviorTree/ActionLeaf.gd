@@ -1,9 +1,11 @@
-class_name ActionLeaf extends Node
+class_name ActionLeaf extends TaskTestTree
+
 
 
 func CanUseState(_state):
-	return true
+	return false
 
 
 func UseActionBasedonState(_state):
 	pass
+

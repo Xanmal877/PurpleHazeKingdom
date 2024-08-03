@@ -36,9 +36,8 @@ var lastDirection
 
 #region The Runtimes
 
-#func _ready():
-	#currentState = IDLE
-	#State()
+func _ready():
+	pass
 
 func _physics_process(_delta):
 	move_and_slide()
@@ -72,7 +71,6 @@ func TakeDamage(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
 		stats.health -= (enemy.physicalDamage - stats.physicalDefense)
-		Knockback(enemy, body)
 
 #endregion
 
@@ -100,20 +98,16 @@ func WalkingAnim(value: bool):
 	Animation_Tree["parameters/conditions/Walking"] = value
 	Animation_Tree["parameters/conditions/Idle"] = not value
 
-var isincombat: bool
-func CombatStance(value: bool):
-	Animation_Tree["parameters/conditions/Combat"] = value
-	isincombat = value
 
+var isincombat: bool
 func CastVoidBoltAnim(value: bool):
 	Animation_Tree["parameters/conditions/VoidBolt"] = value
-	Animation_Tree["parameters/conditions/Reset"] = not value
+	isincombat = value
 
 
 func UpdateBlend():
 	Animation_Tree["parameters/Idle/blend_position"] = direction
 	Animation_Tree["parameters/Walking/blend_position"] = direction
-	Animation_Tree["parameters/CombatStance/blend_position"] = direction
 	Animation_Tree["parameters/VoidBolt/blend_position"] = direction
 
 
