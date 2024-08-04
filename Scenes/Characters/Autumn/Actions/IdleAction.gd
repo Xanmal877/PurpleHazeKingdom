@@ -1,14 +1,14 @@
-class_name IdleAction extends TaskTestTree
+extends TaskTestTree
 
 var IdleTime = randf_range(1,3)
 
-func CanUseState(_state):
+func CanUsePhysics(_state):
 	if Character.isincombat == true:
 		return false
 	return true
 
 
-func UseActionBasedonState(_state):
+func UseActionPhysics(_state):
 	Character.WalkingAnim(false)
 	Character.UpdateBlend()
 	Character.navagent.target_position = Character.global_position

@@ -1,11 +1,12 @@
 class_name TaskTestTree extends Node
 
 @export var Character: CharacterBody2D
+@export var interval: int = 48
 
-func CanUseState(_state):
+func CanUsePhysics(_state):
 	return false
 
 
-func UseActionBasedonState(_state):
+func UseActionPhysics(_state):
 	pass
 

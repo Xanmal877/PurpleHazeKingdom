@@ -5,7 +5,8 @@ func _physics_process(_delta):
 	var children = get_children()
 	for child in children:
 		if child is TaskTestTree:
-			if child.CanUseState(get_parent()):
-				child.UseActionBasedonState(get_parent())
+			if child.CanUsePhysics(get_parent()):
+				child.UseActionPhysics(get_parent())
 				return
+
 

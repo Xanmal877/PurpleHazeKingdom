@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=19 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Autumn.gd" id="1_vo3u4"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet3 (Primary).png" id="2_k7xpo"]
@@ -7,7 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://ctunnlraviocb" path="res://Scenes/UI/StatBars/healthbar.tscn" id="5_03c1f"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="5_4kese"]
 [ext_resource type="PackedScene" uid="uid://cqpdjw2ewl454" path="res://Scenes/UI/StatBars/staminabar.tscn" id="6_ri2bu"]
+[ext_resource type="PackedScene" uid="uid://dji0a3xg8uma8" path="res://Scenes/UI/StatBars/manabar.tscn" id="7_7cnkd"]
 [ext_resource type="Script" path="res://Scenes/BehaviorTree/Base/BTreeBase.gd" id="8_7d4p6"]
+[ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="8_eooqb"]
 [ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="9_17y0m"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/FollowTamaAction.gd" id="10_uvnt3"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/IdleAction.gd" id="11_sydub"]
@@ -47,6 +49,7 @@ script = ExtResource("1_vo3u4")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.11111, -12.2222)
 texture = ExtResource("2_k7xpo")
+flip_h = true
 hframes = 14
 vframes = 13
 frame = 85
@@ -90,8 +93,9 @@ parameters/VoidBolt/blend_position = Vector2(0, 0.150794)
 parameters/Walking/blend_position = Vector2(0, 0)
 
 [node name="navagent" type="NavigationAgent2D" parent="."]
-path_max_distance = 15.0
+path_max_distance = 20.0
 path_postprocessing = 1
+debug_enabled = true
 
 [node name="Timers" type="Node" parent="."]
 
@@ -103,29 +107,35 @@ autostart = true
 wait_time = 0.5
 autostart = true
 
+[node name="Healthbar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("5_03c1f")]
+custom_minimum_size = Vector2(50, 10)
+offset_left = -26.6667
+offset_top = -65.5556
+offset_right = 23.3333
+offset_bottom = -55.5556
+show_percentage = false
+user = NodePath("..")
+
+[node name="Staminabar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("6_ri2bu")]
+custom_minimum_size = Vector2(50, 10)
+offset_left = -26.6667
+offset_top = -54.8889
+offset_right = 23.3333
+offset_bottom = -44.8889
+show_percentage = false
+user = NodePath("..")
+
+[node name="ManaBar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("7_7cnkd")]
+custom_minimum_size = Vector2(50, 10)
+offset_left = -26.6667
+offset_top = -44.2222
+offset_right = 23.3333
+offset_bottom = -34.2222
+show_percentage = false
+script = ExtResource("8_eooqb")
+user = NodePath("..")
+
 [node name="UI" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -61.0
-offset_right = 361.0
-grow_vertical = 0
-
-[node name="Bars" type="VBoxContainer" parent="UI/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Healthbar" parent="UI/HBoxContainer/Bars" node_paths=PackedStringArray("user") instance=ExtResource("5_03c1f")]
-layout_mode = 2
-user = NodePath("../../../..")
-
-[node name="Staminabar" parent="UI/HBoxContainer/Bars" node_paths=PackedStringArray("user") instance=ExtResource("6_ri2bu")]
-layout_mode = 2
-user = NodePath("../../../..")
 
 [node name="Inventory" parent="UI" instance=ExtResource("5_4kese")]
 visible = false

@@ -14,10 +14,10 @@ var attributes: Dictionary = {
 
 
 var stats: Dictionary = {
-	"maxHealth": attributes.Constitution,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
+	"maxHealth": attributes.Constitution * 10,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
 	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
 	"healthRegen": 5,"staminaRegen": 5,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 30,"normalSpeed": 30,"sneakSpeed": 40,"dashSpeed": 50,
+	"speed": 80,"normalSpeed": 80,"sneakSpeed": 40,"dashSpeed": 50,
 	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
 	}
 
@@ -27,8 +27,17 @@ var lastDirection
 @onready var inventory = $UI/Inventory
 @onready var navagent = $navagent
 
-@onready var healthbar = $UI/HBoxContainer/Bars/Healthbar
-@onready var staminabar = $UI/HBoxContainer/Bars/Staminabar
+@onready var healthbar = $Healthbar
+@onready var staminabar = $Staminabar
+@onready var mana_bar = $ManaBar
+
+
+
+#endregion
+
+
+#region Signals
+
 
 
 #endregion
@@ -36,8 +45,6 @@ var lastDirection
 
 #region The Runtimes
 
-func _ready():
-	pass
 
 func _physics_process(_delta):
 	move_and_slide()
@@ -54,7 +61,11 @@ func FindItems(area):
 		navagent.target_position = item.global_position
 		inventory.AddItemtoInventory(item.item)
 		item.queue_free()
-		
+
+
+func puppies():
+	stats.mana -= 20
+	print("testing")
 
 #endregion
 
@@ -77,6 +88,7 @@ func TakeDamage(body):
 
 #region Regeneration
 
+
 @onready var regenerationtimer = $Timers/RegenerationTimer
 func RegenerationTimeout():
 	if stats.health < stats.maxHealth:
@@ -85,6 +97,9 @@ func RegenerationTimeout():
 		stats.stamina += stats.staminaRegen
 	if stats.mana < stats.maxMana:
 		stats.mana += stats.manaRegen
+		healthbar.Status()
+		staminabar.Status()
+		mana_bar.Status()
 
 #endregion
 

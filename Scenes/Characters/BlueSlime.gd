@@ -115,7 +115,7 @@ func Explore():
 			ExploreArray.append(randomPos)
 	ExploreArray.shuffle()
 	var Marker = ExploreArray.pop_back()
-	NavAgent.target_position = Marker
+	navagent.target_position = Marker
 
 func get_random_position_nearby():
 	var basePos = global_position
@@ -163,7 +163,7 @@ func Combat():
 		for enemy in EnemyArray:
 			if enemy != null:
 				enemyTarget = enemy
-				NavAgent.target_position = enemyTarget.global_position
+				navagent.target_position = enemyTarget.global_position
 
 
 func EnemyLost(area):
@@ -183,20 +183,20 @@ func EnemyLost(area):
 
 #region Navigation
 
-@onready var NavAgent = $NavigationAgent2D
+@onready var navagent = $navagent
 func MakePath():
 	if currentState == EXPLORE:
-		stats.direction = to_local(NavAgent.get_next_path_position()).normalized()
+		stats.direction = to_local(navagent.get_next_path_position()).normalized()
 		velocity = stats.direction * stats.speed
-		if NavAgent.distance_to_target() <= 10:
+		if navagent.distance_to_target() <= 10:
 			StateMachine()
 	elif currentState == IDLE:
 		velocity = Vector2.ZERO
 	elif currentState == COMBAT:
-		stats.direction = to_local(NavAgent.get_next_path_position()).normalized()
+		stats.direction = to_local(navagent.get_next_path_position()).normalized()
 		velocity = stats.direction * stats.chaseSpeed
 		if enemyTarget != null:
-			NavAgent.target_position = enemyTarget.global_position
+			navagent.target_position = enemyTarget.global_position
 
 
 #endregion

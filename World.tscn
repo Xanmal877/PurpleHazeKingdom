@@ -15,4 +15,45 @@ script = ExtResource("1_aes4r")
 position = Vector2(447, 901)
 
 [node name="Autumn" parent="." instance=ExtResource("3_irfvd")]
-position = Vector2(595, 836)
+position = Vector2(589, 847)
+
+[node name="Locations" type="Node2D" parent="." groups=["locations"]]
+
+[node name="StoneEdgeVillage" type="Marker2D" parent="Locations" groups=["SEVillage"]]
+position = Vector2(1503, 1612)
+
+[node name="SlimeFields" type="Marker2D" parent="Locations" groups=["SFields"]]
+position = Vector2(805, 1748)
+
+[node name="Marker2D" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-505, 76)
+
+[node name="Marker2D2" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(108, 150)
+
+[node name="Marker2D3" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(225, -53)
+
+[node name="Marker2D4" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-260, -203)
+
+[node name="Marker2D5" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-475, -286)
+
+[node name="Marker2D6" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(202, -283)
+
+[node name="Marker2D7" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(205, -518)
+
+[node name="Marker2D8" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-319, -469)
+
+[node name="Marker2D9" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-364, 173)
+
+[node name="Marker2D10" type="Marker2D" parent="Locations/SlimeFields"]
+position = Vector2(-20, -80)
+
+[node name="Trellark Forest" type="Marker2D" parent="Locations" groups=["TForest"]]
+position = Vector2(527, 358)

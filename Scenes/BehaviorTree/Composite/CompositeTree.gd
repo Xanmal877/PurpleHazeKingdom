@@ -1,20 +1,20 @@
 class_name CompositeLeaf extends TaskTestTree
 
 
-func CanUseState(_state):
+func CanUsePhysics(_state):
 	var children = get_children()
 	for child in children:
 		if child is TaskTestTree:
-			if child.CanUseState(get_parent()):
+			if child.CanUsePhysics(get_parent()):
 				return true
 	return false
 
 
-func UseActionBasedonState(_state):
+func UseActionPhysics(_state):
 	var children = get_children()
 	for child in children:
 		if child is TaskTestTree:
-			if child.CanUseState(get_parent()):
-				child.UseActionBasedonState(get_parent())
+			if child.CanUsePhysics(get_parent()):
+				child.UseActionPhysics(get_parent())
 				return
 
