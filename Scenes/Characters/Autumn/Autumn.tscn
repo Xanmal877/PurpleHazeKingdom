@@ -20,8 +20,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
 size = Vector2(8.33332, 5.55556)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_duwvk"]
-radius = 60.0411
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uga1"]
+radius = 7.77778
+height = 42.2222
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jj3f3"]
 radius = 60.0
@@ -46,13 +47,13 @@ _data = {
 "RESET": SubResource("Animation_bpuxi")
 }
 
-[node name="Autumn" type="CharacterBody2D" node_paths=PackedStringArray("navagent") groups=["Autumn", "ally", "player"]]
+[node name="Autumn" type="CharacterBody2D" node_paths=PackedStringArray("NavAgent") groups=["Autumn", "ally", "player"]]
 y_sort_enabled = true
 scale = Vector2(0.9, 0.9)
 collision_mask = 9
 input_pickable = true
 script = ExtResource("1_vo3u4")
-navagent = NodePath("NavigationAgent2D")
+NavAgent = NodePath("NavigationAgent2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_k7xpo")
@@ -72,7 +73,8 @@ collision_layer = 516
 collision_mask = 516
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/InteractBox"]
-shape = SubResource("CircleShape2D_duwvk")
+position = Vector2(-1.11111, 5.55556)
+shape = SubResource("CapsuleShape2D_5uga1")
 
 [node name="Detectbox" type="Area2D" parent="Areas"]
 visible = false
@@ -198,8 +200,8 @@ script = ExtResource("11_sydub")
 NavAgent = NodePath("../../../NavigationAgent2D")
 Character = NodePath("../../..")
 
-[connection signal="area_entered" from="Areas/InteractBox" to="." method="_on_interact_box_area_entered"]
-[connection signal="area_exited" from="Areas/InteractBox" to="." method="_on_interact_box_area_exited"]
+[connection signal="mouse_entered" from="Areas/InteractBox" to="." method="MouseOn"]
+[connection signal="mouse_exited" from="Areas/InteractBox" to="." method="MouseOff"]
 [connection signal="area_entered" from="Areas/Detectbox" to="." method="FindItems"]
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
 [connection signal="timeout" from="Timers/MoodTimer" to="." method="MoodTimeout"]

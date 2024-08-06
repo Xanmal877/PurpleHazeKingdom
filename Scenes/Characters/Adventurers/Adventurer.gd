@@ -1,16 +1,15 @@
 class_name Adventurer extends CharacterBody2D
 
 
-
 #region Variables
 
 var attributes: Dictionary = {
 
-	"Strength": 12,
+	"Strength": 10,
 	"Dexterity": 10,
-	"Constitution": 12,
-	"Intelligence": 8,
-	"Wisdom": 8,
+	"Constitution": 10,
+	"Intelligence": 10,
+	"Wisdom": 10,
 	"Charisma": 10,
 	}
 
@@ -46,6 +45,7 @@ var economy: Dictionary = {
 }
 
 @export var NavAgent: NavigationAgent2D
+@export var RespawnMarker: Marker2D
 
 #endregion
 
@@ -54,6 +54,11 @@ var economy: Dictionary = {
 
 func _physics_process(delta):
 	move_and_slide()
+
+
+func _input(event):
+	OpenInventory()
+
 
 #endregion
 
@@ -66,12 +71,10 @@ func MakePath():
 	if currentState == IDLE:
 		velocity = Vector2.ZERO
 		stats.speed = 0
-
 	if currentState == MOVE or currentState == EXPLORE:
 		stats.direction = to_local(NavAgent.get_next_path_position()).normalized()
 		velocity = stats.direction * stats.speed
 		stats.speed = stats.normalSpeed
-
 	if currentState == COMBAT:
 		velocity = Vector2.ZERO
 		stats.speed = 0
@@ -93,12 +96,47 @@ func NotInAttackRange(body):
 	if body.is_in_group("enemy"):
 		enemy = null
 
+@onready var animation_player = $Animations/AnimationPlayer
 
 func Combat():
 	if enemy != null:
+		#animation_player.play("Attack")
 		enemy.stats.health -= stats.damage
 		print(enemy)
 
+
+func Respawn():
+	global_position = RespawnMarker.global_position
+	currentState = IDLE
+
 #endregion
 
+
+#region Select Character
+
+@onready var inventoryui = $UI/Inventory
+var mouseEntered: bool = false
+func _on_interactbox_mouse_entered():
+		mouseEntered = true
+
+
+func _on_interactbox_mouse_exited():
+		mouseEntered = false
+
+
+func CharacterLeftScreen():
+	inventoryui.visible = false
+
+
+#endregion
+
+
+#region GUI Actions
+
+func OpenInventory():
+	if Input.is_action_just_pressed("Interact") and mouseEntered == true:
+		inventoryui.visible = !inventoryui.visible
+		currentState = IDLE
+
+#endregion
 

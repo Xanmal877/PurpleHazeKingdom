@@ -5,4 +5,5 @@ func _ready():
 	attributes.Constitution = 12
 	attributes.Intelligence = 8
 	attributes.Wisdom = 8
+	print(attributes)
 

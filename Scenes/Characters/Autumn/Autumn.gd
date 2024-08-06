@@ -53,7 +53,8 @@ var economy: Dictionary = {
 	"Gold": 0
 }
 
-@export var navagent: NavigationAgent2D
+@export var NavAgent: NavigationAgent2D
+@export var RespawnMarker: Marker2D
 
 @onready var inventory = $UI/Inventory
 @onready var healthbar = $Healthbar
@@ -93,7 +94,7 @@ func _input(event):
 func FindItems(area):
 	if area.is_in_group("Item"):
 		var item = area.get_parent()
-		navagent.target_position = item.global_position
+		NavAgent.target_position = item.global_position
 		inventory.AddItemtoInventory(item.item)
 		item.queue_free()
 
@@ -196,28 +197,24 @@ func SetMood():
 func MoodTimeout():
 	mood_timer.wait_time = randi_range(300, 600)
 	currentMood = randi_range(0, 5)
-	print(currentMood)
 
 #endregion
 
 
-#region Character Selection
+#region Select Character
 
 @onready var inventoryui = $UI/Inventory
 var mouseEntered: bool = false
-func _on_interact_box_area_entered(area):
-	if area.get_parent().is_in_group("TamaAreas"):
+func MouseOn():
 		mouseEntered = true
 
 
-func _on_interact_box_area_exited(area):
-	if area.get_parent().is_in_group("TamaAreas"):
+func MouseOff():
 		mouseEntered = false
-		inventoryui.visible = false
 
 
 func OpenInventory():
-	if Input.is_action_just_pressed("RightClick") and mouseEntered == true:
+	if Input.is_action_just_pressed("Interact") and mouseEntered == true:
 		inventoryui.visible = !inventoryui.visible
 		currentState = IDLE
 
@@ -235,7 +232,7 @@ func MakePath():
 		WalkingAnim(false)
 		UpdateBlend()
 	if currentState == MOVE or currentState == EXPLORE:
-		stats.direction = to_local(navagent.get_next_path_position()).normalized()
+		stats.direction = to_local(NavAgent.get_next_path_position()).normalized()
 		velocity = stats.direction * stats.speed
 		stats.speed = stats.normalSpeed
 		WalkingAnim(true)
@@ -246,7 +243,10 @@ func MakePath():
 
 #endregion
 
-@onready var adventurer_respawn = $"../../Locations/AdventurerRespawn"
+
 func Respawn():
-	global_position = adventurer_respawn.global_position
+	global_position = RespawnMarker.global_position
 	currentState = IDLE
+
+
+

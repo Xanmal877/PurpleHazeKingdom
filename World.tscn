@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Tamaneko/Tamaneko.tscn" id="1_strur"]
 [ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
 [ext_resource type="PackedScene" uid="uid://c0br65xw5ls7u" path="res://Scenes/Characters/Autumn/Autumn.tscn" id="3_irfvd"]
+[ext_resource type="PackedScene" uid="uid://bsklsrk2bcpb" path="res://Scenes/Characters/Adventurers/Warrior.tscn" id="5_55boe"]
 [ext_resource type="PackedScene" uid="uid://cu80noxo0yjad" path="res://Scenes/Buildings/TownHall.tscn" id="5_bc7er"]
-[ext_resource type="PackedScene" uid="uid://cews68yvo6ry0" path="res://Scenes/Characters/Adventurers/Warrior.tscn" id="5_jd6gg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ep341"]
 
@@ -60,13 +60,15 @@ y_sort_enabled = true
 [node name="Tamaneko" parent="Characters" instance=ExtResource("1_strur")]
 position = Vector2(1329, 1087)
 
-[node name="Autumn" parent="Characters" instance=ExtResource("3_irfvd")]
+[node name="Autumn" parent="Characters" node_paths=PackedStringArray("RespawnMarker") instance=ExtResource("3_irfvd")]
 position = Vector2(1562, 1475)
+RespawnMarker = NodePath("../../Locations/AdventurerRespawn")
 
 [node name="Warriors" type="Node2D" parent="Characters"]
 
-[node name="Warrior" parent="Characters/Warriors" instance=ExtResource("5_jd6gg")]
-position = Vector2(1453, 1049)
+[node name="Warrior" parent="Characters/Warriors" node_paths=PackedStringArray("RespawnMarker") instance=ExtResource("5_55boe")]
+position = Vector2(1315, 1046)
+RespawnMarker = NodePath("../../../Locations/AdventurerRespawn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -78,5 +80,7 @@ text = "Time: 100"
 label_settings = SubResource("LabelSettings_ep341")
 vertical_alignment = 3
 
-[node name="Town Hall" parent="." instance=ExtResource("5_bc7er")]
-position = Vector2(1334, 943)
+[node name="Building" type="Node2D" parent="."]
+
+[node name="Town Hall" parent="Building" instance=ExtResource("5_bc7er")]
+position = Vector2(1334, 871)

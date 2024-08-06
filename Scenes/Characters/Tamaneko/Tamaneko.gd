@@ -115,7 +115,6 @@ var sneak: bool = false
 func Stealth():
 	if Input.is_action_just_pressed("Sneak"):
 		sneak = !sneak
-		print(SneakBox.shape.radius)
 		SneakCost()
 
 
