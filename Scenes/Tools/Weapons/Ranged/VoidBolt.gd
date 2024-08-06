@@ -8,7 +8,7 @@ extends Area2D
 var Direction
 var velocity = Vector2(0,0)
 var speed: int = 400
-var Damage = 60
+var Damage = 50
 
 
 func _ready():
@@ -52,8 +52,9 @@ func VoidBoltLeftScreen():
 	queue_free()
 
 
-func TileMapEntered(_body):
-	queue_free()
+#func TileMapEntered(body):
+	#if body.is_in_group("tilemap"):
+		#queue_free()
 
 
 

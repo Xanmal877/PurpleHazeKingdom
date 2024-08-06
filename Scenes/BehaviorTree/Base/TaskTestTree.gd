@@ -1,7 +1,9 @@
 class_name TaskTestTree extends Node
 
+
+
 @export var Character: CharacterBody2D
-@export var interval: int = 48
+var time: float
 
 func CanUsePhysics(_state):
 	return false

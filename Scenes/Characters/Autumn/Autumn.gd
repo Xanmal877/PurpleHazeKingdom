@@ -4,50 +4,85 @@ extends CharacterBody2D
 #region Variables
 
 @onready var tama = get_tree().get_first_node_in_group("Tamaneko")
+var FollowTama: bool = false
+var travelling: bool = false
 var target
 
+var deathTimer: float = 30
+
 var attributes: Dictionary = {
-	"Strength": 10,"Dexterity": 10,
-	"Constitution": 10,"Intelligence": 14,
-	"Wisdom": 10,"Charisma": 10
+
+	"Strength": 10,
+	"Dexterity": 10,
+	"Constitution": 10,
+	"Intelligence": 14,
+	"Wisdom": 12,
+	"Charisma": 10
+
 	}
 
 
 var stats: Dictionary = {
-	"maxHealth": attributes.Constitution * 10,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
-	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
-	"healthRegen": 5,"staminaRegen": 5,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 80,"normalSpeed": 80,"sneakSpeed": 40,"dashSpeed": 50,
-	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
-	}
+	"maxHealth": attributes["Constitution"] * 10,
+	"maxStamina": attributes["Dexterity"] * 10,
+	"maxMana": attributes["Intelligence"] * 10,
 
-var direction
-var lastDirection
+	"health": attributes["Constitution"] * 10,
+	"stamina": attributes["Dexterity"] * 10,
+	"mana": attributes["Intelligence"] * 10,
+
+	"healthRegen": attributes["Constitution"] * 0.01,
+	"staminaRegen": attributes["Dexterity"] * 0.5,
+	"manaRegen": attributes["Wisdom"] * 0.5,
+
+	"direction": Vector2(),
+	"lastDirection": Vector2(),
+
+	"speed": (attributes["Dexterity"] * 10) * 0.5,
+	"normalSpeed": (attributes["Dexterity"] * 10) * 0.5,
+	"sneakSpeed": (attributes["Dexterity"] * 10) * 0.2,
+	"dashSpeed": (attributes["Dexterity"] * 10) * 5,
+
+	"damage": (attributes["Strength"] * 10) * 0.5,
+	"normalDamage":  (attributes["Dexterity"] * 10) * 0.5,
+	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
+	"spellDamage": (attributes["Intelligence"] * 10) * 1.5,
+}
+
+var economy: Dictionary = {
+	"Gold": 0
+}
+
+@export var navagent: NavigationAgent2D
 
 @onready var inventory = $UI/Inventory
-@onready var navagent = $navagent
-
 @onready var healthbar = $Healthbar
 @onready var staminabar = $Staminabar
-@onready var mana_bar = $ManaBar
-
-
-
-#endregion
-
-
-#region Signals
-
-
+@onready var manabar = $ManaBar
 
 #endregion
 
 
 #region The Runtimes
 
+func _process(delta):
+	SetMood()
+	if stats.health <= 0:
+		deathTimer = 30
+		deathTimer -= 0.01
+		if deathTimer <= 0.0:
+			deathTimer = 30.0
+		Respawn()
 
 func _physics_process(_delta):
 	move_and_slide()
+
+
+func _input(event):
+	if Input.is_action_just_pressed("FollowTama"):
+		FollowTama = !FollowTama
+	OpenInventory()
+
 
 
 #endregion
@@ -61,11 +96,6 @@ func FindItems(area):
 		navagent.target_position = item.global_position
 		inventory.AddItemtoInventory(item.item)
 		item.queue_free()
-
-
-func puppies():
-	stats.mana -= 20
-	print("testing")
 
 #endregion
 
@@ -88,7 +118,6 @@ func TakeDamage(body):
 
 #region Regeneration
 
-
 @onready var regenerationtimer = $Timers/RegenerationTimer
 func RegenerationTimeout():
 	if stats.health < stats.maxHealth:
@@ -99,7 +128,7 @@ func RegenerationTimeout():
 		stats.mana += stats.manaRegen
 		healthbar.Status()
 		staminabar.Status()
-		mana_bar.Status()
+		manabar.Status()
 
 #endregion
 
@@ -121,27 +150,27 @@ func CastVoidBoltAnim(value: bool):
 
 
 func UpdateBlend():
-	Animation_Tree["parameters/Idle/blend_position"] = direction
-	Animation_Tree["parameters/Walking/blend_position"] = direction
-	Animation_Tree["parameters/VoidBolt/blend_position"] = direction
+	Animation_Tree["parameters/Idle/blend_position"] = stats.direction
+	Animation_Tree["parameters/Walking/blend_position"] = stats.direction
+	Animation_Tree["parameters/VoidBolt/blend_position"] = stats.direction
 
 
 #endregion
 
 
-#region Other
+#region Knockback
 
 func Knockback(enemy, body):
 	var pushback = Vector2(0, 0)
 	var KnockbackTween = get_tree().create_tween()
 
-	if lastDirection == Vector2.LEFT:
+	if stats.lastDirection == Vector2.LEFT:
 		pushback.x = -10
-	elif lastDirection == Vector2.RIGHT:
+	elif stats.lastDirection == Vector2.RIGHT:
 		pushback.x = 10
-	elif lastDirection == Vector2.DOWN:
+	elif stats.lastDirection == Vector2.DOWN:
 		pushback.y = 10
-	elif lastDirection == Vector2.UP:
+	elif stats.lastDirection == Vector2.UP:
 		pushback.y = -10
 
 	if body.is_in_group("enemy"):
@@ -150,3 +179,74 @@ func Knockback(enemy, body):
 
 #endregion
 
+
+#region Moods
+
+enum mood {
+	HAPPY, SAD, ANGRY, SCARED, DISGUSTED, SURPRISED, 
+	}
+
+var currentMood = mood.HAPPY
+
+func SetMood():
+	if stats.health <= (stats.maxHealth * 0.2):
+		currentMood = mood.SCARED
+
+@onready var mood_timer = $Timers/MoodTimer
+func MoodTimeout():
+	mood_timer.wait_time = randi_range(300, 600)
+	currentMood = randi_range(0, 5)
+	print(currentMood)
+
+#endregion
+
+
+#region Character Selection
+
+@onready var inventoryui = $UI/Inventory
+var mouseEntered: bool = false
+func _on_interact_box_area_entered(area):
+	if area.get_parent().is_in_group("TamaAreas"):
+		mouseEntered = true
+
+
+func _on_interact_box_area_exited(area):
+	if area.get_parent().is_in_group("TamaAreas"):
+		mouseEntered = false
+		inventoryui.visible = false
+
+
+func OpenInventory():
+	if Input.is_action_just_pressed("RightClick") and mouseEntered == true:
+		inventoryui.visible = !inventoryui.visible
+		currentState = IDLE
+
+#endregion
+
+
+#region Navigation
+
+enum {MOVE, IDLE, COMBAT, EXPLORE}
+var currentState
+func MakePath():
+	if currentState == IDLE:
+		velocity = Vector2.ZERO
+		stats.speed = 0
+		WalkingAnim(false)
+		UpdateBlend()
+	if currentState == MOVE or currentState == EXPLORE:
+		stats.direction = to_local(navagent.get_next_path_position()).normalized()
+		velocity = stats.direction * stats.speed
+		stats.speed = stats.normalSpeed
+		WalkingAnim(true)
+		UpdateBlend()
+	if currentState == COMBAT:
+		velocity = Vector2.ZERO
+		stats.speed = 0
+
+#endregion
+
+@onready var adventurer_respawn = $"../../Locations/AdventurerRespawn"
+func Respawn():
+	global_position = adventurer_respawn.global_position
+	currentState = IDLE

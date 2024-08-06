@@ -1,29 +1,21 @@
-class_name FollowTama extends TaskTestTree
+extends ActionLeaf
 
-@onready var navagent = $"../../../navagent"
+@export var NavAgent: NavigationAgent2D
 
-var time: int = 0
-
+var trick: bool = false
 
 func CanUsePhysics(_state):
-	navagent.target_position = Character.tama.global_position
-	if navagent.is_target_reachable():
-		return Character.tama.global_position.distance_to(Character.global_position) >= 50
+	time += 1
+	if time == 2:
+		time = 0
+		if Character.FollowTama == true:
+			NavAgent.target_position = Character.tama.global_position
+			return Character.tama.global_position.distance_to(Character.global_position) >= 20
 	return false
 
 
 func UseActionPhysics(_state):
-	Navigate()
-	Character.WalkingAnim(true)
-	Character.UpdateBlend()
+	Character.currentState = Character.MOVE
 	if Character.tama.global_position.distance_to(Character.global_position) >= 500:
 		Character.global_position = Character.tama.global_position
-
-
-func Navigate():
-	navagent.target_position = Character.tama.global_position
-	Character.direction = Character.to_local(navagent.get_next_path_position()).normalized()
-	Character.velocity = Character.direction * Character.stats.speed
-	Character.stats.speed = Character.stats.normalSpeed
-
 

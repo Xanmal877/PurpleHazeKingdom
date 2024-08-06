@@ -1,11 +1,10 @@
 class_name ActionLeaf extends TaskTestTree
 
 
-
-func CanUseState(_state):
+func CanUsePhysics(_state):
 	return false
 
 
-func UseActionBasedonState(_state):
+func UseActionPhysics(_state):
 	pass
 

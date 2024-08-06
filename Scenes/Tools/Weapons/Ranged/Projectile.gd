@@ -67,6 +67,6 @@ func LeftScreen():
 
 
 func TileMapEntered(body):
-	if body.is_in_group("Tilemap"):
+	if body.is_in_group("tilemap"):
 		queue_free()
 

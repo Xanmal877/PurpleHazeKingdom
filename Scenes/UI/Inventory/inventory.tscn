@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqtu20alqlysd"]
+[gd_scene load_steps=6 format=3 uid="uid://cqtu20alqlysd"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Inventory/inventory.gd" id="1_hsr4x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dhh66"]
+font_size = 36
+font_color = Color(0, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1eyq"]
 bg_color = Color(0, 0.580392, 1, 0.545098)
@@ -15,32 +19,47 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhkb"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0.560784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_mkgd7"]
+font_size = 30
+
 [node name="Inventory" type="Control" groups=["inventory"]]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("1_hsr4x")
-metadata/_edit_use_anchors_ = true
 
-[node name="Inventory" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0173609
-anchor_top = 0.169753
-anchor_right = 0.392906
-anchor_bottom = 0.827788
-offset_right = 1.37274
-offset_bottom = -1.40674
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.996837, 1.00331)
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 430.0
+offset_bottom = 626.0
+
+[node name="InventoryOwner" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(420, 48)
+layout_mode = 2
+text = "Players Inventory"
+label_settings = SubResource("LabelSettings_dhh66")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Inventory" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(430, 450)
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_f1eyq")
 metadata/_edit_use_anchors_ = true
 
-[node name="Grid" type="GridContainer" parent="Inventory"]
+[node name="Grid" type="GridContainer" parent="VBoxContainer/Inventory"]
+custom_minimum_size = Vector2(430, 450)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,4 +67,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 4
-metadata/_edit_use_anchors_ = true
+
+[node name="EconomyLabel" type="Label" parent="VBoxContainer/Inventory"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_gbhkb")
+text = "Gold: 10000"
+label_settings = SubResource("LabelSettings_mkgd7")
+horizontal_alignment = 1
+vertical_alignment = 1

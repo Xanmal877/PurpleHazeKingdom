@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cews68yvo6ry0"]
+
+[ext_resource type="PackedScene" uid="uid://gsnk3oxrjge4" path="res://Scenes/Characters/Adventurers/Adventurer.tscn" id="1_rbub8"]
+[ext_resource type="Script" path="res://Scenes/Characters/Adventurers/Warrior.gd" id="2_hbvtn"]
+[ext_resource type="Texture2D" uid="uid://bjecxux8cgcej" path="res://Assets/Weapons and Armor/weapons1.png" id="3_l55sv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bli66"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xdybx"]
+radius = 14.0
+
+[node name="Warrior" node_paths=PackedStringArray("NavAgent") groups=["Warrior"] instance=ExtResource("1_rbub8")]
+script = ExtResource("2_hbvtn")
+NavAgent = NodePath("NavigationAgent2D")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_bli66")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_l55sv")
+region_enabled = true
+region_rect = Rect2(16, 48, 16, 16)
+
+[node name="Hurtbox" parent="Areas" index="0"]
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="Areas/Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_xdybx")

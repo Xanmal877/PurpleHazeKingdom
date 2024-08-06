@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=17 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
-[ext_resource type="Script" path="res://Scenes/Characters/Tamaneko.gd" id="1_f3r72"]
+[ext_resource type="Script" path="res://Scenes/Characters/Tamaneko/Tamaneko.gd" id="1_f3r72"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://1ytr7uyodqdu" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimTree.tres" id="2_3jctt"]
 [ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/Tamaneko3.png" id="2_rdlu8"]
 [ext_resource type="PackedScene" uid="uid://ctunnlraviocb" path="res://Scenes/UI/StatBars/healthbar.tscn" id="5_2p6ms"]
@@ -39,7 +39,7 @@ radius = 33.0
 radius = 60.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_es6yj"]
-radius = 60.0
+radius = 50.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cg4w"]
 draw_center = false
@@ -54,9 +54,13 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2jtww"]
+size = Vector2(133, 129)
+
 [node name="Tamaneko" type="CharacterBody2D" groups=["Tamaneko", "player"]]
 y_sort_enabled = true
-collision_mask = 4719
+collision_mask = 4617
+input_pickable = true
 script = ExtResource("1_f3r72")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -65,6 +69,7 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uhrje")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("2_rdlu8")
 hframes = 10
 vframes = 14
@@ -100,7 +105,7 @@ parameters/Walk/blend_position = Vector2(0.0276221, 0.548193)
 [node name="Timers" type="Node" parent="."]
 
 [node name="RegenerationTimer" type="Timer" parent="Timers"]
-wait_time = 3.0
+wait_time = 0.5
 autostart = true
 
 [node name="SneakTimer" type="Timer" parent="Timers"]
@@ -109,28 +114,28 @@ wait_time = 0.4
 [node name="DashTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="Areas" type="Node2D" parent="."]
+[node name="Areas" type="Node2D" parent="." groups=["TamaAreas"]]
 
 [node name="Hurtbox" type="Area2D" parent="Areas"]
 visible = false
 rotation = 3.14159
 collision_layer = 32
-collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
 shape = SubResource("CircleShape2D_t4tng")
 
-[node name="Detectionbox" type="Area2D" parent="Areas"]
+[node name="Detectionbox" type="Area2D" parent="Areas" groups=["TamaDetectBox"]]
 visible = false
 collision_layer = 64
-collision_mask = 6
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
 shape = SubResource("CircleShape2D_axiqn")
 
 [node name="StealthBox" type="Area2D" parent="Areas" groups=["tstealth"]]
-collision_layer = 512
-collision_mask = 64
+visible = false
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/StealthBox"]
 shape = SubResource("CircleShape2D_es6yj")
@@ -149,6 +154,13 @@ offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2cg4w")
+
+[node name="Interactbox" type="Area2D" parent="Areas"]
+collision_layer = 516
+collision_mask = 516
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Interactbox"]
+shape = SubResource("RectangleShape2D_2jtww")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -173,8 +185,9 @@ user = NodePath("../../../..")
 layout_mode = 2
 user = NodePath("../../../..")
 
-[node name="Inventory" parent="UI" instance=ExtResource("7_vwsd6")]
+[node name="Inventory" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("7_vwsd6")]
 visible = false
+player = NodePath("../..")
 
 [node name="Controls" parent="UI" instance=ExtResource("5_cnmmt")]
 

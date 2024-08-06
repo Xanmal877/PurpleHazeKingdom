@@ -1,14 +1,24 @@
 extends Node2D
 
 
-@onready var tamaneko = $Tamaneko
+@onready var tamaneko = $Characters/Tamaneko
+
 @onready var region_one = $RegionOne
+var time: float = 0
+@onready var time_label = $CanvasLayer/TimeLabel
 
 
 #region The Runtimes
 
 func _ready():
 	SetCameraLimits(region_one, tamaneko.camera)
+
+
+func _process(delta):
+	time += 0.02
+	#if time == 0:
+		#time = 0
+	time_label.text = "Time: " + str(int(time))
 
 #endregion
 

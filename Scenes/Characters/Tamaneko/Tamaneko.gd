@@ -4,18 +4,45 @@ class_name Tamaneko extends CharacterBody2D
 #region Variables
 
 var attributes: Dictionary = {
-	"Strength": 10,"Dexterity": 14,
-	"Constitution": 10,"Intelligence": 10,
-	"Wisdom": 10,"Charisma": 10
+
+	"Strength": 10,
+	"Dexterity": 16,
+	"Constitution": 10,
+	"Intelligence": 10,
+	"Wisdom": 10,
+	"Charisma": 14
 	}
 
-var stats: Dictionary = {
-	"maxHealth": attributes.Constitution * 10,"maxStamina": attributes.Dexterity * 10,"maxMana": attributes.Intelligence * 10,
-	"health": attributes.Constitution * 10,"stamina": attributes.Dexterity * 10,"mana": attributes.Intelligence * 10,
-	"healthRegen": 5,"staminaRegen": 20,"manaRegen": 10,"direction": Vector2(),"lastDirection": Vector2(),
-	"speed": 80,"normalSpeed": 80,"sneakSpeed": 40,"dashSpeed": 600,
-	"damage": 20,"normalDamage": 20,"sneakDamage": 20 * 4,
-	}
+var stats: Dictionary ={
+
+	"maxHealth": attributes["Constitution"] * 10,
+	"maxStamina": attributes["Dexterity"] * 10,
+	"maxMana": attributes["Intelligence"] * 10,
+
+	"health": attributes["Constitution"] * 10,
+	"stamina": attributes["Dexterity"] * 10,
+	"mana": attributes["Intelligence"] * 10,
+
+	"healthRegen": attributes["Constitution"] * 0.01,
+	"staminaRegen": attributes["Dexterity"] * 0.5,
+	"manaRegen": attributes["Wisdom"] * 0.5,
+
+	"direction": Vector2(),
+	"lastDirection": Vector2(),
+
+	"speed": (attributes["Dexterity"] * 10) * 0.5,
+	"normalSpeed": (attributes["Dexterity"] * 10) * 0.5,
+	"sneakSpeed": (attributes["Dexterity"] * 10) * 0.2,
+	"dashSpeed": (attributes["Dexterity"] * 10) * 5,
+
+	"damage": (attributes["Strength"] * 10) * 0.2,
+	"normalDamage":  (attributes["Strength"] * 10) * 0.2,
+	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
+	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,}
+
+var economy: Dictionary = {
+	"Gold": 0
+}
 
 #var questTab: Array[MissionResource]
 
@@ -188,10 +215,6 @@ func DamageEnemy(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
 		enemy.stats.health -= stats.damage
-		if enemy != null and enemy.stats.health <= 0:
-			enemy.DropItem()
-			Slime.SlimesKilled += 1
-			print("Slimes Killed: ", str(enemy.SlimesKilled))
 
 
 func EnemyLost(body):
@@ -270,11 +293,21 @@ func Death():
 		get_tree().change_scene_to_file("res://Scenes/UI/GameOver.tscn")
 
 
+#region Regeneration
+
 @onready var regeneration_timer = $Timers/RegenerationTimer
 func RegenerationTimeout():
-	if !sneak and !isDashing:
-		if stats.stamina < stats.maxStamina:
-			stats.stamina += stats.staminaRegen
-			staminabar.Status()
+	if stats.health < stats.maxHealth:
+		stats.health += stats.healthRegen
+	if stats.stamina < stats.maxStamina:
+		stats.stamina += stats.staminaRegen
+	#if stats.mana < stats.maxMana:
+		#stats.mana += stats.manaRegen
+	healthbar.Status()
+	staminabar.Status()
+	#manabar.Status()
+
+#endregion
+
 #endregion
 

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dibacumy5o8wj"]
+
+[ext_resource type="Script" path="res://Scenes/Buildings/Building.gd" id="1_ini0b"]
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_ini0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]

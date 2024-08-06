@@ -1,7 +1,11 @@
 extends ProgressBar
 
-
 @export var user: CharacterBody2D
+
+signal HealthUpdate
+signal StaminaUpdate
+signal ManaUpdate
+
 
 func _ready():
 	max_value = user.stats.maxMana
