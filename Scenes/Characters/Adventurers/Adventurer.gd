@@ -3,6 +3,8 @@ class_name Adventurer extends CharacterBody2D
 
 #region Variables
 
+var enemynear
+
 var attributes: Dictionary = {
 
 	"Strength": 10,
@@ -14,6 +16,9 @@ var attributes: Dictionary = {
 	}
 
 var stats: Dictionary ={
+	"name": "N/A",
+	"level": 1,
+	"Class": "N/A",
 
 	"maxHealth": attributes["Constitution"] * 10,
 	"maxStamina": attributes["Dexterity"] * 10,
@@ -38,7 +43,12 @@ var stats: Dictionary ={
 	"damage": (attributes["Strength"] * 10) * 0.2,
 	"normalDamage":  (attributes["Strength"] * 10) * 0.2,
 	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
-	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,}
+	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,
+
+	"currentXP": 0,
+	"requiredXP": 0,
+	"overallXP": 0,
+	}
 
 var economy: Dictionary = {
 	"Gold": 0
@@ -47,14 +57,28 @@ var economy: Dictionary = {
 @export var NavAgent: NavigationAgent2D
 @export var RespawnMarker: Marker2D
 
+@onready var animation_player = $Animations/AnimationPlayer
+@onready var healthbar = $Healthbar
+@onready var staminabar = $Staminabar
+@onready var manabar = $Manabar
+
+
 #endregion
 
 
 #region The Runtimes
 
-func _physics_process(delta):
-	move_and_slide()
+func _ready():
+	stats.requiredXP = (stats.level * 1.5) * 100
 
+
+func _physics_process(delta):
+	if enemynear != null:
+		stats.direction = global_position.direction_to(enemynear.global_position).normalized()
+		velocity = stats.direction * stats.speed
+	if stats.health <= 0:
+		Respawn()
+	move_and_slide()
 
 func _input(event):
 	OpenInventory()
@@ -63,51 +87,52 @@ func _input(event):
 #endregion
 
 
-#region Navigation
-
-enum {MOVE, IDLE, COMBAT, EXPLORE}
-var currentState
-func MakePath():
-	if currentState == IDLE:
-		velocity = Vector2.ZERO
-		stats.speed = 0
-	if currentState == MOVE or currentState == EXPLORE:
-		stats.direction = to_local(NavAgent.get_next_path_position()).normalized()
-		velocity = stats.direction * stats.speed
-		stats.speed = stats.normalSpeed
-	if currentState == COMBAT:
-		velocity = Vector2.ZERO
-		stats.speed = 0
-
-#endregion
-
-
 #region Combat
+
+
+func Detected(area):
+	if area.get_parent().get_parent().is_in_group("enemy"):
+		enemynear = area
+
+
+func NotDetected(area):
+	if area.get_parent().get_parent().is_in_group("enemy"):
+		enemynear = null
+
+
 
 var enemy
 func InAttackRange(body):
-	print(body)
 	if body.is_in_group("enemy"):
-		print(enemy)
 		enemy = body
+		healthbar.visible = true
+		staminabar.visible = true
+		manabar.visible = true
 
 
 func NotInAttackRange(body):
 	if body.is_in_group("enemy"):
 		enemy = null
+		healthbar.visible = false
+		staminabar.visible = false
+		manabar.visible = false
+		animation_player.stop()
 
-@onready var animation_player = $Animations/AnimationPlayer
 
 func Combat():
 	if enemy != null:
-		#animation_player.play("Attack")
+		animation_player.play("Attack")
 		enemy.stats.health -= stats.damage
-		print(enemy)
+		if enemy.stats.health <= 0:
+			stats.currentXP += 35
+			LevelUp()
 
 
 func Respawn():
 	global_position = RespawnMarker.global_position
-	currentState = IDLE
+	stats.health = stats.maxHealth
+	stats.stamina = stats.maxStamina
+	stats.mana = stats.maxMana
 
 #endregion
 
@@ -116,12 +141,12 @@ func Respawn():
 
 @onready var inventoryui = $UI/Inventory
 var mouseEntered: bool = false
-func _on_interactbox_mouse_entered():
-		mouseEntered = true
+func MouseEntered():
+	mouseEntered = true
 
 
-func _on_interactbox_mouse_exited():
-		mouseEntered = false
+func MouseExited():
+	mouseEntered = false
 
 
 func CharacterLeftScreen():
@@ -136,7 +161,34 @@ func CharacterLeftScreen():
 func OpenInventory():
 	if Input.is_action_just_pressed("Interact") and mouseEntered == true:
 		inventoryui.visible = !inventoryui.visible
-		currentState = IDLE
 
 #endregion
+
+
+#region XP
+
+func LevelUp():
+	stats.requiredXP = (stats.level * 1.5) * 100
+	if stats.currentXP >= stats.requiredXP:
+		print(stats.level)
+		stats.level += 1
+		IncreaseAttributes()
+		attributes.Intelligence += 1
+		attributes.Wisdom += 1
+
+
+func IncreaseAttributes():
+	attributes.Strength += 1
+	attributes.Dexterity += 1
+	attributes.Constitution += 1
+	attributes.Intelligence += 1
+	attributes.Wisdom += 1
+
+
+#endregion
+
+
+
+
+
 

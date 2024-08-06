@@ -1,10 +1,9 @@
 class_name Slime extends CharacterBody2D
 
 
-
 #region Variables
 
-@onready var tama = get_tree().get_first_node_in_group("player")
+#@onready var tama = get_tree().get_first_node_in_group("player")
 
 @onready var slimestealthpanel = $Areas/Detectionbox/StealthPanel
 @onready var ui = $UI
@@ -131,53 +130,53 @@ func Idle():
 
 #region Explore
 
-@onready var ExploreArray: Array = []
-var randomRange = randi_range(20,100)
+@onready var explore_array: Array[Vector2] = []
+@export var random_range: float = 80.0
+var Marker: Vector2
 
-func Explore():
-	ExploreArray.clear()
-	if ExploreArray.is_empty():
-		for i in range(6): # Generate 6 random positions
-			var randomPos = get_random_position_nearby()
-			ExploreArray.append(randomPos)
-	ExploreArray.shuffle()
-	var Marker = ExploreArray.pop_back()
-	navagent.target_position = Marker
+func Explore() -> void:
+	if explore_array.is_empty():
+		for i in range(6):  # Generate 6 random positions
+			var random_pos = get_random_position_nearby()
+			explore_array.append(random_pos)
+	explore_array.shuffle()
+	Marker = explore_array.pop_back()
+	stats.direction = global_position.direction_to(Marker)
 
-func get_random_position_nearby():
-	var basePos = global_position
-	var randomX = randf_range(basePos.x - randomRange, basePos.x + randomRange)
-	var randomY = randf_range(basePos.y - randomRange, basePos.y + randomRange)
-	return Vector2(randomX, randomY)
+func get_random_position_nearby() -> Vector2:
+	var random_x = randf_range(global_position.x - random_range, global_position.x + random_range)
+	var random_y = randf_range(global_position.y - random_range, global_position.y + random_range)
+	return Vector2(random_x, random_y)
 
 #endregion
-
 
 #region Combat
 
 var EnemyArray: Array = []
 
 func EnemyDetected(area):
-	if area.get_parent().get_parent().is_in_group("Tamaneko") or area.get_parent().get_parent().is_in_group("Autumn"):
+	print(area.get_parent().get_parent())
+	if area.get_parent().get_parent().is_in_group("Adventurer"):
 		player = area.get_parent().get_parent()
+		print(player)
 		EnemyArray.append(player)
 		currentState = COMBAT
 		StateMachine()
 		ui.show()
-		if area.get_parent().get_parent().is_in_group("Tamaneko"):
+		if area.is_in_group("tstealth"):
 			player.sneak = false
 
 
 @onready var combat_timer = $Timers/CombatTimer
 var player
 func DamageEnemy(body):
-	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
+	if body.is_in_group("Adventurer"):
 		player = body
 		combat_timer.start(0.8)
 
 
 func NotDamageEnemy(body):
-	if body.is_in_group("Tamaneko") or body.is_in_group("Autumn"):
+	if body.is_in_group("Adventurer"):
 		player = null
 		combat_timer.stop()
 
@@ -196,11 +195,11 @@ func Combat():
 		for enemy in EnemyArray:
 			if enemy != null:
 				enemyTarget = enemy
-				navagent.target_position = enemyTarget.global_position
+				stats.direction = global_position.direction_to(enemyTarget.global_position)
 
 
 func EnemyLost(area):
-	if area.get_parent().get_parent().is_in_group("Tamaneko") or area.get_parent().get_parent().is_in_group("Autumn"):
+	if area.get_parent().get_parent().is_in_group("Adventurer"):
 		player = null
 		EnemyArray.erase(area.get_parent().get_parent())
 		currentState = IDLE
@@ -216,20 +215,17 @@ func EnemyLost(area):
 
 #region Navigation
 
-@onready var navagent = $navagent
 func MakePath():
 	if currentState == EXPLORE:
-		stats.direction = to_local(navagent.get_next_path_position()).normalized()
 		velocity = stats.direction * stats.speed
-		if navagent.distance_to_target() <= 10:
+		if global_position.distance_to(Marker) <= 10:
 			StateMachine()
 	elif currentState == IDLE:
 		velocity = Vector2.ZERO
 	elif currentState == COMBAT:
-		stats.direction = to_local(navagent.get_next_path_position()).normalized()
-		velocity = stats.direction * stats.normalSpeed
 		if enemyTarget != null:
-			navagent.target_position = enemyTarget.global_position
+			stats.direction = global_position.direction_to(enemyTarget.global_position)
+			velocity = stats.direction * stats.normalSpeed
 
 
 #endregion
@@ -258,4 +254,6 @@ func OnDeath():
 		DropItems()
 		Slime.SlimesKilled += 1
 		queue_free()
+		player.stats.currentXP += 35
+		player.LevelUp()
 

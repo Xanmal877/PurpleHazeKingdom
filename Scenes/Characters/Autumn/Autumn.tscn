@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=20 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Autumn.gd" id="1_vo3u4"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Assets/Spritesheets/Characters/AutumnSakilera/SpriteSheet3 (Primary).png" id="2_k7xpo"]
@@ -12,9 +12,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="8_eooqb"]
 [ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="9_17y0m"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/FollowTamaAction.gd" id="10_uvnt3"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/IdleAction.gd" id="11_sydub"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/VoidBoltAction.gd" id="12_td2he"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/GoVillage.gd" id="15_37ixp"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Actions/ExploreArea.gd" id="15_sorcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
@@ -47,7 +45,7 @@ _data = {
 "RESET": SubResource("Animation_bpuxi")
 }
 
-[node name="Autumn" type="CharacterBody2D" node_paths=PackedStringArray("NavAgent") groups=["Autumn", "ally", "player"]]
+[node name="Autumn" type="CharacterBody2D" node_paths=PackedStringArray("NavAgent") groups=["Adventurer", "Autumn", "player"]]
 y_sort_enabled = true
 scale = Vector2(0.9, 0.9)
 collision_mask = 9
@@ -79,7 +77,7 @@ shape = SubResource("CapsuleShape2D_5uga1")
 [node name="Detectbox" type="Area2D" parent="Areas"]
 visible = false
 collision_layer = 64
-collision_mask = 70
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectbox"]
 shape = SubResource("CircleShape2D_jj3f3")
@@ -112,6 +110,9 @@ parameters/Walking/blend_position = Vector2(0, 0)
 path_max_distance = 30.0
 path_postprocessing = 1
 
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="RegenerationTimer" type="Timer" parent="Timers"]
@@ -129,6 +130,7 @@ autostart = true
 [node name="CombatTimer" type="Timer" parent="Timers"]
 
 [node name="Healthbar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("5_03c1f")]
+z_index = 2
 custom_minimum_size = Vector2(50, 10)
 offset_left = -25.5556
 offset_top = -50.0
@@ -138,6 +140,7 @@ show_percentage = false
 user = NodePath("..")
 
 [node name="Staminabar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("6_ri2bu")]
+z_index = 2
 custom_minimum_size = Vector2(50, 10)
 offset_left = -25.5556
 offset_top = -39.3333
@@ -147,6 +150,7 @@ show_percentage = false
 user = NodePath("..")
 
 [node name="ManaBar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("7_7cnkd")]
+z_index = 2
 custom_minimum_size = Vector2(50, 10)
 offset_left = -25.5556
 offset_top = -28.6666
@@ -172,11 +176,6 @@ Character = NodePath("..")
 script = ExtResource("9_17y0m")
 Character = NodePath("../..")
 
-[node name="FindEnemy" type="Node" parent="BTreeBase/Combat" node_paths=PackedStringArray("NavAgent", "Character")]
-script = ExtResource("15_sorcu")
-NavAgent = NodePath("../../../NavigationAgent2D")
-Character = NodePath("../../..")
-
 [node name="VoidBoltAction" type="Node" parent="BTreeBase/Combat" node_paths=PackedStringArray("Character")]
 script = ExtResource("12_td2he")
 Character = NodePath("../../..")
@@ -190,13 +189,8 @@ script = ExtResource("10_uvnt3")
 NavAgent = NodePath("../../../NavigationAgent2D")
 Character = NodePath("../../..")
 
-[node name="GoVillage" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "Character")]
-script = ExtResource("15_37ixp")
-NavAgent = NodePath("../../../NavigationAgent2D")
-Character = NodePath("../../..")
-
-[node name="Idle" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "Character")]
-script = ExtResource("11_sydub")
+[node name="FindEnemy" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "Character")]
+script = ExtResource("15_sorcu")
 NavAgent = NodePath("../../../NavigationAgent2D")
 Character = NodePath("../../..")
 

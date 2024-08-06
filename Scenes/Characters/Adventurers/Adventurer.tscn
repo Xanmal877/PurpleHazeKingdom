@@ -1,17 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://gsnk3oxrjge4"]
+[gd_scene load_steps=9 format=3 uid="uid://gsnk3oxrjge4"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Adventurers/Adventurer.gd" id="1_fymen"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="2_fsrtd"]
-[ext_resource type="Script" path="res://Scenes/BehaviorTree/Base/BTreeBase.gd" id="2_sygo1"]
-[ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="3_xq53x"]
-[ext_resource type="Script" path="res://Scenes/Characters/Adventurers/FindEnemy.gd" id="4_qnaay"]
+[ext_resource type="PackedScene" uid="uid://ctunnlraviocb" path="res://Scenes/UI/StatBars/healthbar.tscn" id="3_3v01u"]
+[ext_resource type="PackedScene" uid="uid://cqpdjw2ewl454" path="res://Scenes/UI/StatBars/staminabar.tscn" id="4_jb6wy"]
+[ext_resource type="PackedScene" uid="uid://dji0a3xg8uma8" path="res://Scenes/UI/StatBars/manabar.tscn" id="5_saegt"]
+[ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="6_00a48"]
+
+[sub_resource type="Animation" id="Animation_u5dg8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wiu13"]
+_data = {
+"RESET": SubResource("Animation_u5dg8")
+}
 
 [node name="Adventurer" type="CharacterBody2D" groups=["Adventurer"]]
 script = ExtResource("1_fymen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="Screencheck" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
@@ -23,6 +44,8 @@ collision_layer = 32
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
 
 [node name="Detectbox" type="Area2D" parent="Areas"]
+collision_layer = 64
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectbox"]
 
@@ -35,39 +58,68 @@ collision_mask = 4
 [node name="Animations" type="Node2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animations"]
-
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="Inventory" parent="UI" instance=ExtResource("2_fsrtd")]
-visible = false
+libraries = {
+"": SubResource("AnimationLibrary_wiu13")
+}
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="MakePath" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 0.8
 autostart = true
 
 [node name="Combat" type="Timer" parent="Timers"]
 wait_time = 0.5
 autostart = true
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="Healthbar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("3_3v01u")]
+visible = false
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+offset_left = -12.5556
+offset_top = -30.0
+offset_right = 37.4444
+offset_bottom = -20.0
+scale = Vector2(0.5, 0.5)
+show_percentage = false
+user = NodePath("..")
 
-[node name="BehaviorTreeBase" type="Node" parent="." node_paths=PackedStringArray("Character")]
-script = ExtResource("2_sygo1")
-Character = NodePath("..")
+[node name="Staminabar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("4_jb6wy")]
+visible = false
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+offset_left = -13.0
+offset_top = -24.0
+offset_right = 37.0
+offset_bottom = -14.0
+scale = Vector2(0.5, 0.5)
+show_percentage = false
+user = NodePath("..")
 
-[node name="Move" type="Node" parent="BehaviorTreeBase" node_paths=PackedStringArray("Character")]
-script = ExtResource("3_xq53x")
-Character = NodePath("../..")
+[node name="Manabar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("5_saegt")]
+visible = false
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+offset_left = -12.5556
+offset_top = -17.6666
+offset_right = 37.4444
+offset_bottom = -7.6666
+scale = Vector2(0.5, 0.5)
+show_percentage = false
+script = ExtResource("6_00a48")
+user = NodePath("..")
 
-[node name="FindEnemy" type="Node" parent="BehaviorTreeBase/Move" node_paths=PackedStringArray("NavAgent", "Character")]
-script = ExtResource("4_qnaay")
-NavAgent = NodePath("../../../NavigationAgent2D")
-Character = NodePath("../../..")
+[node name="UI" type="CanvasLayer" parent="."]
 
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="CharacterLeftScreen"]
+[node name="Inventory" parent="UI" instance=ExtResource("2_fsrtd")]
+visible = false
+
+[connection signal="screen_exited" from="Screencheck" to="." method="CharacterLeftScreen"]
 [connection signal="body_entered" from="Areas/Hurtbox" to="." method="InAttackRange"]
 [connection signal="body_exited" from="Areas/Hurtbox" to="." method="NotInAttackRange"]
+[connection signal="area_entered" from="Areas/Detectbox" to="." method="Detected"]
+[connection signal="area_exited" from="Areas/Detectbox" to="." method="NotDetected"]
+[connection signal="mouse_entered" from="Areas/Interactbox" to="." method="MouseEntered"]
+[connection signal="mouse_exited" from="Areas/Interactbox" to="." method="MouseExited"]
 [connection signal="timeout" from="Timers/MakePath" to="." method="MakePath"]
 [connection signal="timeout" from="Timers/Combat" to="." method="Combat"]

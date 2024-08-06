@@ -5,9 +5,9 @@
 
 [resource]
 script = ExtResource("1_qu0rp")
-id = 1
 name = "Stamina Potion"
 Type = "Consumable"
 description = ""
 image = ExtResource("1_hooe2")
 amount = 1
+worth = 20

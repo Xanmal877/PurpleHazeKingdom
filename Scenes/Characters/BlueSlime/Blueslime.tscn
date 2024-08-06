@@ -250,6 +250,8 @@ collision_mask = 521
 wall_min_slide_angle = 0.0
 script = ExtResource("2_n0hjf")
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 y_sort_enabled = true
@@ -257,7 +259,7 @@ texture = ExtResource("3_ttn15")
 flip_h = true
 hframes = 7
 vframes = 5
-frame = 3
+frame = 2
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3
@@ -276,7 +278,7 @@ shape = SubResource("CircleShape2D_g2owh")
 
 [node name="Detectionbox" type="Area2D" parent="Areas"]
 collision_layer = 64
-collision_mask = 519
+collision_mask = 576
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
 shape = SubResource("CircleShape2D_1ux1o")
@@ -376,10 +378,6 @@ theme_override_styles/background = SubResource("StyleBoxFlat_clxjv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_7s0su")
 value = 100.0
 show_percentage = false
-
-[node name="navagent" type="NavigationAgent2D" parent="."]
-path_max_distance = 10.0
-path_postprocessing = 1
 
 [connection signal="body_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
 [connection signal="body_exited" from="Areas/Hurtbox" to="." method="NotDamageEnemy"]

@@ -23,6 +23,10 @@ var attributes: Dictionary = {
 
 
 var stats: Dictionary = {
+	"name": "Autumn",
+	"level": 1,
+	"Class": "Void Mage",
+
 	"maxHealth": attributes["Constitution"] * 10,
 	"maxStamina": attributes["Dexterity"] * 10,
 	"maxMana": attributes["Intelligence"] * 10,
@@ -47,6 +51,10 @@ var stats: Dictionary = {
 	"normalDamage":  (attributes["Dexterity"] * 10) * 0.5,
 	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
 	"spellDamage": (attributes["Intelligence"] * 10) * 1.5,
+
+	"currentXP": 0,
+	"requiredXP": 0,
+	"overallXP": 0,
 }
 
 var economy: Dictionary = {
@@ -66,14 +74,9 @@ var economy: Dictionary = {
 
 #region The Runtimes
 
-func _process(delta):
-	SetMood()
-	if stats.health <= 0:
-		deathTimer = 30
-		deathTimer -= 0.01
-		if deathTimer <= 0.0:
-			deathTimer = 30.0
-		Respawn()
+func _ready():
+	stats.requiredXP = (stats.level * 1.5) * 100
+
 
 func _physics_process(_delta):
 	move_and_slide()
@@ -181,26 +184,6 @@ func Knockback(enemy, body):
 #endregion
 
 
-#region Moods
-
-enum mood {
-	HAPPY, SAD, ANGRY, SCARED, DISGUSTED, SURPRISED, 
-	}
-
-var currentMood = mood.HAPPY
-
-func SetMood():
-	if stats.health <= (stats.maxHealth * 0.2):
-		currentMood = mood.SCARED
-
-@onready var mood_timer = $Timers/MoodTimer
-func MoodTimeout():
-	mood_timer.wait_time = randi_range(300, 600)
-	currentMood = randi_range(0, 5)
-
-#endregion
-
-
 #region Select Character
 
 @onready var inventoryui = $UI/Inventory
@@ -244,9 +227,30 @@ func MakePath():
 #endregion
 
 
+#region Respawn
+
 func Respawn():
 	global_position = RespawnMarker.global_position
 	currentState = IDLE
+	CastVoidBoltAnim(false)
+	stats.health = stats.maxHealth
+	stats.stamina = stats.maxStamina
+	stats.mana = stats.maxMana
+
+#endregion
 
 
+func LevelUp():
+	stats.requiredXP = (stats.level * 1.5) * 100
+	if stats.currentXP >= stats.requiredXP:
+		stats.level += 1
+		IncreaseAttributes()
+		attributes.Intelligence += 1
+		attributes.Wisdom += 1
 
+func IncreaseAttributes():
+	attributes.Strength += 1
+	attributes.Dexterity += 1
+	attributes.Constitution += 1
+	attributes.Intelligence += 1
+	attributes.Wisdom += 1

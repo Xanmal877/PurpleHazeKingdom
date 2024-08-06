@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdfqaxbmf3h8s"]
+[gd_scene load_steps=9 format=3 uid="uid://cdfqaxbmf3h8s"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_aes4r"]
 [ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Tamaneko/Tamaneko.tscn" id="1_strur"]
 [ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
 [ext_resource type="PackedScene" uid="uid://c0br65xw5ls7u" path="res://Scenes/Characters/Autumn/Autumn.tscn" id="3_irfvd"]
-[ext_resource type="PackedScene" uid="uid://bsklsrk2bcpb" path="res://Scenes/Characters/Adventurers/Warrior.tscn" id="5_55boe"]
-[ext_resource type="PackedScene" uid="uid://cu80noxo0yjad" path="res://Scenes/Buildings/TownHall.tscn" id="5_bc7er"]
+[ext_resource type="PackedScene" uid="uid://bsklsrk2bcpb" path="res://Scenes/Characters/Adventurers/Warrior.tscn" id="5_v5t1h"]
+[ext_resource type="PackedScene" uid="uid://0tjtouyrbhqf" path="res://Scenes/UI/Inventory/CharacterList.tscn" id="7_6t7db"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpnuv"]
+size = Vector2(100, 100)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ep341"]
 
@@ -54,6 +57,14 @@ position = Vector2(47, 465)
 [node name="AdventurerRespawn" type="Marker2D" parent="Locations"]
 position = Vector2(1569, 1559)
 
+[node name="VillageLocations" type="Node2D" parent="."]
+
+[node name="Market" type="Area2D" parent="VillageLocations"]
+position = Vector2(1637, 1534)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageLocations/Market"]
+shape = SubResource("RectangleShape2D_qpnuv")
+
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -64,10 +75,20 @@ position = Vector2(1329, 1087)
 position = Vector2(1562, 1475)
 RespawnMarker = NodePath("../../Locations/AdventurerRespawn")
 
-[node name="Warriors" type="Node2D" parent="Characters"]
+[node name="Adventurers" type="Node2D" parent="Characters"]
 
-[node name="Warrior" parent="Characters/Warriors" node_paths=PackedStringArray("RespawnMarker") instance=ExtResource("5_55boe")]
-position = Vector2(1315, 1046)
+[node name="Warrior" parent="Characters/Adventurers" node_paths=PackedStringArray("RespawnMarker") instance=ExtResource("5_v5t1h")]
+position = Vector2(1608, 1077)
+RespawnMarker = NodePath("../../../Locations/AdventurerRespawn")
+
+[node name="Warrior2" parent="Characters/Adventurers" node_paths=PackedStringArray("NavAgent", "RespawnMarker") instance=ExtResource("5_v5t1h")]
+position = Vector2(1470, 1269)
+NavAgent = NodePath("../Warrior/NavigationAgent2D")
+RespawnMarker = NodePath("../../../Locations/AdventurerRespawn")
+
+[node name="Warrior3" parent="Characters/Adventurers" node_paths=PackedStringArray("NavAgent", "RespawnMarker") instance=ExtResource("5_v5t1h")]
+position = Vector2(1660, 859)
+NavAgent = NodePath("../Warrior/NavigationAgent2D")
 RespawnMarker = NodePath("../../../Locations/AdventurerRespawn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -80,7 +101,8 @@ text = "Time: 100"
 label_settings = SubResource("LabelSettings_ep341")
 vertical_alignment = 3
 
-[node name="Building" type="Node2D" parent="."]
+[node name="Character List" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("7_6t7db")]
+player = NodePath("../../Characters/Tamaneko")
 
-[node name="Town Hall" parent="Building" instance=ExtResource("5_bc7er")]
-position = Vector2(1334, 871)
+[connection signal="body_entered" from="VillageLocations/Market" to="." method="EnteredMarket"]
+[connection signal="body_exited" from="VillageLocations/Market" to="." method="LeftMarket"]

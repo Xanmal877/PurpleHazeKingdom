@@ -9,9 +9,9 @@ region = Rect2(0, 80, 16, 16)
 
 [resource]
 script = ExtResource("2_073ov")
-id = 0
 name = "Slime Goo"
 Type = "Craftable"
 description = "A piece of goo dropped from a slime"
 image = SubResource("AtlasTexture_nh0qb")
 amount = 1
+worth = 5

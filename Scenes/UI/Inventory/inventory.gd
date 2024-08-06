@@ -1,25 +1,38 @@
 class_name InventoryClass extends Control
 
+#region Variables and Signals
+
+#region Variables
+
 var Items: Array[ItemResource]
 
 @export var player: CharacterBody2D
 
 @onready var inventory_owner = $VBoxContainer/InventoryOwner
-@onready var economy_label = $VBoxContainer/Inventory/EconomyLabel
 @onready var grid = $VBoxContainer/Inventory/Grid
 
+const INVENTORY_SLOT = preload("res://Scenes/UI/Inventory/InventorySlot.tscn")
+
+#endregion
 
 
-const SLOT = preload("res://Scenes/UI/Inventory/Slot.tscn")
+#region Signals
 
 signal AddItem(item: ItemResource)
 signal RemoveItem(item: ItemResource)
 
+#endregion
+
+#endregion
+
+
+#region The Runtimes
+
 func _ready():
 	inventory_owner.text = player.name
 
-func _process(delta):
-	economy_label.text = "Gold: " + str(player.economy.Gold)
+#endregion
+
 
 func InventoryUpdate():
 	for child in grid.get_children():
@@ -27,7 +40,7 @@ func InventoryUpdate():
 		child.queue_free()
 
 	for item in Items:
-		var slot = SLOT.instantiate()
+		var slot = INVENTORY_SLOT.instantiate()
 		grid.add_child(slot)
 
 		slot.amount.text = str(item.amount)
@@ -60,9 +73,6 @@ func GetItem(itemname: String):
 	return null
 
 
-func visibility():
-	if visible:
-		get_tree().paused = true
-	else:
-		get_tree().paused = false
+func MoveItem():
+	pass
 

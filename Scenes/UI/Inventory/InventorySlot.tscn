@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca8bkqka7yeg"]
 
-[ext_resource type="Script" path="res://Scenes/UI/Inventory/Slot.gd" id="1_qtlik"]
+[ext_resource type="Script" path="res://Scenes/UI/Inventory/InventorySlot.gd" id="1_qtlik"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7lcl"]
 draw_center = false
@@ -24,6 +24,7 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 3
 anchor_right = 0.0972222
 anchor_bottom = 0.166667
+mouse_filter = 1
 script = ExtResource("1_qtlik")
 metadata/_edit_use_anchors_ = true
 
@@ -43,6 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_a7lcl")
 
 [node name="image" type="TextureButton" parent="Slot"]
@@ -69,3 +71,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
+
+[connection signal="mouse_entered" from="." to="." method="SlotEntered"]
+[connection signal="mouse_exited" from="." to="." method="SlotExited"]

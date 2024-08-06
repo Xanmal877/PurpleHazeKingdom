@@ -14,6 +14,9 @@ var attributes: Dictionary = {
 	}
 
 var stats: Dictionary ={
+	"name": "Fuyuki",
+	"level": 1,
+	"Class": "Ninja",
 
 	"maxHealth": attributes["Constitution"] * 10,
 	"maxStamina": attributes["Dexterity"] * 10,
@@ -38,7 +41,12 @@ var stats: Dictionary ={
 	"damage": (attributes["Strength"] * 10) * 0.2,
 	"normalDamage":  (attributes["Strength"] * 10) * 0.2,
 	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
-	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,}
+	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,
+
+	"currentXP": 0,
+	"requiredXP": 0,
+	"overallXP": 0,
+}
 
 var economy: Dictionary = {
 	"Gold": 0
@@ -63,6 +71,10 @@ var economy: Dictionary = {
 
 #region The Runtimes
 
+func _ready():
+	stats.requiredXP = (stats.level * 1.5) * 100
+
+
 func _physics_process(_delta):
 	Movement()
 	DashAbility()
@@ -72,6 +84,8 @@ func _physics_process(_delta):
 	UseHealthPotion()
 	UseStaminaPotion()
 	move_and_slide()
+
+
 
 func _input(_event):
 	OpenMenus()
@@ -132,7 +146,7 @@ func SneakCost():
 			for slime in slimegroup:
 				slime.slimestealthpanel.visible = true
 		else:
-			SneakBox.shape.radius = 80
+			SneakBox.shape.radius = 40
 			stealth_panel.visible = false
 			var slimegroup = get_tree().get_nodes_in_group("enemy")
 			for slime in slimegroup:
@@ -310,3 +324,27 @@ func RegenerationTimeout():
 
 #endregion
 
+
+#region XP
+
+func LevelUp():
+	stats.requiredXP = (stats.level * 1.5) * 100
+	if stats.currentXP >= stats.requiredXP:
+		stats.level += 1
+		IncreaseAttributes()
+		attributes.Intelligence += 1
+		attributes.Wisdom += 1
+		stats.overallXP += stats.currentXP
+		stats.currentXP = 0
+
+
+
+func IncreaseAttributes():
+	attributes.Strength += 1
+	attributes.Dexterity += 1
+	attributes.Constitution += 1
+	attributes.Intelligence += 1
+	attributes.Wisdom += 1
+
+
+#endregion

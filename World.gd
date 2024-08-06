@@ -2,10 +2,11 @@ extends Node2D
 
 
 @onready var tamaneko = $Characters/Tamaneko
-
-@onready var region_one = $RegionOne
-var time: float = 0
 @onready var time_label = $CanvasLayer/TimeLabel
+@onready var region_one = $RegionOne
+
+
+var time: float = 0
 
 
 #region The Runtimes
@@ -19,6 +20,21 @@ func _process(delta):
 	#if time == 0:
 		#time = 0
 	time_label.text = "Time: " + str(int(time))
+
+#endregion
+
+
+#region Market
+
+func EnteredMarket(body):
+	if body.is_in_group("Adventurer"):
+		pass
+
+
+func LeftMarket(body):
+	if body.is_in_group("Adventurer"):
+		pass
+
 
 #endregion
 
@@ -39,4 +55,5 @@ func SetCameraLimits(tilemap: TileMap, camera: Camera2D):
 
 
 #endregion
+
 

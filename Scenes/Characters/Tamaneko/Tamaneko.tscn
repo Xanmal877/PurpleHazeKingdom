@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=16 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="AnimationLibrary" uid="uid://dqbhxdl8mjnu4" path="res://Assets/Spritesheets/Characters/FuyukiTamaneko/AnimPlayer.res" id="1_dn12y"]
 [ext_resource type="Script" path="res://Scenes/Characters/Tamaneko/Tamaneko.gd" id="1_f3r72"]
@@ -35,11 +35,8 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_t4tng"]
 radius = 33.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_axiqn"]
-radius = 60.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_es6yj"]
-radius = 50.0
+radius = 36.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cg4w"]
 draw_center = false
@@ -55,9 +52,9 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jtww"]
-size = Vector2(133, 129)
+size = Vector2(60, 60)
 
-[node name="Tamaneko" type="CharacterBody2D" groups=["Tamaneko", "player"]]
+[node name="Tamaneko" type="CharacterBody2D" groups=["Adventurer", "Tamaneko", "player"]]
 y_sort_enabled = true
 collision_mask = 4617
 input_pickable = true
@@ -123,16 +120,7 @@ collision_layer = 32
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
 shape = SubResource("CircleShape2D_t4tng")
 
-[node name="Detectionbox" type="Area2D" parent="Areas" groups=["TamaDetectBox"]]
-visible = false
-collision_layer = 64
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectionbox"]
-shape = SubResource("CircleShape2D_axiqn")
-
 [node name="StealthBox" type="Area2D" parent="Areas" groups=["tstealth"]]
-visible = false
 collision_layer = 2
 collision_mask = 2
 
@@ -155,6 +143,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2cg4w")
 
 [node name="Interactbox" type="Area2D" parent="Areas"]
+visible = false
 collision_layer = 516
 collision_mask = 516
 
@@ -194,4 +183,3 @@ player = NodePath("../..")
 [connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="DashTimeout"]
 [connection signal="body_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
-[connection signal="body_entered" from="Areas/Detectionbox" to="." method="DetectQuestGiver"]

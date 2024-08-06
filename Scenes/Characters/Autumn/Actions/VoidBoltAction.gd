@@ -37,6 +37,9 @@ func UseActionPhysics(_state):
 
 		if closestenemy != null:
 			Character.target = closestenemy
+			if closestenemy.stats.health <= 0:
+				Character.currentXP += 35
+				Character.LevelUp()
 
 
 	if closestenemy == null:
