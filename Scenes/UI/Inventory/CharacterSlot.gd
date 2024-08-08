@@ -1,9 +1,8 @@
 extends Control
 
 
-@onready var amount = $Slot/amount
-@onready var cname = $Slot/CName
-@onready var classname = $Slot/classname
+@onready var adventurer_info = $Slot/AdventurerInfo
+
 
 var mouseEntered: bool = false
 

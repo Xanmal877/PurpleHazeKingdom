@@ -5,7 +5,8 @@ func CanUsePhysics(_state):
 	var children = get_children()
 	for child in children:
 		if child is TaskTestTree:
-			if child.CanUsePhysics(get_parent()):
+			var CanUse = await child.CanUsePhysics(get_parent())
+			if CanUse:
 				return true
 	return false
 

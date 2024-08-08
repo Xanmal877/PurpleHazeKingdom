@@ -6,10 +6,12 @@ class_name InventoryClass extends Control
 
 var Items: Array[ItemResource]
 
-@export var player: CharacterBody2D
+@export var user: CharacterBody2D
+@onready var inventory = $"."
+@onready var namelabel = $VBoxContainer/Inventory/Panel/namelabel
+@onready var grid = $VBoxContainer/Inventory/ScrollContainer/Grid
 
-@onready var inventory_owner = $VBoxContainer/InventoryOwner
-@onready var grid = $VBoxContainer/Inventory/Grid
+
 
 const INVENTORY_SLOT = preload("res://Scenes/UI/Inventory/InventorySlot.tscn")
 
@@ -29,10 +31,13 @@ signal RemoveItem(item: ItemResource)
 #region The Runtimes
 
 func _ready():
-	inventory_owner.text = player.name
+	await get_tree().create_timer(1).timeout
+	namelabel.text = user.Name
 
 #endregion
 
+
+#region inventory Code
 
 func InventoryUpdate():
 	for child in grid.get_children():
@@ -72,7 +77,53 @@ func GetItem(itemname: String):
 			return 0
 	return null
 
+#endregion
 
-func MoveItem():
-	pass
 
+#region HotBar Slots
+
+#func UseHealthPotion():
+	#if Input.is_action_just_pressed("Slot 1"):
+		#for i in inventory.Items:
+			#if i.name == "Health Potion":
+				#if i.amount > 0 and health != maxHealth:
+					#health += 10
+					#i.amount -= 1
+#
+#
+#func UseStaminaPotion():
+	#if Input.is_action_just_pressed("Slot 2"):
+		#for i in inventory.Items:
+			#if i.name == "Stamina Potion":
+				#if i.amount > 0:
+					#stamina += 10
+					#i.amount -= 1
+
+#endregion
+
+#
+##region MoveWindows
+#
+#var mousepos = get_global_mouse_position()
+#var moving: bool = false
+#func MoveWindow():
+	#if mouseEntered == true:
+		#if Input.is_action_just_pressed("Left Click"):
+			#moving = true
+		#if Input.is_action_just_released("Left Click"):
+			#moving = false
+#
+#
+#var mouseEntered: bool = false
+#
+#func TitleEntered():
+	#mouseEntered = true
+	#print(mouseEntered)
+#
+#
+#func TitleExited():
+	#mouseEntered = false
+	#print(mouseEntered)
+#
+#
+##endregion

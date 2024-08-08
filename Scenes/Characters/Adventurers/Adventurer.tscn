@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://gsnk3oxrjge4"]
+[gd_scene load_steps=10 format=3 uid="uid://gsnk3oxrjge4"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Adventurers/Adventurer.gd" id="1_fymen"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="2_fsrtd"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cqpdjw2ewl454" path="res://Scenes/UI/StatBars/staminabar.tscn" id="4_jb6wy"]
 [ext_resource type="PackedScene" uid="uid://dji0a3xg8uma8" path="res://Scenes/UI/StatBars/manabar.tscn" id="5_saegt"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="6_00a48"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vo532"]
+radius = 11.0
 
 [sub_resource type="Animation" id="Animation_u5dg8"]
 length = 0.001
@@ -28,11 +31,13 @@ _data = {
 }
 
 [node name="Adventurer" type="CharacterBody2D" groups=["Adventurer"]]
+motion_mode = 1
 script = ExtResource("1_fymen")
+Name = "Adventurer"
+Class = "Adventurer"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[node name="Screencheck" type="VisibleOnScreenNotifier2D" parent="."]
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
@@ -40,8 +45,16 @@ script = ExtResource("1_fymen")
 
 [node name="Hurtbox" type="Area2D" parent="Areas"]
 collision_layer = 32
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
+
+[node name="Hitbox" type="Area2D" parent="Areas" groups=["AdventurerHitbox"]]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hitbox"]
+shape = SubResource("CircleShape2D_vo532")
 
 [node name="Detectbox" type="Area2D" parent="Areas"]
 collision_layer = 64
@@ -69,8 +82,6 @@ wait_time = 0.8
 autostart = true
 
 [node name="Combat" type="Timer" parent="Timers"]
-wait_time = 0.5
-autostart = true
 
 [node name="Healthbar" parent="." node_paths=PackedStringArray("user") instance=ExtResource("3_3v01u")]
 visible = false
@@ -111,15 +122,16 @@ user = NodePath("..")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Inventory" parent="UI" instance=ExtResource("2_fsrtd")]
+[node name="Inventory" parent="UI" node_paths=PackedStringArray("user") instance=ExtResource("2_fsrtd")]
 visible = false
+user = NodePath("../..")
 
-[connection signal="screen_exited" from="Screencheck" to="." method="CharacterLeftScreen"]
-[connection signal="body_entered" from="Areas/Hurtbox" to="." method="InAttackRange"]
-[connection signal="body_exited" from="Areas/Hurtbox" to="." method="NotInAttackRange"]
+[connection signal="area_entered" from="Areas/Hurtbox" to="." method="InAttackRange"]
+[connection signal="area_exited" from="Areas/Hurtbox" to="." method="NotInAttackRange"]
 [connection signal="area_entered" from="Areas/Detectbox" to="." method="Detected"]
 [connection signal="area_exited" from="Areas/Detectbox" to="." method="NotDetected"]
+[connection signal="area_entered" from="Areas/Interactbox" to="." method="FindItems"]
 [connection signal="mouse_entered" from="Areas/Interactbox" to="." method="MouseEntered"]
 [connection signal="mouse_exited" from="Areas/Interactbox" to="." method="MouseExited"]
 [connection signal="timeout" from="Timers/MakePath" to="." method="MakePath"]
-[connection signal="timeout" from="Timers/Combat" to="." method="Combat"]
+[connection signal="timeout" from="Timers/Combat" to="." method="DamageEnemy"]

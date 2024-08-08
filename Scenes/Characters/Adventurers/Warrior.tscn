@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsklsrk2bcpb"]
+[gd_scene load_steps=15 format=3 uid="uid://bsklsrk2bcpb"]
 
 [ext_resource type="PackedScene" uid="uid://gsnk3oxrjge4" path="res://Scenes/Characters/Adventurers/Adventurer.tscn" id="1_rbub8"]
 [ext_resource type="Script" path="res://Scenes/Characters/Adventurers/Warrior.gd" id="2_hbvtn"]
 [ext_resource type="Texture2D" uid="uid://bjecxux8cgcej" path="res://Assets/Weapons and Armor/weapons1.png" id="3_viiqi"]
-[ext_resource type="Animation" uid="uid://cduw8moow01lu" path="res://Attack.res" id="4_1n60r"]
+[ext_resource type="Animation" uid="uid://cduw8moow01lu" path="res://Scenes/Attack.res" id="4_obw34"]
 [ext_resource type="Script" path="res://Scenes/BehaviorTree/Base/BTreeBase.gd" id="5_xqgtl"]
 [ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="6_f3in7"]
-[ext_resource type="Script" path="res://Scenes/Characters/Adventurers/FindEnemy.gd" id="7_i1d1r"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/ExploreArea.gd" id="7_lk3bq"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/GoToEnemy.gd" id="8_amp7x"]
+[ext_resource type="Script" path="res://Scenes/Characters/Adventurers/FindLoot.gd" id="9_p612t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3tuev"]
 
@@ -20,17 +22,21 @@ radius = 40.0
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i36bb"]
 _data = {
-"Attack": ExtResource("4_1n60r")
+"Attack": ExtResource("4_obw34")
 }
 
 [node name="Warrior" node_paths=PackedStringArray("NavAgent") instance=ExtResource("1_rbub8")]
 script = ExtResource("2_hbvtn")
 NavAgent = NodePath("NavigationAgent2D")
+Strength = 12
+Constitution = 12
+Name = ""
+Class = "Warrior"
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("RectangleShape2D_3tuev")
 
-[node name="Sprite2D" parent="." index="2"]
+[node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_viiqi")
 region_enabled = true
 region_rect = Rect2(16, 48, 16, 16)
@@ -49,24 +55,34 @@ libraries = {
 "": SubResource("AnimationLibrary_i36bb")
 }
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="7"]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="8"]
 path_max_distance = 10.0
 path_postprocessing = 1
 debug_enabled = true
 
-[node name="Inventory" parent="UI" index="0" node_paths=PackedStringArray("player")]
-player = NodePath("../..")
-
-[node name="BehaviorTreeBase" type="Node" parent="." index="11" node_paths=PackedStringArray("Character")]
+[node name="BehaviorTreeBase" type="Node" parent="." index="10" node_paths=PackedStringArray("user")]
 script = ExtResource("5_xqgtl")
-Character = NodePath("..")
+user = NodePath("..")
 
-[node name="Move" type="Node" parent="BehaviorTreeBase" index="0" node_paths=PackedStringArray("Character")]
+[node name="Looting" type="Node" parent="BehaviorTreeBase" index="0" node_paths=PackedStringArray("user")]
 script = ExtResource("6_f3in7")
-Character = NodePath("../..")
+user = NodePath("../..")
 
-[node name="FindEnemy" type="Node" parent="BehaviorTreeBase/Move" index="0" node_paths=PackedStringArray("NavAgent", "Character")]
-script = ExtResource("7_i1d1r")
+[node name="FindLoot" type="Node" parent="BehaviorTreeBase/Looting" index="0" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("9_p612t")
 NavAgent = NodePath("../../../NavigationAgent2D")
-Character = NodePath("../../..")
-time = 10.0
+user = NodePath("../../..")
+
+[node name="Move" type="Node" parent="BehaviorTreeBase" index="1" node_paths=PackedStringArray("user")]
+script = ExtResource("6_f3in7")
+user = NodePath("../..")
+
+[node name="FindEnemy" type="Node" parent="BehaviorTreeBase/Move" index="0" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("7_lk3bq")
+NavAgent = NodePath("../../../NavigationAgent2D")
+user = NodePath("../../..")
+
+[node name="GoToEnemy" type="Node" parent="BehaviorTreeBase/Move" index="1" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("8_amp7x")
+NavAgent = NodePath("../../../NavigationAgent2D")
+user = NodePath("../../..")

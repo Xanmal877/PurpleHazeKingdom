@@ -28,19 +28,19 @@ func RegenerateHealth():
 	print("1")
 	await Htimerscene.timeout
 	print("2")
-	if user.stats.health < user.stats.maxHealth:
-		user.stats.health += user.stats.healthRegen
+	if user.health < user.maxHealth:
+		user.health += user.healthRegen
 
 
 func RegenerateStamina():
 	await Stimerscene.timeout
-	if user.stats.stamina < user.stats.maxStamina:
-		user.stats.stamina += user.stats.staminaRegen
+	if user.stamina < user.maxStamina:
+		user.stamina += user.staminaRegen
 
 
 func RegenerateMana():
 	await Mtimerscene.timeout
-	if user.stats.stamina < user.stats.maxStamina:
-		user.stats.stamina += user.stats.staminaRegen
+	if user.stamina < user.maxStamina:
+		user.stamina += user.staminaRegen
 
 

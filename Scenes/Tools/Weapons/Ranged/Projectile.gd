@@ -16,7 +16,7 @@ var direction: Vector2
 #region Runtimes
 
 func _ready():
-	if player.stats.lastDirection != Vector2.ZERO:
+	if player.lastDirection != Vector2.ZERO:
 		RangedProperties()
 		velocity = direction * speed
 	else:
@@ -34,24 +34,24 @@ func _physics_process(delta):
 func RangedProperties():
 	if is_in_group("arrow"):
 		speed = 300
-		direction = player.stats.lastDirection
-		rotation = get_angle_to(player.stats.lastDirection)
+		direction = player.lastDirection
+		rotation = get_angle_to(player.lastDirection)
 	if is_in_group("shuriken"):
 		speed = 300
-		direction = player.stats.lastDirection
+		direction = player.lastDirection
 
 
 func EnemyHit(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
-		enemy.stats.health -= 1
+		enemy.health -= 1
 		if enemy.currentState != enemy.COMBAT:
 			enemy.EnemyArray.append(player)
 			enemy.currentState = enemy.COMBAT
 			enemy.StateMachine()
 			enemy.ui.show()
-		if enemy.stats.health <= 0:
-			#player.CurrentXP += enemy.stats.XPValue
+		if enemy.health <= 0:
+			#player.CurrentXP += enemy.XPValue
 			enemy.queue_free()
 		queue_free()
 	else:

@@ -1,15 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cu80noxo0yjad"]
+[gd_scene load_steps=4 format=3 uid="uid://cu80noxo0yjad"]
 
 [ext_resource type="PackedScene" uid="uid://dibacumy5o8wj" path="res://Scenes/Buildings/Building.tscn" id="1_ct6qb"]
 [ext_resource type="Texture2D" uid="uid://cffw5ijashx13" path="res://Assets/Spritesheets/Locations/Village/special houses.png" id="2_1bael"]
+[ext_resource type="Script" path="res://Scenes/Buildings/TownHall.gd" id="2_jyjvn"]
 
-[node name="Building" instance=ExtResource("1_ct6qb")]
+[node name="TownHall" instance=ExtResource("1_ct6qb")]
 scale = Vector2(1.5, 1.5)
+script = ExtResource("2_jyjvn")
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_1bael")
 region_enabled = true
 region_rect = Rect2(16, 0, 192, 128)
 
-[node name="CollisionPolygon2D" parent="StaticBody2D" index="0"]
-polygon = PackedVector2Array(14.6667, 60.6667, 5.33333, 60.6667, -4.66667, 60.6667, -14, 61.3333, -27.3333, 60.6667, -28.6667, 50, -83.3333, 50.6667, -84.6667, 25.3333, -87.3333, -21.3333, -36, -22.6667, -13.3333, -44.6667, 0, -56, 9.33333, -50, 34, -24.6667, 88.6667, -20.6667, 89.3333, 26, 84, 24, 83.3333, 48.6667, 76, 49.3333, 67.3333, 50, 39.3333, 49.3333, 28, 48.6667, 28, 60.6667)
+[node name="CollisionPolygon2D" parent="." index="1"]
+polygon = PackedVector2Array(84, 49.3333, 28, 48, 26.6667, 61.3333, -26.6667, 61.3333, -28, 48, -82.6667, 48.6667, -82.6667, 22.6667, -83.3333, -9.33333, -87.3333, -20, -32.6667, -24.6667, -2, -56, 2.66667, -56, 33.3333, -25.3333, 33.3333, -20, 86.6667, -20, 89.3333, 26, 82, 26)

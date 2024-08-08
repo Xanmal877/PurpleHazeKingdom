@@ -4,10 +4,10 @@ extends ProgressBar
 
 
 func _ready():
-	max_value = user.stats.maxStamina
-	value = user.stats.stamina
+	max_value = user.maxStamina
+	value = user.stamina
 
 
 func Status():
-	max_value = user.stats.maxStamina
-	value = user.stats.stamina
+	max_value = user.maxStamina
+	value = user.stamina

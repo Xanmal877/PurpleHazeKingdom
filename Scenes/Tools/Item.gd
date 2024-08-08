@@ -17,17 +17,16 @@ func _input(_event):
 	PickupItem()
 
 
-func BodyEntered(body):
-	if body.is_in_group("player") or body.is_in_group("ally"):
+func AreaEntered(area):
+	if area.is_in_group("InteractBox"):
+		player = area.get_parent().get_parent()
 		inrange = true
 		inrangelabel.visible = true
-	if body.is_in_group("player"):
-		player = body
-	if body.is_in_group("ally"):
-		ally = body
 
-func BodyLeft(body):
-	if body.is_in_group("player") or body.is_in_group("ally"):
+
+func AreaExited(area):
+	if area.is_in_group("InteractBox"):
+		player = null
 		inrange = false
 		inrangelabel.visible = false
 
@@ -37,3 +36,4 @@ func PickupItem():
 		player.inventory.AddItemtoInventory(item)
 		queue_free()
 		ItemPickedup.emit()
+

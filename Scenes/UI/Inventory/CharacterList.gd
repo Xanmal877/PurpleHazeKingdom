@@ -4,12 +4,11 @@ extends Control
 
 #region Variables
 
-@onready var Characters = get_tree().get_nodes_in_group("Adventurer")
-
 @export var player: CharacterBody2D
 
-@onready var inventory_owner = $VBoxContainer/InventoryOwner
-@onready var grid = $VBoxContainer/Inventory/Grid
+@onready var title = $VBoxContainer/Inventory/Title
+@onready var grid = $VBoxContainer/Inventory/ScrollContainer/Grid
+
 
 
 const CHARACTER_SLOT = preload("res://Scenes/UI/Inventory/CharacterSlot.tscn")
@@ -31,15 +30,19 @@ signal RemoveItem(item: ItemResource)
 #region The Runtimes
 
 func _ready():
-	inventory_owner.text = "Character List"
+	title.text = "Character List"
 
 func _process(delta):
 	ClistUpdate()
+
+func _input(event):
+	OpenCList()
 
 #endregion
 
 
 func ClistUpdate():
+	var Characters = get_tree().get_nodes_in_group("Adventurer")
 	var puppy: Array = Characters
 	for child in grid.get_children():
 		grid.remove_child(child)
@@ -49,34 +52,10 @@ func ClistUpdate():
 		var slot = CHARACTER_SLOT.instantiate()
 		grid.add_child(slot)
 		
-		slot.cname.text = str(adv.stats.name)
-		slot.amount.text = str(adv.stats.level)
-		slot.classname.text = str(adv.stats.Class)
+		slot.adventurer_info.text = str(adv.Name) + "\n" + "Level:  " + str(adv.level) + "\n" + str(adv.Class)
 
 
-#func AddItemtoInventory(item: ItemResource):
-	#var index = Items.find(item)
-	#if index != -1:
-		#item.amount += 1
-		#AddItem.emit(item)
-		#InventoryUpdate()
-	#else:
-		#Items.append(item)
-		#AddItem.emit(item)
-		#InventoryUpdate()
-#
-#
-#func RemoveItemFromInventory(item: ItemResource):
-	#Items.erase(item)
-	#RemoveItem.emit(item)
-	#InventoryUpdate()
-#
-#
-#func GetItem(itemname: String):
-	#for i in Items:
-		#if i.name == itemname:
-			#return i
-		#else:
-			#return 0
-	#return null
-
+func OpenCList():
+	if Input.is_action_just_pressed("Character List"):
+		visible = !visible
+		ClistUpdate()

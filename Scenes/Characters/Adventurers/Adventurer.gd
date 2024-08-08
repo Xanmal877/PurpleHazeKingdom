@@ -1,58 +1,11 @@
-class_name Adventurer extends CharacterBody2D
+class_name Adventurer extends GameStats
 
 
 #region Variables
 
-var enemynear
+var isincombat: bool = false
+var target
 
-var attributes: Dictionary = {
-
-	"Strength": 10,
-	"Dexterity": 10,
-	"Constitution": 10,
-	"Intelligence": 10,
-	"Wisdom": 10,
-	"Charisma": 10,
-	}
-
-var stats: Dictionary ={
-	"name": "N/A",
-	"level": 1,
-	"Class": "N/A",
-
-	"maxHealth": attributes["Constitution"] * 10,
-	"maxStamina": attributes["Dexterity"] * 10,
-	"maxMana": attributes["Intelligence"] * 10,
-
-	"health": attributes["Constitution"] * 10,
-	"stamina": attributes["Dexterity"] * 10,
-	"mana": attributes["Intelligence"] * 10,
-
-	"healthRegen": attributes["Constitution"] * 0.01,
-	"staminaRegen": attributes["Dexterity"] * 0.5,
-	"manaRegen": attributes["Wisdom"] * 0.5,
-
-	"direction": Vector2(),
-	"lastDirection": Vector2(),
-
-	"speed": (attributes["Dexterity"] * 10) * 0.5,
-	"normalSpeed": (attributes["Dexterity"] * 10) * 0.5,
-	"sneakSpeed": (attributes["Dexterity"] * 10) * 0.2,
-	"dashSpeed": (attributes["Dexterity"] * 10) * 5,
-
-	"damage": (attributes["Strength"] * 10) * 0.2,
-	"normalDamage":  (attributes["Strength"] * 10) * 0.2,
-	"sneakDamage": (attributes["Dexterity"] * 10) * 2,
-	"spellDamage": (attributes["Intelligence"] * 10) * 0.5,
-
-	"currentXP": 0,
-	"requiredXP": 0,
-	"overallXP": 0,
-	}
-
-var economy: Dictionary = {
-	"Gold": 0
-}
 
 @export var NavAgent: NavigationAgent2D
 @export var RespawnMarker: Marker2D
@@ -61,6 +14,7 @@ var economy: Dictionary = {
 @onready var healthbar = $Healthbar
 @onready var staminabar = $Staminabar
 @onready var manabar = $Manabar
+@onready var inventory = $UI/Inventory
 
 
 #endregion
@@ -69,19 +23,26 @@ var economy: Dictionary = {
 #region The Runtimes
 
 func _ready():
-	stats.requiredXP = (stats.level * 1.5) * 100
+	requiredXP = (level * 1.5) * 100
+	GameManager.connect("MonsterKilled", LevelUp)
+	GameManager.connect("AttackMade", TakeDamage)
+	StatUpdates()
 
 
-func _physics_process(delta):
-	if enemynear != null:
-		stats.direction = global_position.direction_to(enemynear.global_position).normalized()
-		velocity = stats.direction * stats.speed
-	if stats.health <= 0:
+func _physics_process(_delta):
+	if isincombat == true:
+		velocity = Vector2.ZERO
+		speed = 0
+	else:
+		speed = normalSpeed
+		velocity = direction * speed
+	if health <= 0:
 		Respawn()
 	move_and_slide()
 
 func _input(event):
 	OpenInventory()
+	CloseCharacterScreen()
 
 
 #endregion
@@ -89,50 +50,59 @@ func _input(event):
 
 #region Combat
 
+@onready var combat = $Timers/Combat
 
 func Detected(area):
-	if area.get_parent().get_parent().is_in_group("enemy"):
-		enemynear = area
+	if area.get_owner().is_in_group("enemy"):
+		target = area.get_owner()
+		NavAgent.target_position = target.global_position
 
 
 func NotDetected(area):
-	if area.get_parent().get_parent().is_in_group("enemy"):
-		enemynear = null
+	if area.get_owner().is_in_group("enemy"):
+		target = null
 
 
-
-var enemy
-func InAttackRange(body):
-	if body.is_in_group("enemy"):
-		enemy = body
+func InAttackRange(area):
+	if area.get_owner().is_in_group("enemy"):
+		isincombat = true
+		combat.start(0.5)
 		healthbar.visible = true
 		staminabar.visible = true
 		manabar.visible = true
 
 
-func NotInAttackRange(body):
-	if body.is_in_group("enemy"):
-		enemy = null
+func NotInAttackRange(area):
+	if area.get_owner().is_in_group("enemy"):
+		isincombat = false
 		healthbar.visible = false
 		staminabar.visible = false
 		manabar.visible = false
+		combat.stop()
 		animation_player.stop()
 
 
-func Combat():
-	if enemy != null:
+func TakeDamage(Attacker, Attacked, Damage):
+	if Attacked != self:
+		return
+
+	health -= Damage
+	healthbar.Status()
+	staminabar.Status()
+	manabar.Status()
+
+
+func DamageEnemy():
+	if target != null:
 		animation_player.play("Attack")
-		enemy.stats.health -= stats.damage
-		if enemy.stats.health <= 0:
-			stats.currentXP += 35
-			LevelUp()
+		GameManager.emit_signal("AttackMade", self, target, damage)
 
 
 func Respawn():
 	global_position = RespawnMarker.global_position
-	stats.health = stats.maxHealth
-	stats.stamina = stats.maxStamina
-	stats.mana = stats.maxMana
+	health = maxHealth
+	stamina = maxStamina
+	mana = maxMana
 
 #endregion
 
@@ -149,8 +119,9 @@ func MouseExited():
 	mouseEntered = false
 
 
-func CharacterLeftScreen():
-	inventoryui.visible = false
+func CloseCharacterScreen():
+	if Input.is_action_just_pressed("Escape"):
+		inventoryui.visible = false
 
 
 #endregion
@@ -165,30 +136,16 @@ func OpenInventory():
 #endregion
 
 
-#region XP
 
-func LevelUp():
-	stats.requiredXP = (stats.level * 1.5) * 100
-	if stats.currentXP >= stats.requiredXP:
-		print(stats.level)
-		stats.level += 1
-		IncreaseAttributes()
-		attributes.Intelligence += 1
-		attributes.Wisdom += 1
+#region Pickup Items
 
-
-func IncreaseAttributes():
-	attributes.Strength += 1
-	attributes.Dexterity += 1
-	attributes.Constitution += 1
-	attributes.Intelligence += 1
-	attributes.Wisdom += 1
-
+func FindItems(area):
+	if area.is_in_group("Item"):
+		var item = area.get_parent()
+		NavAgent.target_position = item.global_position
+		inventory.AddItemtoInventory(item.item)
+		item.queue_free()
 
 #endregion
-
-
-
-
 
 

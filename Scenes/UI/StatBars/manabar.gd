@@ -8,13 +8,13 @@ signal ManaUpdate
 
 
 func _ready():
-	max_value = user.stats.maxMana
-	value = user.stats.mana
+	max_value = user.maxMana
+	value = user.mana
 
 
 func Status():
-	max_value = user.stats.maxMana
-	value = user.stats.mana
+	max_value = user.maxMana
+	value = user.mana
 
 
 

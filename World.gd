@@ -5,9 +5,7 @@ extends Node2D
 @onready var time_label = $CanvasLayer/TimeLabel
 @onready var region_one = $RegionOne
 
-
 var time: float = 0
-
 
 #region The Runtimes
 
@@ -20,6 +18,7 @@ func _process(delta):
 	#if time == 0:
 		#time = 0
 	time_label.text = "Time: " + str(int(time))
+
 
 #endregion
 

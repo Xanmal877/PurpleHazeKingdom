@@ -3,11 +3,15 @@ extends Adventurer
 
 func _ready():
 	super._ready()
-	stats.name = "Archimedes"
-	stats.Class = "Wizard"
-	attributes.Strength = 8
-	attributes.Dexterity = 8
-	attributes.Constitution = 8
-	attributes.Intelligence = 12
-	attributes.Wisdom = 12
+	Name = adventurerNames.pick_random()
+	Class = "Wizard"
+	StatUpdates()
+	await get_tree().create_timer(1).timeout
+
+
+func LevelUp(Killer, XPvalue, GoldValue):
+	super.LevelUp(Killer, XPvalue, GoldValue)
+	Strength += 2
+	Constitution += 2
+	StatUpdates()
 

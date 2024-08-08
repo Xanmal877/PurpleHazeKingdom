@@ -3,12 +3,16 @@ extends Adventurer
 
 func _ready():
 	super._ready()
-	stats.requiredXP = (stats.level * 1.5) * 100
-	stats.name = "Steve"
-	stats.Class = "Warrior"
-	attributes.Strength = 12
-	attributes.Constitution = 12
-	attributes.Intelligence = 8
-	attributes.Wisdom = 8
+	Name = adventurerNames.pick_random()
+	Class = "Warrior"
+	StatUpdates()
+	await get_tree().create_timer(1).timeout
+
+
+func LevelUp(Killer, XPvalue, GoldValue):
+	super.LevelUp(Killer, XPvalue, GoldValue)
+	Strength += 2
+	Constitution += 2
+	StatUpdates()
 
 

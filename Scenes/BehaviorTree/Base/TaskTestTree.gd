@@ -2,7 +2,10 @@ class_name TaskTestTree extends Node
 
 
 
-@export var Character: CharacterBody2D
+@export var user: CharacterBody2D
+var direction: Vector2
+var target = null
+
 @export var time: float
 
 func CanUsePhysics(_state):

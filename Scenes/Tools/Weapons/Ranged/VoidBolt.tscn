@@ -52,7 +52,7 @@ scale = Vector2(1.6, 1.6)
 wait_time = 0.6
 one_shot = true
 
-[connection signal="body_entered" from="." to="." method="EnemyHit"]
 [connection signal="body_entered" from="." to="." method="TileMapEntered"]
+[connection signal="body_entered" from="." to="." method="EnemyHit"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="VoidBoltLeftScreen"]
 [connection signal="timeout" from="Timeout" to="." method="VoidBoltTimeout"]

@@ -33,12 +33,7 @@ func _physics_process(delta):
 
 func EnemyHit(body):
 	if body.is_in_group("enemy"):
-		var enemy = body
-		enemy.stats.health -= Damage
-		Knockback(enemy, body)
-		#if enemy.stats.health <= 0:
-			#Sakilera.stats.CurrentXP += enemy.stats.XPValue
-			#Tamaneko.stats.CurrentXP += enemy.stats.XPValue * 0.5
+		GameManager.emit_signal("AttackMade", user, user.target, user.spellDamage)
 		queue_free()
 	else:
 		pass
