@@ -1,54 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctyx4mhq3wlbq"]
+[gd_scene load_steps=7 format=3 uid="uid://cbjfe0cc6r3w"]
 
-[ext_resource type="Script" path="res://Scenes/Buildings/UI/WarriorsGuildMenu.gd" id="1_q3vak"]
+[ext_resource type="PackedScene" uid="uid://dii8cfolglpot" path="res://Scenes/Buildings/UI/BuildingMenu.tscn" id="1_e2p5u"]
+[ext_resource type="Script" path="res://Scenes/Buildings/UI/WarriorsGuildMenu.gd" id="2_kch0l"]
+[ext_resource type="Texture2D" uid="uid://bjecxux8cgcej" path="res://Assets/Weapons and Armor/weapons1.png" id="3_dpmue"]
 
-[node name="WarriorsGuildMenu" type="Control"]
-custom_minimum_size = Vector2(300, 500)
-layout_mode = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svsm8"]
+bg_color = Color(0, 0, 0.607843, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="InputEventKey" id="InputEventKey_o6u6y"]
+device = -1
+keycode = 87
+unicode = 119
+
+[sub_resource type="Shortcut" id="Shortcut_joq6p"]
+events = [SubResource("InputEventKey_o6u6y")]
+
+[node name="WarriorsGuildMenu" instance=ExtResource("1_e2p5u")]
+script = ExtResource("2_kch0l")
+
+[node name="Label" parent="Panel" index="0"]
+text = "Warriors Guild"
+
+[node name="Button" type="Button" parent="." index="1"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_q3vak")
-
-[node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(300, 500)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="Panel"]
-custom_minimum_size = Vector2(150, 75)
-layout_mode = 0
-offset_left = 69.0
-offset_top = 57.0
-offset_right = 219.0
-offset_bottom = 132.0
-
-[node name="HireWarrior" type="Button" parent="Panel/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_svsm8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_svsm8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_svsm8")
+shortcut = SubResource("Shortcut_joq6p")
 text = "Hire Warrior"
-metadata/_edit_use_anchors_ = true
 
-[node name="Close" type="Button" parent="Panel/Panel"]
-layout_mode = 0
-offset_left = 192.0
-offset_top = -48.0
-offset_right = 210.0
-offset_bottom = -17.0
-text = "X"
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("3_dpmue")
 
-[connection signal="pressed" from="Panel/Panel/HireWarrior" to="." method="HireWarriorPressed"]
-[connection signal="pressed" from="Panel/Panel/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Button" to="." method="HireWarriorButton"]

@@ -6,16 +6,13 @@ class_name Adventurer extends GameStats
 var isincombat: bool = false
 var target
 
-
 @export var NavAgent: NavigationAgent2D
-@export var RespawnMarker: Marker2D
 
 @onready var animation_player = $Animations/AnimationPlayer
 @onready var healthbar = $Healthbar
 @onready var staminabar = $Staminabar
 @onready var manabar = $Manabar
 @onready var inventory = $UI/Inventory
-
 
 #endregion
 
@@ -30,20 +27,18 @@ func _ready():
 
 
 func _physics_process(_delta):
+	Death()
 	if isincombat == true:
 		velocity = Vector2.ZERO
 		speed = 0
 	else:
 		speed = normalSpeed
 		velocity = direction * speed
-	if health <= 0:
-		Respawn()
 	move_and_slide()
 
 func _input(event):
 	OpenInventory()
 	CloseCharacterScreen()
-
 
 #endregion
 
@@ -56,28 +51,31 @@ func Detected(area):
 	if area.get_owner().is_in_group("enemy"):
 		target = area.get_owner()
 		NavAgent.target_position = target.global_position
+		healthbar.visible = true
+		staminabar.visible = true
+		manabar.visible = true
 
 
 func NotDetected(area):
 	if area.get_owner().is_in_group("enemy"):
 		target = null
+		healthbar.visible = false
+		staminabar.visible = false
+		manabar.visible = false
+
 
 
 func InAttackRange(area):
 	if area.get_owner().is_in_group("enemy"):
 		isincombat = true
 		combat.start(0.5)
-		healthbar.visible = true
-		staminabar.visible = true
-		manabar.visible = true
+
 
 
 func NotInAttackRange(area):
 	if area.get_owner().is_in_group("enemy"):
 		isincombat = false
-		healthbar.visible = false
-		staminabar.visible = false
-		manabar.visible = false
+
 		combat.stop()
 		animation_player.stop()
 
@@ -98,11 +96,9 @@ func DamageEnemy():
 		GameManager.emit_signal("AttackMade", self, target, damage)
 
 
-func Respawn():
-	global_position = RespawnMarker.global_position
-	health = maxHealth
-	stamina = maxStamina
-	mana = maxMana
+func Death():
+	if health <= 0:
+		queue_free()
 
 #endregion
 
@@ -136,7 +132,6 @@ func OpenInventory():
 #endregion
 
 
-
 #region Pickup Items
 
 func FindItems(area):
@@ -147,5 +142,4 @@ func FindItems(area):
 		item.queue_free()
 
 #endregion
-
 

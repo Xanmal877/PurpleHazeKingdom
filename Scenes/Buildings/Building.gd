@@ -1,6 +1,6 @@
 class_name BuildingClass extends StaticBody2D
 
-
+@export var menu: Control
 @onready var player: CharacterBody2D = get_tree().get_first_node_in_group("Tamaneko")
 
 func _input(event):
@@ -19,4 +19,7 @@ func MouseOff():
 
 
 func OpenMenu():
-	pass
+	if mouseEntered == true:
+		if Input.is_action_just_pressed("Left Click"):
+			menu.visible = !menu.visible
+

@@ -1,4 +1,4 @@
-class_name SlimeSpawner extends Node2D
+extends Node2D
 
 
 #region Generate Random Position
@@ -24,15 +24,15 @@ func generateRandomPosition() -> Vector2:
 @export var MaxSpawns: int
 @onready var spawntimer = $SpawnTimer
 
-const BLUESLIME = preload("res://Scenes/Characters/BlueSlime/Blueslime.tscn")
+const GUARD = preload("res://Scenes/Characters/Adventurers/Guard.tscn")
 func Spawn():
-	var blueslime = BLUESLIME.instantiate()
-	Spawned.add_child(blueslime)
-	blueslime.global_position = generateRandomPosition()
+	var npc = GUARD.instantiate()
+	Spawned.add_child(npc)
+	npc.global_position = generateRandomPosition()
 
 
 func SpawnTimer():
-	if Spawned.get_child_count() < MaxSpawns:
+	if Spawned.get_child_count() != MaxSpawns:
 		Spawn()
 
 #endregion

@@ -14,6 +14,6 @@ func UseActionPhysics(_state):
 	time -= 0.1
 	if time <= 0:
 		time = 1.5
-		NavAgent.target_position = user.target.global_position
-		user.direction = user.to_local(NavAgent.get_next_path_position()).normalized()
-
+		if user.target != null:
+			NavAgent.target_position = user.target
+			user.direction = user.to_local(NavAgent.get_next_path_position()).normalized()

@@ -1,14 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dll0eaobm77o6"]
+[gd_scene load_steps=7 format=3 uid="uid://dll0eaobm77o6"]
 
 [ext_resource type="PackedScene" uid="uid://dibacumy5o8wj" path="res://Scenes/Buildings/Building.tscn" id="1_a4jx1"]
 [ext_resource type="Script" path="res://Scenes/Buildings/WarriorsGuild.gd" id="2_8pnyg"]
 [ext_resource type="Texture2D" uid="uid://cffw5ijashx13" path="res://Assets/Spritesheets/Locations/Village/special houses.png" id="2_j5ji6"]
+[ext_resource type="PackedScene" uid="uid://cbjfe0cc6r3w" path="res://Scenes/Buildings/UI/WarriorsGuildMenu.tscn" id="4_grraw"]
+[ext_resource type="Script" path="res://Scenes/Buildings/UI/WarriorsGuildMenu.gd" id="5_bgpv5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kjshr"]
 
-[node name="warriorsguild" instance=ExtResource("1_a4jx1")]
+[node name="warriorsguild" node_paths=PackedStringArray("menu") instance=ExtResource("1_a4jx1")]
 physics_material_override = SubResource("PhysicsMaterial_kjshr")
 script = ExtResource("2_8pnyg")
+menu = NodePath("CanvasLayer/WarriorsGuildMenu")
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_j5ji6")
@@ -16,4 +19,17 @@ region_enabled = true
 region_rect = Rect2(392, 272, 168, 144)
 
 [node name="CollisionPolygon2D" parent="." index="1"]
-polygon = PackedVector2Array(-17, 68, -70, 69, -75, 25, -76, -17, -79, -51, -76, -64, 79, -63, 78, -16, 71, -16, 71, 37, -13, 36)
+polygon = PackedVector2Array(-17, 68, -70, 69, -75, 25, -76, -17, -79, -50, 78, -50, 78, -16, 71, -16, 71, 37, -13, 36)
+
+[node name="WarriorsGuildMenu" parent="CanvasLayer" index="0" instance=ExtResource("4_grraw")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+script = ExtResource("5_bgpv5")

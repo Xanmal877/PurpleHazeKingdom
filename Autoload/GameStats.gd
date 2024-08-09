@@ -25,13 +25,13 @@ var lastDirection: Vector2
 @export var Class: String = ""
 @export var level: int = 1
 
-var maxHealth: int = Constitution * 10
-var maxStamina: int = Dexterity * 10
-var maxMana: int = Intelligence * 10
+var maxHealth: float = Constitution * 10
+var maxStamina: float = Dexterity * 10
+var maxMana: float = Intelligence * 10
 
-var health: int = maxHealth
-var stamina: int = maxStamina
-var mana: int = maxMana
+var health: float = maxHealth
+var stamina: float = maxStamina
+var mana: float = maxMana
 
 var healthRegen: float = Constitution * 0.1
 var staminaRegen: float = Dexterity * 0.5
@@ -103,7 +103,6 @@ func StatUpdates():
 #endregion
 
 
-
 @onready var adventurerNames: Array = [
 	"Thalia Moonshadow",
 	"Jareth Stormblade",
@@ -127,4 +126,27 @@ func StatUpdates():
 	"Evander Stormchaser"
 ]
 
+
+@onready var guardNames: Array = [
+	"Harven Steelclad",
+	"Alistair Greyshield",
+	"Lira Windblade",
+	"Bran Stonehelm",
+	"Thorne Ironfist",
+	"Celia Brightsword",
+	"Garret Frostblade",
+	"Thalia Shadowguard",
+	"Roderick Ironoak",
+	"Elara Quickstrike",
+	"Jaxon Darksteel",
+	"Mira Stormwatch",
+	"Orin Wolfheart",
+	"Sera Lightbringer",
+	"Darius Stormclad",
+	"Kael Thunderstrike",
+	"Vira Emberblade",
+	"Torin Swiftwind",
+	"Lyra Sunshield",
+	"Drake Ironclaw"
+]
 
