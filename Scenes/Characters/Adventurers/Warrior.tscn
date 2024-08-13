@@ -71,7 +71,26 @@ user = NodePath("..")
 script = ExtResource("11_4e0hg")
 user = NodePath("../..")
 
-[node name="AttackEnemy" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf" index="0" node_paths=PackedStringArray("user")]
+[node name="Explore" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf" index="0" node_paths=PackedStringArray("user")]
+script = ExtResource("6_f3in7")
+user = NodePath("../../..")
+
+[node name="PickupItems" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="0" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("9_p612t")
+NavAgent = NodePath("../../../../NavigationAgent2D")
+user = NodePath("../../../..")
+
+[node name="FindLocation" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="1" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("7_grcq7")
+NavAgent = NodePath("../../../../NavigationAgent2D")
+user = NodePath("../../../..")
+
+[node name="GoToLocation" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="2" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("8_amp7x")
+NavAgent = NodePath("../../../../NavigationAgent2D")
+user = NodePath("../../../..")
+
+[node name="AttackEnemy" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf" index="1" node_paths=PackedStringArray("user")]
 script = ExtResource("6_f3in7")
 user = NodePath("../../..")
 
@@ -86,27 +105,6 @@ NavAgent = NodePath("../../../../NavigationAgent2D")
 user = NodePath("../../../..")
 
 [node name="GoToLocation" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/AttackEnemy" index="2" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("8_amp7x")
-NavAgent = NodePath("../../../../NavigationAgent2D")
-user = NodePath("../../../..")
-
-[node name="Explore" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf" index="1" node_paths=PackedStringArray("user")]
-script = ExtResource("6_f3in7")
-user = NodePath("../../..")
-
-[node name="PickupItems" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="0" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("9_p612t")
-NavAgent = NodePath("../../../../NavigationAgent2D")
-user = NodePath("../../../..")
-
-[node name="FindLocation" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="1" node_paths=PackedStringArray("CArea", "Cshape", "NavAgent", "user")]
-script = ExtResource("7_grcq7")
-CArea = NodePath("../../../../Areas/Detectbox")
-Cshape = NodePath("../../../../Areas/Detectbox/CollisionShape2D")
-NavAgent = NodePath("../../../../NavigationAgent2D")
-user = NodePath("../../../..")
-
-[node name="GoToLocation" type="Node" parent="BehaviorTreeBase/CompositeRandomizerLeaf/Explore" index="2" node_paths=PackedStringArray("NavAgent", "user")]
 script = ExtResource("8_amp7x")
 NavAgent = NodePath("../../../../NavigationAgent2D")
 user = NodePath("../../../..")

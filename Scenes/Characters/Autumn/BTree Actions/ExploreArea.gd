@@ -17,5 +17,5 @@ func UseActionPhysics(_state):
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	if !enemies.is_empty():
 		var enemy = enemies.pick_random()
-		user.target = enemy.global_position
+		user.target = enemy
 

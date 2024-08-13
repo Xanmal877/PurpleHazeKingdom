@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="6_00a48"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vo532"]
-radius = 11.0
+radius = 8.06226
 
 [sub_resource type="Animation" id="Animation_u5dg8"]
 length = 0.001

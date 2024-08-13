@@ -120,7 +120,6 @@ func EnemyDetected(area):
 		combat.start(0.5)
 
 func EnemyNotDetected(area):
-	if area.get_owner().is_in_group("Adventurer"):
 		target = null
 		ui.hide()
 		#currentState = IDLE

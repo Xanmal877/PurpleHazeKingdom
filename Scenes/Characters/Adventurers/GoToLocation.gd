@@ -5,7 +5,7 @@ extends ActionLeaf
 var pointreached: bool = false
 
 func CanUsePhysics(_state):
-	if user.target != null and NavAgent.distance_to_target() >= 30:
+	if user.target != null:
 		return true
 	return false
 
@@ -14,8 +14,7 @@ func UseActionPhysics(_state):
 	time -= 0.1
 	if time <= 0:
 		time = 1.5
+		NavAgent.target_position = user.target.global_position
 		user.direction = user.to_local(NavAgent.get_next_path_position()).normalized()
-		#if NavAgent.distance_to_target() <= 30:
-			#user.target = null
-		#if user.global_position.distance_to(user.target) <= 30:
-			#user.target = null
+		if NavAgent.distance_to_target() <= 30:
+			user.target = null

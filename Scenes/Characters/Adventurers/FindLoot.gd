@@ -3,6 +3,7 @@ extends ActionLeaf
 @export var NavAgent: NavigationAgent2D
 @onready var items = get_tree().get_nodes_in_group("Item")
 
+
 func CanUsePhysics(_state):
 	items = get_tree().get_nodes_in_group("Item")
 	if !items.is_empty():

@@ -14,43 +14,7 @@ script = ExtResource("1_aes4r")
 
 [node name="RegionOne" parent="." instance=ExtResource("2_qjn5p")]
 
-[node name="Locations" type="Node2D" parent="." groups=["locations"]]
-
-[node name="StoneEdgeVillage" type="Marker2D" parent="Locations" groups=["SEVillage"]]
-position = Vector2(1569, 1534)
-scale = Vector2(0.998858, 1.00315)
-
-[node name="SlimeFields" type="Marker2D" parent="Locations" groups=["SFields"]]
-position = Vector2(49, 1617)
-
-[node name="Marker2D" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(164, 162)
-
-[node name="Marker2D2" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(777, 236)
-
-[node name="Marker2D3" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(894, 33)
-
-[node name="Marker2D4" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(409, -117)
-
-[node name="Marker2D5" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(194, -200)
-
-[node name="Marker2D6" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(871, -197)
-
-[node name="Marker2D9" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(305, 259)
-
-[node name="Marker2D10" type="Marker2D" parent="Locations/SlimeFields"]
-position = Vector2(649, 6)
-
-[node name="Trellark Forest" type="Marker2D" parent="Locations" groups=["TForest"]]
-position = Vector2(47, 465)
-
-[node name="AdventurerRespawn" type="Marker2D" parent="Locations"]
+[node name="AdventurerRespawn" type="Marker2D" parent="."]
 position = Vector2(1569, 1559)
 
 [node name="Characters" type="Node2D" parent="."]

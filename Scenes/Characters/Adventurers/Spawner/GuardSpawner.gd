@@ -24,8 +24,9 @@ func generateRandomPosition() -> Vector2:
 @export var MaxSpawns: int
 @onready var spawntimer = $SpawnTimer
 
+
 const GUARD = preload("res://Scenes/Characters/Adventurers/Guard.tscn")
-func Spawn():
+func SpawnGuard():
 	var npc = GUARD.instantiate()
 	Spawned.add_child(npc)
 	npc.global_position = generateRandomPosition()
@@ -33,6 +34,7 @@ func Spawn():
 
 func SpawnTimer():
 	if Spawned.get_child_count() != MaxSpawns:
-		Spawn()
+		SpawnGuard()
+
 
 #endregion
