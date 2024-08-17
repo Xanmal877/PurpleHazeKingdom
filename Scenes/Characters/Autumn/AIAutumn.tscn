@@ -1,0 +1,374 @@
+[gd_scene load_steps=29 format=3 uid="uid://c0br65xw5ls7u"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/AIAutumn.gd" id="1_vo3u4"]
+[ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Scenes/Characters/Autumn/SpriteSheet3 (Primary).png" id="2_k7xpo"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/Areas/Detectbox.gd" id="3_d3xb1"]
+[ext_resource type="AnimationLibrary" uid="uid://c1s5fae33vol4" path="res://Scenes/Characters/Autumn/Animations/Idle.res" id="3_mxjrn"]
+[ext_resource type="AnimationLibrary" uid="uid://y15vhtqlrevx" path="res://Scenes/Characters/Autumn/Animations/VoidBolt.res" id="4_o4pgb"]
+[ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="5_4kese"]
+[ext_resource type="AnimationLibrary" uid="uid://cskxjhctjvgeo" path="res://Scenes/Characters/Autumn/Animations/Walk.res" id="5_yix8o"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://c3cti7rr55kx8" path="res://Scenes/Characters/Autumn/Animations/AnimeTree.tres" id="6_doiin"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/UI/StatBars.gd" id="7_x7s31"]
+[ext_resource type="Script" path="res://Scenes/BehaviorTree/Base/BTreeBase.gd" id="8_7d4p6"]
+[ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="9_17y0m"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/FollowTamaAction.gd" id="10_uvnt3"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/VoidBoltAction.gd" id="12_td2he"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/GoToEnemy.gd" id="15_0rkh2"]
+[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/ExploreArea.gd" id="15_sorcu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
+size = Vector2(8.33332, 5.55556)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c2qeh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uga1"]
+radius = 21.1111
+height = 42.2222
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jj3f3"]
+radius = 40.0
+
+[sub_resource type="Animation" id="Animation_bpuxi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [85]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nyx7m"]
+_data = {
+"RESET": SubResource("Animation_bpuxi")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x62gx"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.337255, 0, 0.337255, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmn32"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkunt"]
+bg_color = Color(0.862745, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qi84f"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u3cd2"]
+bg_color = Color(0, 0.4, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbsm4"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2478d"]
+bg_color = Color(0, 0, 0.654902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="AIAutumn" type="CharacterBody2D" node_paths=PackedStringArray("NavAgent") groups=["Adventurer", "Autumn", "player"]]
+y_sort_enabled = true
+scale = Vector2(0.9, 0.9)
+collision_mask = 9
+input_pickable = true
+script = ExtResource("1_vo3u4")
+NavAgent = NodePath("NavigationAgent2D")
+Intelligence = 14
+Wisdom = 12
+Name = "Autumn Sakilera"
+Class = "Void Mage"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_k7xpo")
+hframes = 14
+vframes = 13
+frame = 85
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s1cxy")
+
+[node name="Areas" type="Node2D" parent="." groups=["AutumnAreas"]]
+
+[node name="Hurtbox" type="Area2D" parent="Areas" groups=["Autumn"]]
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
+shape = SubResource("CircleShape2D_c2qeh")
+disabled = true
+
+[node name="Hitbox" type="Area2D" parent="Areas" groups=["Autumn"]]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hitbox"]
+shape = SubResource("CircleShape2D_c2qeh")
+disabled = true
+
+[node name="InteractBox" type="Area2D" parent="Areas" groups=["Autumn"]]
+collision_layer = 516
+collision_mask = 516
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/InteractBox"]
+position = Vector2(-1.11111, 5.55556)
+shape = SubResource("CapsuleShape2D_5uga1")
+
+[node name="Detectbox" type="Area2D" parent="Areas" groups=["Autumn"]]
+collision_layer = 64
+collision_mask = 64
+script = ExtResource("3_d3xb1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectbox"]
+shape = SubResource("CircleShape2D_jj3f3")
+
+[node name="Animations" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_nyx7m"),
+"Idle": ExtResource("3_mxjrn"),
+"VoidBolt": ExtResource("4_o4pgb"),
+"Walk": ExtResource("5_yix8o")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Animations"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_nyx7m"),
+"Idle": ExtResource("3_mxjrn"),
+"VoidBolt": ExtResource("4_o4pgb"),
+"Walk": ExtResource("5_yix8o")
+}
+tree_root = ExtResource("6_doiin")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/Idle = false
+parameters/conditions/Reset = false
+parameters/conditions/VoidBolt = false
+parameters/conditions/Walking = false
+parameters/Idle/blend_position = Vector2(0.0311999, 0.0238094)
+parameters/VoidBolt/blend_position = Vector2(0, 0.150794)
+parameters/Walking/blend_position = Vector2(-0.336, -0.495595)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 30.0
+path_postprocessing = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="RegenerationTimer" type="Timer" parent="Timers"]
+wait_time = 0.5
+autostart = true
+
+[node name="MoodTimer" type="Timer" parent="Timers"]
+wait_time = 200.0
+autostart = true
+
+[node name="CombatTimer" type="Timer" parent="Timers"]
+
+[node name="Statbars" type="Panel" parent="." node_paths=PackedStringArray("user")]
+custom_minimum_size = Vector2(30, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.4444
+offset_top = -40.0
+offset_right = 15.5556
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x62gx")
+script = ExtResource("7_x7s31")
+user = NodePath("..")
+
+[node name="Healthbar" type="ProgressBar" parent="Statbars"]
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -9.33333
+offset_right = 37.0
+offset_bottom = 0.666673
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_dmn32")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dkunt")
+value = 50.0
+show_percentage = false
+
+[node name="Staminabar" type="ProgressBar" parent="Statbars"]
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -2.66666
+offset_right = 37.0
+offset_bottom = 7.33334
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme_override_styles/background = SubResource("StyleBoxFlat_qi84f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u3cd2")
+value = 50.0
+show_percentage = false
+
+[node name="Manabar" type="ProgressBar" parent="Statbars"]
+z_index = 2
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = 4.00001
+offset_right = 37.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_tbsm4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2478d")
+value = 50.0
+show_percentage = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Inventory" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("5_4kese")]
+process_mode = 3
+visible = false
+player = NodePath("../..")
+
+[node name="BTreeBase" type="Node" parent="." node_paths=PackedStringArray("user")]
+script = ExtResource("8_7d4p6")
+user = NodePath("..")
+
+[node name="Combat" type="Node" parent="BTreeBase" node_paths=PackedStringArray("user")]
+script = ExtResource("9_17y0m")
+user = NodePath("../..")
+
+[node name="VoidBoltAction" type="Node" parent="BTreeBase/Combat" node_paths=PackedStringArray("user")]
+script = ExtResource("12_td2he")
+user = NodePath("../../..")
+time = 1.0
+
+[node name="Move" type="Node" parent="BTreeBase" node_paths=PackedStringArray("user")]
+script = ExtResource("9_17y0m")
+user = NodePath("../..")
+
+[node name="FollowTama" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("10_uvnt3")
+NavAgent = NodePath("../../../NavigationAgent2D")
+user = NodePath("../../..")
+
+[node name="FindEnemy" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("15_sorcu")
+NavAgent = NodePath("../../../NavigationAgent2D")
+user = NodePath("../../..")
+
+[node name="GoToEnemy" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
+script = ExtResource("15_0rkh2")
+NavAgent = NodePath("../../../NavigationAgent2D")
+user = NodePath("../../..")
+
+[connection signal="area_entered" from="Areas/Hurtbox" to="." method="InDamageRange"]
+[connection signal="area_exited" from="Areas/Hurtbox" to="." method="NotInDamageRange"]
+[connection signal="area_entered" from="Areas/Hitbox" to="." method="TakeDamage"]
+[connection signal="area_entered" from="Areas/InteractBox" to="." method="FindItems"]
+[connection signal="mouse_entered" from="Areas/InteractBox" to="." method="MouseOn"]
+[connection signal="mouse_exited" from="Areas/InteractBox" to="." method="MouseOff"]
+[connection signal="area_entered" from="Areas/Detectbox" to="." method="EnemyDetected"]
+[connection signal="area_entered" from="Areas/Detectbox" to="Areas/Detectbox" method="FindItems"]
+[connection signal="area_exited" from="Areas/Detectbox" to="." method="EnemyNotDetected"]
+[connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
+[connection signal="timeout" from="Timers/MoodTimer" to="." method="MoodTimeout"]

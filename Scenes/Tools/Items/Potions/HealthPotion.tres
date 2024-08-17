@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://mavufsixqny2"]
+
+[ext_resource type="Script" path="res://Scenes/Tools/ItemResource.gd" id="1_m0838"]
+[ext_resource type="Texture2D" uid="uid://qn2lviuxfm6h" path="res://Assets/Items/Potions/LiteHealthPotion.png" id="1_s8rhp"]
+
+[resource]
+script = ExtResource("1_m0838")
+name = "Health Potion"
+Type = "Consumable"
+description = "A Health Potion that heals you
+"
+image = ExtResource("1_s8rhp")
+amount = 1
+worth = 20

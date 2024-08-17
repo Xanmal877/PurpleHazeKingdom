@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://nrm3q4om1iy4"]
+
+[ext_resource type="PackedScene" uid="uid://dibacumy5o8wj" path="res://Scenes/Buildings/Building.tscn" id="1_j4sih"]
+[ext_resource type="Texture2D" uid="uid://ob223xtwg3hb" path="res://Assets/Spritesheets/Locations/Village/small houses.png" id="2_nesob"]
+
+[node name="SmallHouse" instance=ExtResource("1_j4sih")]
+scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_nesob")
+region_enabled = true
+region_rect = Rect2(376, 248, 80, 104)
+
+[node name="CollisionPolygon2D" parent="." index="1"]
+polygon = PackedVector2Array(28, 48, -28, 50, -29, 29, -32, -18, -2, -46, 2, -45, 27, -22, 28, 22)

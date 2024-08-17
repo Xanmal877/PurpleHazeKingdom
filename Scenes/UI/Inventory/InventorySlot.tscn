@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca8bkqka7yeg"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Inventory/InventorySlot.gd" id="1_qtlik"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7lcl"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_nlx7q"]
+font_size = 12
+font_color = Color(0, 0, 0, 1)
+
+[node name="Slot" type="Control"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchor_right = 0.0972222
+anchor_bottom = 0.166667
+mouse_filter = 1
+script = ExtResource("1_qtlik")
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot" type="Panel" parent="."]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_a7lcl")
+
+[node name="image" type="TextureButton" parent="Slot"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 0.7625
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="amount" type="Label" parent="Slot"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+offset_left = 30.0
+offset_top = 62.0
+offset_right = 50.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "100"
+label_settings = SubResource("LabelSettings_nlx7q")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[connection signal="mouse_entered" from="." to="." method="SlotEntered"]
+[connection signal="mouse_exited" from="." to="." method="SlotExited"]

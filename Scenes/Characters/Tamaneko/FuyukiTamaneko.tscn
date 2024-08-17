@@ -1,0 +1,358 @@
+[gd_scene load_steps=28 format=3 uid="uid://bj451chfshy60"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/Tamaneko/FuyukiTamaneko.gd" id="1_f3r72"]
+[ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Scenes/Characters/Tamaneko/Spritesheet.png" id="2_0r0ug"]
+[ext_resource type="AnimationLibrary" uid="uid://bv4h2h7n17noe" path="res://Scenes/Characters/Tamaneko/Animations/Idle.res" id="3_32khv"]
+[ext_resource type="AnimationLibrary" uid="uid://caygbxxk255te" path="res://Scenes/Characters/Tamaneko/Animations/Katana.res" id="4_h8jm2"]
+[ext_resource type="AnimationLibrary" uid="uid://bw1axujx5130s" path="res://Scenes/Characters/Tamaneko/Animations/Shuriken.res" id="5_41opb"]
+[ext_resource type="AnimationLibrary" uid="uid://coer0hcfs8i0l" path="res://Scenes/Characters/Tamaneko/Animations/Walk.res" id="6_sx43n"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://bqxg6sxn40lye" path="res://Scenes/Characters/Tamaneko/Animations/AnimTree.tres" id="7_bmcym"]
+[ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="8_slfr1"]
+[ext_resource type="Script" path="res://Scenes/UI/StatBars/healthbar.gd" id="10_if5h3"]
+[ext_resource type="Script" path="res://Scenes/UI/Controls.gd" id="11_0mnm5"]
+[ext_resource type="Script" path="res://Scenes/UI/StatBars/staminabar.gd" id="11_v56gf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhrje"]
+size = Vector2(9, 6)
+
+[sub_resource type="Animation" id="Animation_crerl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Areas/Hurtbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3kl86"]
+_data = {
+"RESET": SubResource("Animation_crerl")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t4tng"]
+radius = 33.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_es6yj"]
+radius = 36.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cg4w"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.443137, 0.0196078, 0.443137, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2jtww"]
+size = Vector2(60, 60)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iseyw"]
+radius = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c607d"]
+bg_color = Color(0.298039, 0, 0.298039, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqams"]
+font_size = 46
+
+[sub_resource type="LabelSettings" id="LabelSettings_gcjgo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhrc2"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmn32"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkunt"]
+bg_color = Color(0.862745, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qi84f"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u3cd2"]
+bg_color = Color(0, 0.4, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="Tamaneko" type="CharacterBody2D" groups=["Adventurer", "Tamaneko", "player"]]
+y_sort_enabled = true
+collision_mask = 9
+input_pickable = true
+script = ExtResource("1_f3r72")
+Dexterity = 16
+Charisma = 12
+Name = "Fuyuki Tamaneko"
+Class = "Ninja"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("2_0r0ug")
+hframes = 10
+vframes = 14
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_uhrje")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="Animations" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_3kl86"),
+"Idle": ExtResource("3_32khv"),
+"Katana": ExtResource("4_h8jm2"),
+"Shuriken": ExtResource("5_41opb"),
+"Walk": ExtResource("6_sx43n")
+}
+autoplay = "RESET"
+
+[node name="AnimationTree" type="AnimationTree" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_3kl86"),
+"Idle": ExtResource("3_32khv"),
+"Katana": ExtResource("4_h8jm2"),
+"Shuriken": ExtResource("5_41opb"),
+"Walk": ExtResource("6_sx43n")
+}
+tree_root = ExtResource("7_bmcym")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/Idle = false
+parameters/conditions/Swing = false
+parameters/conditions/Throw = false
+parameters/conditions/Walk = false
+parameters/Idle/blend_position = Vector2(0.114091, 0.560241)
+"parameters/Swing Katana/blend_position" = Vector2(0, 0)
+"parameters/Throw Shuriken/blend_position" = Vector2(-0.114091, -0.487952)
+parameters/Walk/blend_position = Vector2(0.0276221, 0.548193)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="RegenerationTimer" type="Timer" parent="Timers"]
+wait_time = 0.5
+autostart = true
+
+[node name="SneakTimer" type="Timer" parent="Timers"]
+wait_time = 0.4
+
+[node name="DashTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Areas" type="Node2D" parent="." groups=["TamaAreas"]]
+
+[node name="Hurtbox" type="Area2D" parent="Areas"]
+visible = false
+rotation = 3.14159
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
+shape = SubResource("CircleShape2D_t4tng")
+
+[node name="Hitbox" type="Area2D" parent="Areas"]
+visible = false
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hitbox"]
+
+[node name="StealthBox" type="Area2D" parent="Areas" groups=["tstealth"]]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/StealthBox"]
+shape = SubResource("CircleShape2D_es6yj")
+
+[node name="StealthPanel" type="Panel" parent="Areas/StealthBox"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2cg4w")
+
+[node name="Interactbox" type="Area2D" parent="Areas" groups=["InteractBox"]]
+visible = false
+collision_layer = 516
+collision_mask = 516
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Interactbox"]
+shape = SubResource("RectangleShape2D_2jtww")
+
+[node name="Detectbox" type="Area2D" parent="Areas"]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectbox"]
+shape = SubResource("CircleShape2D_iseyw")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Inventory" parent="UI" node_paths=PackedStringArray("user") instance=ExtResource("8_slfr1")]
+visible = false
+user = NodePath("../..")
+
+[node name="Controls" type="Panel" parent="UI"]
+visible = false
+custom_minimum_size = Vector2(300, 250)
+anchors_preset = -1
+anchor_left = 0.739583
+anchor_right = 1.0
+anchor_bottom = 0.490741
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_c607d")
+script = ExtResource("11_0mnm5")
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="Label" parent="UI/Controls"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_bqams")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/Controls"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.211346
+anchor_right = 1.0
+anchor_bottom = 0.856
+offset_top = 10.384
+grow_horizontal = 2
+grow_vertical = 0
+text = "Move = WASD
+Left Click = Swing Weapon
+Right Click = Throw Shuriken
+Shift = Dash
+C = Sneak
+Tab = Inventory
+1 = Health Potion
+2 = Stamina Potion"
+label_settings = SubResource("LabelSettings_gcjgo")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="UI/Controls"]
+layout_mode = 0
+anchor_left = 0.399999
+anchor_top = 0.86
+anchor_right = 0.546666
+anchor_bottom = 1.0
+offset_right = -1.52588e-05
+theme_override_styles/normal = SubResource("StyleBoxFlat_yhrc2")
+text = "Close"
+metadata/_edit_use_anchors_ = true
+
+[node name="Healthbar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("user")]
+custom_minimum_size = Vector2(250, 10)
+anchors_preset = -1
+anchor_top = 0.896605
+anchor_right = 0.217014
+anchor_bottom = 0.938272
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_dmn32")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dkunt")
+value = 50.0
+script = ExtResource("10_if5h3")
+user = NodePath("../..")
+metadata/_edit_use_anchors_ = true
+
+[node name="Staminabar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("user")]
+custom_minimum_size = Vector2(250, 20)
+anchors_preset = -1
+anchor_top = 0.947531
+anchor_right = 0.217014
+anchor_bottom = 0.989198
+theme_override_styles/background = SubResource("StyleBoxFlat_qi84f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u3cd2")
+value = 50.0
+script = ExtResource("11_v56gf")
+user = NodePath("../..")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
+[connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]
+[connection signal="timeout" from="Timers/DashTimer" to="." method="DashTimeout"]
+[connection signal="area_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
+[connection signal="pressed" from="UI/Controls/Button" to="UI/Controls" method="_on_button_pressed"]

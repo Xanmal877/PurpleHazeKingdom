@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cu80noxo0yjad"]
+
+[ext_resource type="PackedScene" uid="uid://dibacumy5o8wj" path="res://Scenes/Buildings/Building.tscn" id="1_ct6qb"]
+[ext_resource type="Texture2D" uid="uid://cffw5ijashx13" path="res://Assets/Spritesheets/Locations/Village/special houses.png" id="2_1bael"]
+[ext_resource type="Script" path="res://Scenes/Buildings/TownHall.gd" id="2_jyjvn"]
+[ext_resource type="PackedScene" uid="uid://b1xd14dmeq4af" path="res://Scenes/Buildings/UI/TownHallMenu.tscn" id="4_ohpjd"]
+
+[node name="TownHall" node_paths=PackedStringArray("menu") instance=ExtResource("1_ct6qb")]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("2_jyjvn")
+menu = NodePath("CanvasLayer/TownHallMenu")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_1bael")
+region_enabled = true
+region_rect = Rect2(16, 0, 192, 128)
+
+[node name="CollisionPolygon2D" parent="." index="1"]
+polygon = PackedVector2Array(84, 49.3333, 28, 48, 26.6667, 61.3333, -26.6667, 61.3333, -28, 48, -82.6667, 48.6667, -87.3333, 22.6667, -89.3333, -2, -88.6667, -9.33333, -33.3333, -9.33333, 34, -10.6667, 88, -10.6667, 89.3333, 26, 82, 26)
+
+[node name="TownHallMenu" parent="CanvasLayer" index="0" instance=ExtResource("4_ohpjd")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0

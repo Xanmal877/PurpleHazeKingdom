@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfsfn8goxw6x2"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Inventory/CharacterSlot.gd" id="1_247kp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7lcl"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4voi8"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 1, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_mraif"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="CharacterSlot" type="Control"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 3
+anchor_left = 0.0173611
+anchor_top = 0.0308642
+anchor_right = 0.0607639
+anchor_bottom = 0.108025
+offset_right = 50.0
+offset_bottom = 50.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 1
+script = ExtResource("1_247kp")
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_a7lcl")
+
+[node name="AdventurerInfo" type="Label" parent="Slot"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_4voi8")
+text = "name"
+label_settings = SubResource("LabelSettings_mraif")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="." to="." method="SlotEntered"]
+[connection signal="mouse_exited" from="." to="." method="SlotExited"]

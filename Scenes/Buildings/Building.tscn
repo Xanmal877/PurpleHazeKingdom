@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dibacumy5o8wj"]
+
+[ext_resource type="Script" path="res://Scenes/Buildings/Building.gd" id="1_ini0b"]
+
+[node name="Building" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 8
+input_pickable = true
+script = ExtResource("1_ini0b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[connection signal="mouse_entered" from="." to="." method="MouseOn"]
+[connection signal="mouse_exited" from="." to="." method="MouseOff"]

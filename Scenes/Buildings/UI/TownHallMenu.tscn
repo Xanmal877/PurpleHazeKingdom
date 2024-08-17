@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1xd14dmeq4af"]
+
+[ext_resource type="PackedScene" uid="uid://dii8cfolglpot" path="res://Scenes/Buildings/UI/BuildingMenu.tscn" id="1_qpcb1"]
+[ext_resource type="Script" path="res://Scenes/UI/Inventory/CharacterList.gd" id="2_q0k0t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1eyq"]
+bg_color = Color(0.498039, 0, 0.690196, 0.886275)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0.54902, 1)
+border_blend = true
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ae2uy"]
+bg_color = Color(0, 0, 0.635294, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_dhh66"]
+font_color = Color(0, 1, 1, 1)
+
+[node name="TownHallMenu" instance=ExtResource("1_qpcb1")]
+
+[node name="Label" parent="Panel" index="0"]
+text = "Town Hall"
+
+[node name="Character List" type="Control" parent="Panel" index="1" groups=["CSlot"]]
+custom_minimum_size = Vector2(280, 400)
+layout_mode = 1
+anchor_left = 0.00125
+anchor_top = 0.005
+anchor_right = 0.35625
+anchor_bottom = 0.9225
+offset_right = 56.0
+offset_bottom = 80.0
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+script = ExtResource("2_q0k0t")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Character List" index="0"]
+custom_minimum_size = Vector2(280, 400)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory" type="Panel" parent="Panel/Character List/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(280, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1eyq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Panel/Character List/VBoxContainer/Inventory" index="0"]
+custom_minimum_size = Vector2(280, 40)
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 0.222286
+theme_override_styles/normal = SubResource("StyleBoxFlat_ae2uy")
+text = "Adventurers List"
+label_settings = SubResource("LabelSettings_dhh66")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Character List/VBoxContainer/Inventory" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0166667
+anchor_top = 0.23
+anchor_right = 1.00952
+anchor_bottom = 0.9775
+mouse_filter = 0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="Panel/Character List/VBoxContainer/Inventory/ScrollContainer" index="0"]
+custom_minimum_size = Vector2(270, 300)
+layout_mode = 2
+columns = 2
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://btsrr0udefl7o"]
+
+[ext_resource type="PackedScene" uid="uid://b2fkyte1jfbu1" path="res://Scenes/Tools/Weapons/Ranged/Projectile.tscn" id="1_lf0c1"]
+[ext_resource type="Texture2D" uid="uid://bjecxux8cgcej" path="res://Assets/Weapons and Armor/weapons1.png" id="2_1jl5v"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ll8cg"]
+radius = 2.99999
+height = 22.0
+
+[node name="Arrow" groups=["arrow"] instance=ExtResource("1_lf0c1")]
+rotation = 3.92699
+scale = Vector2(0.7, 0.7)
+
+[node name="CollisionShape2D" parent="." index="0"]
+rotation = -0.783443
+shape = SubResource("CapsuleShape2D_ll8cg")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_1jl5v")
+region_enabled = true
+region_rect = Rect2(0, 112, 16, 16)
+
+[node name="Timeout" parent="." index="3"]
+wait_time = 2.0

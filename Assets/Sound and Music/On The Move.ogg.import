@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bk0qstprtxt0p"
+path="res://.godot/imported/On The Move.ogg-84c07ba891c4e7d8d529ad5ed57353c1.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Sound and Music/On The Move.ogg"
+dest_files=["res://.godot/imported/On The Move.ogg-84c07ba891c4e7d8d529ad5ed57353c1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

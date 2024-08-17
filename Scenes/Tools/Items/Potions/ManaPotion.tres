@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://81e15sxa2kql"]
+
+[ext_resource type="Script" path="res://Scenes/Tools/ItemResource.gd" id="1_3gijo"]
+[ext_resource type="Texture2D" uid="uid://bnw8y0dswskkt" path="res://Assets/Items/Potions/LiteManaPotion.png" id="1_joed8"]
+
+[resource]
+script = ExtResource("1_3gijo")
+name = "Mana Potion"
+Type = "Consumable"
+description = "123456"
+image = ExtResource("1_joed8")
+amount = 1
+worth = 20

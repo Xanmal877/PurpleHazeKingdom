@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgxkno6wyju3j"]
+
+[ext_resource type="PackedScene" uid="uid://dvfle884xd3f4" path="res://Scenes/Tools/Item.tscn" id="1_n4w3o"]
+[ext_resource type="Resource" uid="uid://boinpof75udoj" path="res://Scenes/Tools/Items/MonsterDrops/SlimeGoo.tres" id="2_0pkp3"]
+[ext_resource type="Texture2D" uid="uid://cmx374la8atps" path="res://Assets/Items/MagicalItems.png" id="3_xi4no"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dmjl"]
+radius = 7.0
+
+[node name="Slime Goo" instance=ExtResource("1_n4w3o")]
+scale = Vector2(0.6, 0.6)
+item = ExtResource("2_0pkp3")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_3dmjl")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_xi4no")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bcq4eqd8v362r"]
+
+[ext_resource type="Texture2D" uid="uid://cx4be1qko1oo8" path="res://Assets/Items/Resources/Branch.png" id="1_s2nio"]
+[ext_resource type="Script" path="res://Scenes/Tools/ItemResource.gd" id="2_sgoo6"]
+
+[resource]
+script = ExtResource("2_sgoo6")
+name = "Branch"
+Type = "Consumable"
+description = ""
+image = ExtResource("1_s2nio")
+amount = 1
+worth = 1
