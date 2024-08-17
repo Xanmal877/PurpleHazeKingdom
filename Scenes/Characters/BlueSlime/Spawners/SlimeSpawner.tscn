@@ -2,11 +2,15 @@
 
 [ext_resource type="Script" path="res://Scenes/Characters/BlueSlime/Spawners/SlimeSpawner.gd" id="1_hqxac"]
 
-[node name="SlimeSpawner" type="Node2D"]
+[node name="SlimeSpawner" type="Node2D" node_paths=PackedStringArray("Spawned")]
 script = ExtResource("1_hqxac")
+Spawned = NodePath("Spawned")
+MaxSpawns = 100
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="Spawned" type="Node2D" parent="."]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="SpawnTimer"]

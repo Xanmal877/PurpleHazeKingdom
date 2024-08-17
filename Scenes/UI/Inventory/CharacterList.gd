@@ -9,8 +9,6 @@ extends Control
 @onready var title = $VBoxContainer/Inventory/Title
 @onready var grid = $VBoxContainer/Inventory/ScrollContainer/Grid
 
-
-
 const CHARACTER_SLOT = preload("res://Scenes/UI/Inventory/CharacterSlot.tscn")
 
 
@@ -32,9 +30,6 @@ signal RemoveItem(item: ItemResource)
 func _ready():
 	title.text = "Character List"
 
-func _process(delta):
-	ClistUpdate()
-
 func _input(event):
 	OpenCList()
 
@@ -52,10 +47,14 @@ func ClistUpdate():
 		var slot = CHARACTER_SLOT.instantiate()
 		grid.add_child(slot)
 		
-		slot.adventurer_info.text = str(adv.Name) + "\n" + "Level:  " + str(adv.level) + "\n" + str(adv.Class)
+		slot.adventurer_info.text = str(adv.stats.Name) + "\n" + "Level:  " + str(adv.stats.level) + "\n" + str(adv.stats.Class)
 
 
 func OpenCList():
 	if Input.is_action_just_pressed("Character List"):
 		visible = !visible
 		ClistUpdate()
+
+
+func _on_timer_timeout():
+	ClistUpdate()

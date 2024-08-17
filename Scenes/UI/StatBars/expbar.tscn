@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://lfjkogq33l4a"]
+
+[ext_resource type="Script" path="res://Scenes/UI/StatBars/expbar.gd" id="1_nqfj5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sr4pf"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0.619608, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7xf8"]
+bg_color = Color(0.47451, 0, 0.552941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="expbar" type="ProgressBar"]
+custom_minimum_size = Vector2(250, 10)
+size_flags_vertical = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_sr4pf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_o7xf8")
+value = 50.0
+script = ExtResource("1_nqfj5")

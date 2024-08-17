@@ -1,0 +1,197 @@
+[gd_scene load_steps=10 format=3 uid="uid://4yqlapdu1p6u"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu.gd" id="1_dgdh6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gvhf"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvd1a"]
+bg_color = Color(0.305882, 0, 0.305882, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsrxc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hifff"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkt8n"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.490196, 0, 0.490196, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yi3x2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ua8h"]
+font_size = 128
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_usdal"]
+draw_center = false
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.8, 1, 0, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Main Menu" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_dgdh6")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8gvhf")
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gvd1a")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -20.0
+offset_right = 46.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "New Game"
+
+[node name="SaveGame" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "Save Game"
+icon_alignment = 1
+
+[node name="LoadGame" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "Load Game"
+icon_alignment = 1
+
+[node name="Bananas" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "Bananas"
+
+[node name="Options" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "Options"
+
+[node name="Exit Game" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_xsrxc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hifff")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkt8n")
+text = "Exit Game"
+
+[node name="Control" type="Control" parent="."]
+visible = false
+top_level = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BananaPanel" type="Panel" parent="Control"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yi3x2")
+
+[node name="Label" type="Label" parent="Control/BananaPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "BANANAS"
+label_settings = SubResource("LabelSettings_8ua8h")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Control/BananaPanel"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_usdal")
+text = "Close"
+
+[connection signal="pressed" from="Menu/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/SaveGame" to="." method="_on_save_game_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Bananas" to="." method="_on_bananas_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Menu/VBoxContainer/Exit Game" to="." method="_on_exit_game_pressed"]
+[connection signal="pressed" from="Control/BananaPanel/Button" to="." method="CloseBananaButton"]

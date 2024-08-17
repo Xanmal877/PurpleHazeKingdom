@@ -3,17 +3,12 @@ class_name SlimeSpawner extends Node2D
 
 #region Generate Random Position
 
-@export var CArea: Area2D
-@export var Cshape: CollisionShape2D
+@export var SpawnMarkers: Node2D
 
 func generateRandomPosition() -> Vector2:
-	var Cshapesize = Cshape.shape.size
-	var spawnzone = Vector2(
-		randi_range(-Cshapesize.x / 2, Cshapesize.x / 2),
-		randi_range(-Cshapesize.y / 2, Cshapesize.y / 2)
-	)
-	spawnzone += CArea.global_position
-	return spawnzone
+	var Markers = SpawnMarkers.get_children()
+	var marker = Markers.pick_random()
+	return marker.global_position
 
 #endregion
 
@@ -31,8 +26,17 @@ func Spawn():
 	blueslime.global_position = generateRandomPosition()
 
 
+
 func SpawnTimer():
-	if Spawned.get_child_count() < MaxSpawns:
+	if Spawned.get_child_count() < 25:
+		spawntimer.wait_time = 0.2
 		Spawn()
+	elif Spawned.get_child_count() < 60:
+		spawntimer.wait_time = 1
+		Spawn()
+	else:
+		pass
+	#print(Spawned.get_child_count())
+
 
 #endregion

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=2 format=3 uid="uid://dcg5kh1v3l0bv"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/CharacterStats.gd" id="1_2wocn"]
+
+[resource]
+script = ExtResource("1_2wocn")
+Name = "Fuyuki Tamaneko"
+Class = "Ninja"
+level = 5
+Strength = 10
+Dexterity = 16
+Constitution = 10
+Intelligence = 10
+Wisdom = 10
+Charisma = 10

@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=24 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/AIAutumn.gd" id="1_vo3u4"]
+[ext_resource type="Resource" uid="uid://b4c527txu6lh0" path="res://Scenes/Characters/Autumn/AIAutumnStats.tres" id="2_6jf6g"]
 [ext_resource type="Texture2D" uid="uid://08ywwfq0uehq" path="res://Scenes/Characters/Autumn/SpriteSheet3 (Primary).png" id="2_k7xpo"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/Areas/Detectbox.gd" id="3_d3xb1"]
 [ext_resource type="AnimationLibrary" uid="uid://c1s5fae33vol4" path="res://Scenes/Characters/Autumn/Animations/Idle.res" id="3_mxjrn"]
@@ -9,12 +10,6 @@
 [ext_resource type="AnimationLibrary" uid="uid://cskxjhctjvgeo" path="res://Scenes/Characters/Autumn/Animations/Walk.res" id="5_yix8o"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c3cti7rr55kx8" path="res://Scenes/Characters/Autumn/Animations/AnimeTree.tres" id="6_doiin"]
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/UI/StatBars.gd" id="7_x7s31"]
-[ext_resource type="Script" path="res://Scenes/BehaviorTree/Base/BTreeBase.gd" id="8_7d4p6"]
-[ext_resource type="Script" path="res://Scenes/BehaviorTree/Composite/CompositeTree.gd" id="9_17y0m"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/FollowTamaAction.gd" id="10_uvnt3"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/VoidBoltAction.gd" id="12_td2he"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/GoToEnemy.gd" id="15_0rkh2"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/BTree Actions/ExploreArea.gd" id="15_sorcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
 size = Vector2(8.33332, 5.55556)
@@ -144,10 +139,7 @@ collision_mask = 9
 input_pickable = true
 script = ExtResource("1_vo3u4")
 NavAgent = NodePath("NavigationAgent2D")
-Intelligence = 14
-Wisdom = 12
-Name = "Autumn Sakilera"
-Class = "Void Mage"
+stats = ExtResource("2_6jf6g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_k7xpo")
@@ -324,42 +316,9 @@ show_percentage = false
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Inventory" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("5_4kese")]
+[node name="Inventory" parent="UI" instance=ExtResource("5_4kese")]
 process_mode = 3
 visible = false
-player = NodePath("../..")
-
-[node name="BTreeBase" type="Node" parent="." node_paths=PackedStringArray("user")]
-script = ExtResource("8_7d4p6")
-user = NodePath("..")
-
-[node name="Combat" type="Node" parent="BTreeBase" node_paths=PackedStringArray("user")]
-script = ExtResource("9_17y0m")
-user = NodePath("../..")
-
-[node name="VoidBoltAction" type="Node" parent="BTreeBase/Combat" node_paths=PackedStringArray("user")]
-script = ExtResource("12_td2he")
-user = NodePath("../../..")
-time = 1.0
-
-[node name="Move" type="Node" parent="BTreeBase" node_paths=PackedStringArray("user")]
-script = ExtResource("9_17y0m")
-user = NodePath("../..")
-
-[node name="FollowTama" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("10_uvnt3")
-NavAgent = NodePath("../../../NavigationAgent2D")
-user = NodePath("../../..")
-
-[node name="FindEnemy" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("15_sorcu")
-NavAgent = NodePath("../../../NavigationAgent2D")
-user = NodePath("../../..")
-
-[node name="GoToEnemy" type="Node" parent="BTreeBase/Move" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("15_0rkh2")
-NavAgent = NodePath("../../../NavigationAgent2D")
-user = NodePath("../../..")
 
 [connection signal="area_entered" from="Areas/Hurtbox" to="." method="InDamageRange"]
 [connection signal="area_exited" from="Areas/Hurtbox" to="." method="NotInDamageRange"]

@@ -1,4 +1,4 @@
-class_name Slime extends GameStats
+class_name Slime extends CharacterBody2D
 
 
 #region Variables
@@ -9,6 +9,8 @@ class_name Slime extends GameStats
 @onready var healthbar = $UI/VBoxContainer/Healthbar
 @onready var animation_tree = $Animations/AnimationTree
 
+@export var stats: CharacterStats
+
 
 #endregion
 
@@ -16,26 +18,25 @@ class_name Slime extends GameStats
 #region The Runtimes
 
 func _ready():
-	nametag.text = str(Name) + "\n" + "lvl:  " + str(level)
+	nametag.text = str(stats.Name) + "\n" + "lvl:  " + str(stats.level)
 	ui.hide()
 	currentState = IDLE
 	GameManagement()
-	StatUpdates()
+	stats.StatUpdates()
 
 
 
 func _process(_delta):
 	OnDeath()
-	healthbar.value = health
-	healthbar.max_value = maxHealth
+	
 
 func _physics_process(_delta):
 	if currentState == IDLE:
 		velocity = Vector2.ZERO
-		speed = 0
+		stats.speed = 0
 	else:
-		speed = normalSpeed
-		velocity = direction * speed
+		stats.speed = stats.normalSpeed
+		velocity = stats.direction * stats.speed
 	move_and_slide()
 
 
@@ -93,7 +94,7 @@ func Explore():
 			ExploreArray.append(random_pos)
 	ExploreArray.shuffle()
 	Marker = ExploreArray.pop_back()
-	direction = global_position.direction_to(Marker)
+	stats.direction = global_position.direction_to(Marker)
 	if global_position.distance_to(Marker) <= 20:
 		currentState = IDLE
 
@@ -107,7 +108,6 @@ func get_random_position_nearby() -> Vector2:
 
 #region Combat
 
-@export var RespawnMarker: Marker2D
 var target
 var isincombat: bool = false
 @onready var combat = $Timers/CombatTimer
@@ -140,19 +140,18 @@ func NotInAttackRange(area):
 
 func DamageEnemy():
 	if target != null:
-		direction = global_position.direction_to(target.global_position)
+		stats.direction = global_position.direction_to(target.global_position)
 		if global_position.distance_to(target.global_position) <= 20:
-			GameManager.emit_signal("AttackMade", self, target, damage)
+			GameManager.emit_signal("AttackMade", self, target, stats.damage)
 
 
 func TakeDamage(Attacker, Attacked, Damage):
 	if Attacked != self:
 		return
 
-	health -= Damage
-	healthbar.value = health
-	healthbar.max_value = maxHealth
-
+	stats.health -= Damage
+	healthbar.value = stats.health
+	healthbar.max_value = stats.maxHealth
 
 #endregion
 
@@ -170,14 +169,11 @@ func DropItems():
 	item1.position = position
 
 
-#endregion
-
-
 func OnDeath():
-	if health <= 0:
+	if stats.health <= 0:
 		DropItems()
 		var goldvalue = randi_range(3,5)
-		GameManager.emit_signal("MonsterKilled",target, 35, goldvalue)
+		GameManager.emit_signal("MonsterKilled", self, 35, goldvalue)
 		queue_free()
 
 #endregion
@@ -188,12 +184,8 @@ func Regeneration():
 		pass
 
 
-func LevelUp(Killer, XPvalue, GoldValue):
-	super.LevelUp(Killer, XPvalue, GoldValue)
-	Strength += 2
-	Constitution += 2
-	StatUpdates()
-
-
-
-
+func LevelUp(Killed, XPvalue, GoldValue):
+	stats.LevelUp(Killed, XPvalue, GoldValue)
+	stats.Strength += 2
+	stats.Constitution += 2
+	stats.StatUpdates()

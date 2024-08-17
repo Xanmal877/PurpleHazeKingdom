@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" load_steps=34 format=3 uid="uid://s53tu530ys8s"]
 
-[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Spritesheets/Locations/Forest/apple-icon.png" id="1_ess57"]
-[ext_resource type="Texture2D" uid="uid://llnu5blcx6b1" path="res://Assets/Spritesheets/Locations/Forest/forest_objects.png" id="2_ce5dk"]
-[ext_resource type="Texture2D" uid="uid://bch207sea5ncb" path="res://Assets/Spritesheets/Locations/Forest/forest_terrain.png" id="3_23jmm"]
-[ext_resource type="Texture2D" uid="uid://2bep4sukwv4l" path="res://Assets/Spritesheets/Locations/Forest/Water and Waterfalls.png" id="4_ifk0c"]
+[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/apple-icon.png" id="1_ess57"]
+[ext_resource type="Texture2D" uid="uid://llnu5blcx6b1" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/forest_objects.png" id="2_ce5dk"]
+[ext_resource type="Texture2D" uid="uid://bch207sea5ncb" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/forest_terrain.png" id="3_23jmm"]
+[ext_resource type="Texture2D" uid="uid://2bep4sukwv4l" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/Water and Waterfalls.png" id="4_ifk0c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2j5f1"]
 resource_name = "Apple"

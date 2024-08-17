@@ -32,7 +32,7 @@ signal RemoveItem(item: ItemResource)
 
 func _ready():
 	await get_tree().create_timer(1).timeout
-	namelabel.text = user.Name
+	namelabel.text = user.stats.Name
 
 #endregion
 

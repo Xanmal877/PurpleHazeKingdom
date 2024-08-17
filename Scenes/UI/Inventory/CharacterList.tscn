@@ -83,3 +83,9 @@ custom_minimum_size = Vector2(270, 300)
 layout_mode = 2
 columns = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,32 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdfqaxbmf3h8s"]
+[gd_scene load_steps=5 format=3 uid="uid://cdfqaxbmf3h8s"]
 
-[ext_resource type="Script" path="res://World.gd" id="1_aes4r"]
-[ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Tamaneko/FuyukiTamaneko.tscn" id="1_strur"]
+[ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Fuyuki/Tamaneko.tscn" id="1_strur"]
 [ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
-[ext_resource type="PackedScene" uid="uid://bsklsrk2bcpb" path="res://Scenes/Characters/Adventurers/Warrior.tscn" id="5_v5t1h"]
-[ext_resource type="PackedScene" uid="uid://0tjtouyrbhqf" path="res://Scenes/UI/Inventory/CharacterList.tscn" id="7_6t7db"]
+[ext_resource type="PackedScene" uid="uid://4yqlapdu1p6u" path="res://Scenes/UI/MainMenu.tscn" id="4_taa8q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ep341"]
 
-[node name="World" type="Node2D" groups=["worldnode"]]
+[node name="SceneManager" type="Node2D" groups=["worldnode"]]
 y_sort_enabled = true
-script = ExtResource("1_aes4r")
 
 [node name="RegionOne" parent="." instance=ExtResource("2_qjn5p")]
 
-[node name="AdventurerRespawn" type="Marker2D" parent="."]
-position = Vector2(1569, 1559)
+[node name="AdventurerSpawn" type="Marker2D" parent="." groups=["ASpawn"]]
+position = Vector2(1565, 1041)
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Tamaneko" parent="Characters" instance=ExtResource("1_strur")]
 position = Vector2(1451, 1007)
-
-[node name="Adventurers" type="Node2D" parent="Characters" groups=["AdventurerGroup"]]
-
-[node name="Warrior" parent="Characters/Adventurers" instance=ExtResource("5_v5t1h")]
-position = Vector2(1510, 999)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -38,5 +30,5 @@ text = "Time: 100"
 label_settings = SubResource("LabelSettings_ep341")
 vertical_alignment = 3
 
-[node name="Character List" parent="CanvasLayer" instance=ExtResource("7_6t7db")]
+[node name="Main Menu" parent="." instance=ExtResource("4_taa8q")]
 visible = false

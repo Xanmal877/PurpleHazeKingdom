@@ -16,7 +16,7 @@ var direction: Vector2
 #region Runtimes
 
 func _ready():
-	if player.lastDirection != Vector2.ZERO:
+	if player.stats.lastDirection != Vector2.ZERO:
 		RangedProperties()
 		velocity = direction * speed
 	else:
@@ -38,7 +38,7 @@ func RangedProperties():
 		rotation = get_angle_to(player.lastDirection)
 	if is_in_group("shuriken"):
 		speed = 300
-		direction = player.lastDirection
+		direction = player.stats.lastDirection
 
 
 func EnemyHit(body):
@@ -69,4 +69,3 @@ func LeftScreen():
 func TileMapEntered(body):
 	if body.is_in_group("tilemap"):
 		queue_free()
-

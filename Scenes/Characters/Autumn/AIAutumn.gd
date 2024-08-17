@@ -1,4 +1,4 @@
-extends GameStats
+extends CharacterBody2D
 
 
 #region Variables and Signals
@@ -21,6 +21,8 @@ var economy: Dictionary = {
 @onready var inventory = $UI/Inventory
 @onready var statbars = $Statbars
 
+@export var stats: CharacterStats
+
 #endregion
 
 
@@ -36,14 +38,14 @@ signal AnimChange(Anim)
 #region The Runtimes
 
 func _ready():
-	requiredXP = (level * 1.5) * 100
+	stats.StatUpdates()
 	GameManager.MonsterKilled.connect(LevelUp)
 
 
 func _physics_process(_delta):
 	if isincombat == true:
 		velocity = Vector2.ZERO
-		speed = 0
+		stats.speed = 0
 		WalkingAnim(false)
 		UpdateBlend()
 	else:
@@ -51,8 +53,8 @@ func _physics_process(_delta):
 		UpdateBlend()
 		WalkingAnim(true)
 		UpdateBlend()
-		speed = normalSpeed
-		velocity = direction * speed
+		stats.speed = stats.normalSpeed
+		velocity = stats.direction * stats.speed
 	move_and_slide()
 
 
@@ -91,11 +93,11 @@ func EnemyNotDetected(area):
 		target = null
 
 
-const VOID_BOLT = preload("res://Scenes/Tools/Weapons/Ranged/VoidBolt.tscn")
-func FireVoidBolt():
-	var vbolt = VOID_BOLT.instantiate()
-	vbolt.user = self
-	add_child(vbolt)
+#const VOID_BOLT = preload("res://Scenes/Tools/Weapons/Ranged/VoidBolt.tscn")
+#func FireVoidBolt():
+	#var vbolt = VOID_BOLT.instantiate()
+	#vbolt.user = self
+	#add_child(vbolt)
 
 
 
@@ -120,12 +122,12 @@ func TakeDamage(area):
 
 @onready var regenerationtimer = $Timers/RegenerationTimer
 func RegenerationTimeout():
-	if health < maxHealth:
-		health += healthRegen
-	if stamina < maxStamina:
-		stamina += staminaRegen
-	if mana < maxMana:
-		mana += manaRegen
+	if stats.health < stats.maxHealth:
+		stats.health += stats.healthRegen
+	if stats.stamina < stats.maxStamina:
+		stats.stamina += stats.staminaRegen
+	if stats.mana < stats.maxMana:
+		stats.mana += stats.manaRegen
 		statbars.Status()
 
 #endregion
@@ -147,9 +149,9 @@ func CastVoidBoltAnim(value: bool):
 
 
 func UpdateBlend():
-	Animation_Tree["parameters/Idle/blend_position"] = direction
-	Animation_Tree["parameters/Walking/blend_position"] = direction
-	Animation_Tree["parameters/VoidBolt/blend_position"] = direction
+	Animation_Tree["parameters/Idle/blend_position"] = stats.direction
+	Animation_Tree["parameters/Walking/blend_position"] = stats.direction
+	Animation_Tree["parameters/VoidBolt/blend_position"] = stats.direction
 
 
 #endregion
@@ -161,13 +163,13 @@ func Knockback(enemy, body):
 	var pushback = Vector2(0, 0)
 	var KnockbackTween = get_tree().create_tween()
 
-	if lastDirection == Vector2.LEFT:
+	if stats.lastDirection == Vector2.LEFT:
 		pushback.x = -10
-	elif lastDirection == Vector2.RIGHT:
+	elif stats.lastDirection == Vector2.RIGHT:
 		pushback.x = 10
-	elif lastDirection == Vector2.DOWN:
+	elif stats.lastDirection == Vector2.DOWN:
 		pushback.y = 10
-	elif lastDirection == Vector2.UP:
+	elif stats.lastDirection == Vector2.UP:
 		pushback.y = -10
 
 	if body.is_in_group("enemy"):
@@ -201,15 +203,15 @@ func OpenInventory():
 func Respawn():
 	global_position = RespawnMarker.global_position
 	CastVoidBoltAnim(false)
-	health = maxHealth
-	stamina = maxStamina
-	mana = maxMana
+	stats.health = stats.maxHealth
+	stats.stamina = stats.maxStamina
+	stats.mana = stats.maxMana
 
 #endregion
 
 
 func LevelUp(Killer, XPvalue, GoldValue):
-	super.LevelUp(Killer, XPvalue, GoldValue)
-	Strength += 2
-	Constitution += 2
-	StatUpdates()
+	stats.LevelUp(Killer, XPvalue, GoldValue)
+	stats.Strength += 2
+	stats.Constitution += 2
+	stats.StatUpdates()

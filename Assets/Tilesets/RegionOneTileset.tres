@@ -1,18 +1,15 @@
-[gd_resource type="TileSet" load_steps=50 format=3 uid="uid://d20lmkbestn0w"]
+[gd_resource type="TileSet" load_steps=46 format=3 uid="uid://d20lmkbestn0w"]
 
-[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Spritesheets/Locations/Forest/apple-icon.png" id="1_4ifhk"]
-[ext_resource type="Texture2D" uid="uid://deog1bblb2yqn" path="res://Assets/Spritesheets/Locations/Village/barrels.png" id="1_cfugt"]
-[ext_resource type="Texture2D" uid="uid://cb5swils6qyl5" path="res://Assets/Spritesheets/Locations/Village/fences.png" id="2_4nfm8"]
-[ext_resource type="Texture2D" uid="uid://llnu5blcx6b1" path="res://Assets/Spritesheets/Locations/Forest/forest_objects.png" id="2_ih5ja"]
-[ext_resource type="Texture2D" uid="uid://bch207sea5ncb" path="res://Assets/Spritesheets/Locations/Forest/forest_terrain.png" id="3_fvjmx"]
-[ext_resource type="PackedScene" uid="uid://cu80noxo0yjad" path="res://Scenes/Buildings/TownHall.tscn" id="3_g27lc"]
-[ext_resource type="Texture2D" uid="uid://b1gm7oimxqflg" path="res://Assets/Spritesheets/Locations/Village/floor-tiles.png" id="4_7f4cd"]
-[ext_resource type="Texture2D" uid="uid://2bep4sukwv4l" path="res://Assets/Spritesheets/Locations/Forest/Water and Waterfalls.png" id="4_evyo5"]
-[ext_resource type="PackedScene" uid="uid://nrm3q4om1iy4" path="res://Scenes/Buildings/SmallHouse.tscn" id="4_reqd6"]
-[ext_resource type="PackedScene" uid="uid://dll0eaobm77o6" path="res://Scenes/Buildings/WarriorsGuild.tscn" id="5_n8r6c"]
-[ext_resource type="Texture2D" uid="uid://73hb3s3mw4xf" path="res://Assets/Spritesheets/Locations/Village/market.png" id="5_tm554"]
-[ext_resource type="Texture2D" uid="uid://dbkvtfbyi4176" path="res://Assets/Spritesheets/Locations/Village/other.png" id="8_s2t3d"]
-[ext_resource type="Texture2D" uid="uid://ob223xtwg3hb" path="res://Assets/Spritesheets/Locations/Village/small houses.png" id="11_mn4xv"]
+[ext_resource type="Texture2D" uid="uid://cwvqe7n0iy1t6" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/apple-icon.png" id="1_4ifhk"]
+[ext_resource type="Texture2D" uid="uid://deog1bblb2yqn" path="res://Assets/Tilesets/Spritesheets/Locations/Village/barrels.png" id="1_cfugt"]
+[ext_resource type="Texture2D" uid="uid://cb5swils6qyl5" path="res://Assets/Tilesets/Spritesheets/Locations/Village/fences.png" id="2_4nfm8"]
+[ext_resource type="Texture2D" uid="uid://llnu5blcx6b1" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/forest_objects.png" id="2_ih5ja"]
+[ext_resource type="Texture2D" uid="uid://bch207sea5ncb" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/forest_terrain.png" id="3_fvjmx"]
+[ext_resource type="Texture2D" uid="uid://b1gm7oimxqflg" path="res://Assets/Tilesets/Spritesheets/Locations/Village/floor-tiles.png" id="4_7f4cd"]
+[ext_resource type="Texture2D" uid="uid://2bep4sukwv4l" path="res://Assets/Tilesets/Spritesheets/Locations/Forest/Water and Waterfalls.png" id="4_evyo5"]
+[ext_resource type="Texture2D" uid="uid://73hb3s3mw4xf" path="res://Assets/Tilesets/Spritesheets/Locations/Village/market.png" id="5_tm554"]
+[ext_resource type="Texture2D" uid="uid://dbkvtfbyi4176" path="res://Assets/Tilesets/Spritesheets/Locations/Village/other.png" id="8_s2t3d"]
+[ext_resource type="Texture2D" uid="uid://ob223xtwg3hb" path="res://Assets/Tilesets/Spritesheets/Locations/Village/small houses.png" id="11_mn4xv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8ylan"]
 texture = ExtResource("1_cfugt")
@@ -365,12 +362,6 @@ texture = ExtResource("2_4nfm8")
 3:3/0 = 0
 3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:3/0/physics_layer_0/angular_velocity = 0.0
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_fedjw"]
-resource_name = "Buildings"
-scenes/1/scene = ExtResource("3_g27lc")
-scenes/2/scene = ExtResource("4_reqd6")
-scenes/3/scene = ExtResource("5_n8r6c")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cq128"]
 texture = ExtResource("4_7f4cd")
@@ -2702,4 +2693,3 @@ sources/2 = SubResource("TileSetAtlasSource_cq128")
 sources/3 = SubResource("TileSetAtlasSource_703cd")
 sources/6 = SubResource("TileSetAtlasSource_r4gcx")
 sources/9 = SubResource("TileSetAtlasSource_7k6h2")
-sources/10 = SubResource("TileSetScenesCollectionSource_fedjw")
