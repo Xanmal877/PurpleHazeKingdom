@@ -258,6 +258,7 @@ corner_radius_bottom_left = 10
 y_sort_enabled = true
 collision_mask = 9
 wall_min_slide_angle = 0.0
+safe_margin = 0.8
 script = ExtResource("1_4vy8l")
 stats = ExtResource("2_ofi64")
 
@@ -268,6 +269,7 @@ texture = ExtResource("3_efyqn")
 flip_h = true
 hframes = 7
 vframes = 5
+frame = 3
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3
@@ -315,6 +317,7 @@ wait_time = 0.5
 autostart = true
 
 [node name="DamagerTimer" type="Timer" parent="Timers"]
+wait_time = 1.5
 
 [node name="UI" type="Control" parent="."]
 visible = false

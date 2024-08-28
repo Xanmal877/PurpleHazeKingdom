@@ -1,4 +1,4 @@
-extends ActionLeaf
+class_name GoToLocationAction extends ActionLeaf
 
 
 @export var NavAgent: NavigationAgent2D

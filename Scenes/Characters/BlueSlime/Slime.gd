@@ -52,7 +52,6 @@ func Movement():
 	move_and_slide()
 
 
-
 enum {
 	IDLE,
 	EXPLORE,
@@ -105,10 +104,10 @@ func DetectionRadar():
 
 @onready var damagevisual = $DamageVisual
 
+
 func DetectionTimeout():
 	DetectionRadar()
 
-	
 
 func DamageEnemy():
 	if target != null and global_position.distance_to(target.global_position) <= 20:

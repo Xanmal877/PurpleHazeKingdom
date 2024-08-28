@@ -50,16 +50,16 @@ func _process(delta):
 
 func _physics_process(_delta):
 	Movement()
-	UseWeapon()
 	move_and_slide()
 
 func _input(_event):
+	UseWeapon()
 	OpenMenus()
 
 
 func GameManagerReady():
 	GM.connect("AttackMade", TakeDamage)
-	GM.connect("MonsterKilled", SlimeKilled)
+	GM.connect("MonsterKilled", MonsterKilled)
 	GM.SetCameraLimits(region_one, tamaneko.camera)
 
 #endregion
@@ -114,6 +114,8 @@ func Movement():
 		isDashing = false
 
 
+#region Combat
+
 var isAttacking: bool = false
 func UseWeapon():
 	const SHURIKEN = preload("res://Scenes/Tools/Weapons/Ranged/Shuriken.tscn")
@@ -152,6 +154,7 @@ func DoDamage(area):
 			damagetype = stats.Damage
 		GameManager.emit_signal("AttackMade", self, target, damagetype)
 
+
 func TakeDamage(Attacker, Attacked, Damage):
 	if Attacked != self:
 		return
@@ -160,19 +163,29 @@ func TakeDamage(Attacker, Attacked, Damage):
 	staminabar.Status()
 	CheckDeath()
 
+
+func MonsterKilled(Killed, XPvalue, GoldValue):
+	#if Killed != self:
+		#return
+	stats.currentXP += XPvalue
+	stats.gold += GoldValue
+	expbar.Status()
+	print("currentXP:  ", stats.currentXP, "  Experience Needed: ", stats.requiredXP)
+	stats.StatUpdates()
+
+
 @onready var game_over = $"../../GameOver"
 func CheckDeath():
 	# Death Code
 	if stats.health <= 0:
 		game_over.visible = true
 
+#endregion
 
-#region Menus
 
 @onready var character_sheet = $UI/CharacterSheet
 @onready var inventoryui = $UI/Inventory
 @onready var mainmenu = $"../../Main Menu"
-
 var inmenu: bool = false
 func OpenMenus():
 	if Input.is_action_just_pressed("Inventory"):
@@ -193,8 +206,6 @@ func OpenMenus():
 	else:
 		inmenu = false
 		get_tree().paused = false
-
-#endregion
 
 
 #region Animation
@@ -220,23 +231,6 @@ func UpdateBlend():
 #endregion
 
 
-#region Other
-
-
-
-
-func SlimeKilled(Killed, XPvalue, GoldValue):
-	#if Killed != self:
-		#return
-	stats.currentXP += XPvalue
-	stats.gold += GoldValue
-	expbar.Status()
-	print("currentXP:  ", stats.currentXP, "  Experience Needed: ", stats.requiredXP)
-	stats.StatUpdates()
-
-#region Regeneration
-
-
 func Regeneration():
 	if stats.health < stats.maxHealth:
 		stats.health += stats.healthRegen
@@ -245,8 +239,3 @@ func Regeneration():
 	healthbar.Status()
 	staminabar.Status()
 	expbar.Status()
-
-#endregion
-
-#endregion
-

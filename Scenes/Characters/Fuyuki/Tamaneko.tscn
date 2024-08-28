@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=27 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Fuyuki/Tamaneko.gd" id="1_3b5nv"]
 [ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Scenes/Characters/Fuyuki/Spritesheet.png" id="2_1o1ws"]
@@ -9,7 +9,6 @@
 [ext_resource type="AnimationLibrary" uid="uid://coer0hcfs8i0l" path="res://Scenes/Characters/Fuyuki/Animations/Walk.res" id="6_juqme"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://bqxg6sxn40lye" path="res://Scenes/Characters/Fuyuki/Animations/AnimTree.tres" id="7_msg6o"]
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="8_mqokg"]
-[ext_resource type="Script" path="res://Scenes/UI/Controls.gd" id="9_yymd8"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/healthbar.gd" id="10_6qhnr"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/staminabar.gd" id="11_1uase"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/expbar.gd" id="13_m1lo6"]
@@ -49,35 +48,6 @@ size = Vector2(60, 60)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iseyw"]
 radius = 40.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c607d"]
-bg_color = Color(0.298039, 0, 0.298039, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 0, 0, 1)
-border_blend = true
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="LabelSettings" id="LabelSettings_bqams"]
-font_size = 46
-
-[sub_resource type="LabelSettings" id="LabelSettings_gcjgo"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhrc2"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmn32"]
 draw_center = false
@@ -222,8 +192,6 @@ autostart = true
 [node name="Areas" type="Node2D" parent="." groups=["TamaAreas"]]
 
 [node name="Hurtbox" type="Area2D" parent="Areas"]
-visible = false
-rotation = 3.14159
 collision_layer = 32
 collision_mask = 16
 
@@ -265,61 +233,6 @@ shape = SubResource("CircleShape2D_iseyw")
 [node name="Inventory" parent="UI" node_paths=PackedStringArray("user") instance=ExtResource("8_mqokg")]
 visible = false
 user = NodePath("../..")
-
-[node name="Controls" type="Panel" parent="UI"]
-visible = false
-custom_minimum_size = Vector2(300, 250)
-anchors_preset = -1
-anchor_left = 0.739583
-anchor_right = 1.0
-anchor_bottom = 0.490741
-grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_c607d")
-script = ExtResource("9_yymd8")
-metadata/_edit_use_anchors_ = true
-
-[node name="Controls" type="Label" parent="UI/Controls"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 64.0
-grow_horizontal = 2
-text = "Controls"
-label_settings = SubResource("LabelSettings_bqams")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="UI/Controls"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.211346
-anchor_right = 1.0
-anchor_bottom = 0.856
-offset_top = 10.384
-grow_horizontal = 2
-grow_vertical = 0
-text = "Move = WASD
-Left Click = Swing Weapon
-Right Click = Throw Shuriken
-Shift = Dash
-C = Sneak
-Tab = Inventory
-1 = Health Potion
-2 = Stamina Potion"
-label_settings = SubResource("LabelSettings_gcjgo")
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UI/Controls"]
-layout_mode = 0
-anchor_left = 0.399999
-anchor_top = 0.86
-anchor_right = 0.546666
-anchor_bottom = 1.0
-offset_right = -1.52588e-05
-theme_override_styles/normal = SubResource("StyleBoxFlat_yhrc2")
-text = "Close"
-metadata/_edit_use_anchors_ = true
 
 [node name="Bars" type="VBoxContainer" parent="UI"]
 anchors_preset = 2
@@ -364,4 +277,3 @@ visible = false
 
 [connection signal="timeout" from="Timers/RegenerationTimer" to="." method="Regeneration"]
 [connection signal="area_entered" from="Areas/Hurtbox" to="." method="DoDamage"]
-[connection signal="pressed" from="UI/Controls/Button" to="UI/Controls" method="_on_button_pressed"]
