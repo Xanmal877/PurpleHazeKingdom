@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/healthbar.gd" id="10_6qhnr"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/staminabar.gd" id="11_1uase"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/expbar.gd" id="13_m1lo6"]
+[ext_resource type="PackedScene" uid="uid://bl4yc1tvyf34l" path="res://Scenes/UI/CharacterSheet.tscn" id="14_cf856"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhrje"]
 size = Vector2(9, 6)
@@ -42,19 +43,6 @@ radius = 33.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_es6yj"]
 radius = 36.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cg4w"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.443137, 0.0196078, 0.443137, 1)
-border_blend = true
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jtww"]
 size = Vector2(60, 60)
@@ -169,11 +157,14 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[node name="Tamaneko" type="CharacterBody2D" groups=["Adventurer", "Tamaneko", "player"]]
+[node name="Tamaneko" type="CharacterBody2D" node_paths=PackedStringArray("Sprite") groups=["Adventurer", "Tamaneko", "player"]]
 y_sort_enabled = true
 collision_mask = 9
 input_pickable = true
+wall_min_slide_angle = 0.0
+safe_margin = 0.8
 script = ExtResource("1_3b5nv")
+Sprite = NodePath("Sprite2D")
 stats = ExtResource("2_fkmfc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -187,7 +178,9 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uhrje")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(2.5, 2.5)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 
 [node name="Animations" type="Node2D" parent="."]
 
@@ -226,12 +219,6 @@ parameters/Walk/blend_position = Vector2(0.0276221, 0.548193)
 wait_time = 0.5
 autostart = true
 
-[node name="SneakTimer" type="Timer" parent="Timers"]
-wait_time = 0.4
-
-[node name="DashTimer" type="Timer" parent="Timers"]
-one_shot = true
-
 [node name="Areas" type="Node2D" parent="." groups=["TamaAreas"]]
 
 [node name="Hurtbox" type="Area2D" parent="Areas"]
@@ -256,21 +243,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/StealthBox"]
 shape = SubResource("CircleShape2D_es6yj")
-
-[node name="StealthPanel" type="Panel" parent="Areas/StealthBox"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.0
-offset_top = -37.0
-offset_right = 37.0
-offset_bottom = 37.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2cg4w")
 
 [node name="Interactbox" type="Area2D" parent="Areas" groups=["InteractBox"]]
 visible = false
@@ -387,8 +359,9 @@ value = 50.0
 script = ExtResource("13_m1lo6")
 user = NodePath("../../..")
 
-[connection signal="timeout" from="Timers/RegenerationTimer" to="." method="RegenerationTimeout"]
-[connection signal="timeout" from="Timers/SneakTimer" to="." method="SneakCost"]
-[connection signal="timeout" from="Timers/DashTimer" to="." method="DashTimeout"]
-[connection signal="area_entered" from="Areas/Hurtbox" to="." method="DamageEnemy"]
+[node name="CharacterSheet" parent="UI" instance=ExtResource("14_cf856")]
+visible = false
+
+[connection signal="timeout" from="Timers/RegenerationTimer" to="." method="Regeneration"]
+[connection signal="area_entered" from="Areas/Hurtbox" to="." method="DoDamage"]
 [connection signal="pressed" from="UI/Controls/Button" to="UI/Controls" method="_on_button_pressed"]

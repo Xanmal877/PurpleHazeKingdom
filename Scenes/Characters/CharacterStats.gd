@@ -10,6 +10,7 @@ class_name CharacterStats extends Resource
 @export_category("Attributes")
 @export var Strength: int
 @export var Dexterity: int
+@export var Perception: int
 @export var Constitution: int
 @export var Intelligence: int
 @export var Wisdom: int
@@ -37,8 +38,7 @@ var normalSpeed: float
 var sneakSpeed: float
 var dashSpeed: float
 
-var damage: float
-var normalDamage: float
+var Damage: float
 var sneakDamage: float
 var spellDamage: float
 
@@ -48,11 +48,12 @@ var direction: Vector2
 var lastDirection: Vector2
 
 var currentPosition: Vector2
+var detectionRadius: float
 
 #endregion
 
 
-#region XP
+#region Experience and Stat System
 
 var currentXP: float
 var requiredXP: float
@@ -62,42 +63,51 @@ func LevelUp(Killer, XPvalue, GoldValue):
 	if Killer == self:
 		currentXP += XPvalue
 		gold += GoldValue
+
+
+
+
+func CatchUpLevel():
+	for i in range(level):
+		StatUpdates()
+
+
+func StatUpdates():
 	requiredXP = (level * 1.5) * 100
 	if currentXP >= requiredXP:
 		level += 1
 		currentXP += overallXP
 		currentXP = 0
+
 		Strength += 1
 		Dexterity += 1
+		Perception += 1
 		Constitution += 1
 		Intelligence += 1
 		Wisdom += 1
+		Charisma += 1
 
+		maxHealth = int(20 + (Constitution + Strength) / 1.2)
+		maxStamina = int(20 + (Dexterity + Constitution) / 1.2)
+		maxMana = int(20 + (Wisdom + Intelligence) / 1.2)
 
-func StatUpdates():
-	requiredXP = (level * 1.5) * 100
-	
-	maxHealth = Constitution * 10
-	maxStamina = Dexterity * 10
-	maxMana = Intelligence * 10
+		health = maxHealth
+		stamina = maxStamina
+		mana = maxMana
 
-	health = maxHealth
-	stamina = maxStamina
-	mana = maxMana
+		healthRegen = Constitution * 0.01
+		staminaRegen = Dexterity * 0.1
+		manaRegen = Wisdom * 0.05
 
-	healthRegen = Constitution * 0.01
-	staminaRegen = Dexterity * 0.1
-	manaRegen = Wisdom * 0.05
+		speed = int(60 + (Dexterity + Perception) / 1.2)
+		sneakSpeed = 30 + Dexterity
+		dashSpeed = 200 + Dexterity
 
-	speed = (Dexterity * 10) * 0.5
-	normalSpeed = (Dexterity * 10) * 0.5
-	sneakSpeed = (Dexterity * 10) * 0.2
-	dashSpeed = (Dexterity * 10) * 5
-
-	damage = (Strength * 10) * 0.2
-	normalDamage = (Strength * 10) * 0.2
-	sneakDamage = (Dexterity * 10) * 2
-	spellDamage = (Intelligence * 10) * 0.5
+		Damage = 2 + Strength
+		sneakDamage = 5 + Dexterity
+		spellDamage = 10 + Intelligence
+		
+		detectionRadius = (Perception * 10)
 
 #endregion
 

@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bl4yc1tvyf34l"]
+[gd_scene load_steps=6 format=3 uid="uid://bl4yc1tvyf34l"]
+
+[ext_resource type="Script" path="res://Scenes/UI/CharacterSheet.gd" id="1_0p2by"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2gh7"]
 bg_color = Color(0, 0, 0.745098, 1)
@@ -28,6 +30,10 @@ corner_radius_top_right = 50
 font_size = 36
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_fwkxc"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
 [node name="CharacterSheet" type="Control"]
 custom_minimum_size = Vector2(350, 600)
 layout_mode = 3
@@ -37,6 +43,7 @@ anchor_right = 0.65191
 anchor_bottom = 0.962963
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_0p2by")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
@@ -59,6 +66,19 @@ grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_tnxnh")
 text = "Character Sheet"
 label_settings = SubResource("LabelSettings_6g6jr")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Stats" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 0.999998
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_fwkxc")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

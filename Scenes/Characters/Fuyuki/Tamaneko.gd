@@ -4,7 +4,7 @@ class_name Tamaneko extends CharacterBody2D
 #region Variables
 
 static var fourDirection: bool = true
-
+@export var Sprite: Sprite2D
 @onready var tamaneko = $"."
 @onready var inventory = $UI/Inventory
 
@@ -33,18 +33,24 @@ func _ready():
 	stats.StatUpdates()
 	GameManagerReady()
 	await get_tree().create_timer(0.5).timeout
-	LevelUp(self, 0, 0)
-	stats.StatUpdates()
-	print("LeveL:  ", stats.level, "  Dexterity:  ", stats.Dexterity)
+	#stats.CatchUpLevel()
+	print(
+	"Level:  " + str(stats.level) +
+	"\n" + "Strength:  " + str(stats.Strength) +
+	"\n" + "Dexterity:  " + str(stats.Dexterity) +
+	"\n" + "Perception:  " + str(stats.Perception) +
+	"\n" + "Constitution:  " + str(stats.Constitution) +
+	"\n" + "Intelligence:  " + str(stats.Intelligence)
+	)
+
+
 
 func _process(delta):
 	GM.GameTimer($"../../CanvasLayer/TimeLabel")
 
 func _physics_process(_delta):
 	Movement()
-	DashAbility()
-	Attack()
-	Stealth()
+	UseWeapon()
 	move_and_slide()
 
 func _input(_event):
@@ -56,121 +62,64 @@ func GameManagerReady():
 	GM.connect("MonsterKilled", SlimeKilled)
 	GM.SetCameraLimits(region_one, tamaneko.camera)
 
-
 #endregion
 
 
-#region Movement
-
-#region Basic Movement
-
+var isSneaking: bool = false
+var isDashing: bool = false
 func Movement():
+
+# Directional Movement Code Section
+	if fourDirection == true:
+		if abs(stats.direction.x) > abs(stats.direction.y):
+			stats.direction.y = 0
+		else:
+			stats.direction.x = 0
+
+# Simple Movement code Section
 	stats.direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if stats.direction != Vector2.ZERO and !isAttacking:
-		if fourDirection == true:
-			if abs(stats.direction.x) > abs(stats.direction.y):
-				stats.direction.y = 0
-			else:
-				stats.direction.x = 0
 		WalkingAnim(true)
 		stats.lastDirection = stats.direction
-		if !isDashing:
+		if isDashing == true:
+			velocity = stats.direction.normalized() * stats.dashSpeed
+		elif isSneaking == true:
+			velocity = stats.direction.normalized() * stats.sneakSpeed
+		else:
 			velocity = stats.direction.normalized() * stats.speed
-		if isDashing:
-			velocity = stats.direction * stats.dashSpeed
 	else:
 		velocity = Vector2.ZERO
 		WalkingAnim(false)
 	UpdateBlend()
 
-#endregion
+# Sneaking Code Section
+	if Input.is_action_just_pressed("Sneak") and stats.stamina >= 5:
+		isSneaking = !isSneaking
+		stats.stamina -= 5
+		staminabar.Status()
+	if isSneaking:
+		Sprite.self_modulate = Color(1,0.157,1,0.35)
+	else:
+		Sprite.self_modulate = Color(1,1,1,1)
 
-
-#region Sneaking
-
-var sneak: bool = false
-@onready var charactersprite = $Sprite2D
-@onready var sneak_timer = $Timers/SneakTimer
-@onready var stealth_panel = $Areas/StealthBox/StealthPanel
-@onready var SneakBox = $Areas/StealthBox/CollisionShape2D
-
-func Stealth():
-	if Input.is_action_just_pressed("Sneak"):
-		sneak = !sneak
-		SneakCost()
-
-
-func SneakCost():
-		if sneak and stats.stamina >= 1:
-			SneakBox.shape.radius = 20
-			stealth_panel.visible = true
-			charactersprite.self_modulate = Color(1,0.157,1,0.35)
-			stats.speed = stats.sneakSpeed
-			stats.damage = stats.sneakDamage
-			sneak_timer.start(0.4)
-			stats.stamina -= 1
-			staminabar.Status()
-			var slimegroup = get_tree().get_nodes_in_group("enemy")
-			for slime in slimegroup:
-				slime.slimestealthpanel.visible = true
-		else:
-			SneakBox.shape.radius = 40
-			stealth_panel.visible = false
-			var slimegroup = get_tree().get_nodes_in_group("enemy")
-			for slime in slimegroup:
-				slime.slimestealthpanel.visible = false
-			charactersprite.self_modulate = Color(1,1,1,1)
-			stats.damage = stats.normalDamage
-			stats.speed = stats.normalSpeed
-			sneak = false
-			sneak_timer.stop()
-
-
-#endregion
-
-
-#region Dash
-
-@onready var dash_timer = $Timers/DashTimer
-var isDashing: bool = false
-func DashAbility():
-	if Input.is_action_just_pressed("Dash") and stats.stamina >= 20:
+# Dashing Code Section
+	if Input.is_action_just_pressed("Dash") and stats.stamina >= 5:
 		isDashing = true
-		dash_timer.start(0.5)
-		stats.stamina -= 20
+		stats.stamina -= 5
 		staminabar.Status()
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "modulate", Color(1,0.157,1,0.078), 0.2)
 		tween.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
-
-func DashTimeout():
-	isDashing = false
-	Animation_Player.speed_scale = 1.0
-	#speed = 0
-	#WalkingAnim(false)
-	#await get_tree().create_timer(0.5).timeout
-	#speed = normalSpeed
+		await get_tree().create_timer(0.5).timeout
+		isDashing = false
 
 
-#endregion
-
-#endregion
-
-
-#region Combat
-
-var enemyArray: Array = []
-
-func EnemyDetected(body):
-	if body.is_in_group("enemy"):
-		enemyArray.append(body)
-
-
-var inmenu: bool = false
 var isAttacking: bool = false
-const SHURIKEN = preload("res://Scenes/Tools/Weapons/Ranged/Shuriken.tscn")
-func Attack():
+func UseWeapon():
+	const SHURIKEN = preload("res://Scenes/Tools/Weapons/Ranged/Shuriken.tscn")
 	if !isAttacking and inmenu == false:
+		
+		# Swing Katana Code Section
 		if Input.is_action_just_pressed("Left Click") and stats.stamina >= 2:
 			SwingKatanaAnim(true)
 			stats.stamina -= 2
@@ -178,6 +127,8 @@ func Attack():
 			isAttacking = true
 			await get_tree().create_timer(0.5).timeout
 			isAttacking = false
+
+		# Throw shuriken Code Section
 		elif Input.is_action_pressed("Right Click") and stats.stamina >= 1:
 			ThrowShurikenAnim(true)
 			stats.stamina -= 1
@@ -189,38 +140,40 @@ func Attack():
 			isAttacking = true
 			await get_tree().create_timer(0.5).timeout
 			isAttacking = false
-			
 
 
-func DamageEnemy(area):
+func DoDamage(area):
 	if area.is_in_group("enemyHitbox"):
-		var enemy = area.get_owner()
-		enemy.stats.health -= stats.damage
-
-
-
-func EnemyLost(body):
-	if body.is_in_group("enemy"):
-		enemyArray.erase(body)
-
+		var target = area.get_owner()
+		var damagetype
+		if isSneaking:
+			damagetype = stats.sneakDamage
+		else:
+			damagetype = stats.Damage
+		GameManager.emit_signal("AttackMade", self, target, damagetype)
 
 func TakeDamage(Attacker, Attacked, Damage):
 	if Attacked != self:
 		return
-
 	stats.health -= Damage
 	healthbar.Status()
 	staminabar.Status()
-	Death()
+	CheckDeath()
 
-#endregion
+@onready var game_over = $"../../GameOver"
+func CheckDeath():
+	# Death Code
+	if stats.health <= 0:
+		game_over.visible = true
 
 
 #region Menus
 
+@onready var character_sheet = $UI/CharacterSheet
 @onready var inventoryui = $UI/Inventory
 @onready var mainmenu = $"../../Main Menu"
 
+var inmenu: bool = false
 func OpenMenus():
 	if Input.is_action_just_pressed("Inventory"):
 		if inventoryui.visible == false:
@@ -230,6 +183,9 @@ func OpenMenus():
 
 	if Input.is_action_just_pressed("Escape"):
 		mainmenu.visible = !mainmenu.visible
+	
+	if Input.is_action_just_pressed("Character Sheet"):
+		character_sheet.visible = !character_sheet.visible
 
 	if inventoryui.visible or mainmenu.visible:
 		inmenu = true
@@ -266,12 +222,7 @@ func UpdateBlend():
 
 #region Other
 
-func LevelUp(Killed, XPvalue, GoldValue):
-		for i in range(stats.level):
-			stats.LevelUp(Killed, XPvalue, GoldValue)
-			stats.Dexterity += 2
-			stats.Charisma += 2
-			stats.StatUpdates()
+
 
 
 func SlimeKilled(Killed, XPvalue, GoldValue):
@@ -281,20 +232,12 @@ func SlimeKilled(Killed, XPvalue, GoldValue):
 	stats.gold += GoldValue
 	expbar.Status()
 	print("currentXP:  ", stats.currentXP, "  Experience Needed: ", stats.requiredXP)
-	if stats.currentXP >= stats.requiredXP:
-		LevelUp(Killed, XPvalue, GoldValue)
-
-
-
-func Death():
-	if stats.health <= 0:
-		get_tree().change_scene_to_file("res://Scenes/UI/GameOver.tscn")
-
+	stats.StatUpdates()
 
 #region Regeneration
 
-@onready var regeneration_timer = $Timers/RegenerationTimer
-func RegenerationTimeout():
+
+func Regeneration():
 	if stats.health < stats.maxHealth:
 		stats.health += stats.healthRegen
 	if stats.stamina < stats.maxStamina:

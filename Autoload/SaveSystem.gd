@@ -7,6 +7,13 @@ func SaveGame(user):
 
 	# Save player data
 	var SaveData = {
+		"Strength": user.stats.Strength,
+		"Dexterity": user.stats.Dexterity,
+		"Perception": user.stats.Perception,
+		"Constitution": user.stats.Constitution,
+		"Intelligence": user.stats.Intelligence,
+		"Wisdom": user.stats.Wisdom,
+		"Charisma": user.stats.Charisma,
 		"health": user.stats.health,
 		"maxHealth": user.stats.maxHealth,
 		"stamina": user.stats.stamina,
@@ -14,8 +21,7 @@ func SaveGame(user):
 		"mana": user.stats.mana,
 		"maxMana": user.stats.maxMana,
 		"level": user.stats.level,
-		"damage": user.stats.damage,
-		"normalDamage": user.stats.normalDamage,
+		"Damage": user.stats.Damage,
 		"sneakDamage": user.stats.sneakDamage,
 		"spellDamage": user.stats.spellDamage,
 		"speed": user.stats.speed,
@@ -52,21 +58,27 @@ func LoadGame(user):
 	var SaveData = JSON.parse_string(json)
 
 	# Restore the saved data to the user's stats
+	user.stats.Strength = SaveData["Strength"]
+	user.stats.Dexterity = SaveData["Dexterity"]
+	user.stats.Perception = SaveData["Perception"]
+	user.stats.Constitution = SaveData["Constitution"]
+	user.stats.Intelligence = SaveData["Intelligence"]
+	user.stats.Wisdom = SaveData["Wisdom"]
+	user.stats.Charisma = SaveData["Charisma"]
 	user.stats.health = SaveData["health"]
 	user.stats.maxHealth = SaveData["maxHealth"]
 	user.stats.stamina = SaveData["stamina"]
 	user.stats.maxStamina = SaveData["maxStamina"]
 	user.stats.mana = SaveData["mana"]
 	user.stats.maxMana = SaveData["maxMana"]
-	user.stats.level = SaveData["level"]
-	user.stats.damage = SaveData["damage"]
-	user.stats.normalDamage = SaveData["normalDamage"]
+	user.stats.Damage = SaveData["Damage"]
 	user.stats.sneakDamage = SaveData["sneakDamage"]
 	user.stats.spellDamage = SaveData["spellDamage"]
 	user.stats.speed = SaveData["speed"]
 	user.stats.normalSpeed = SaveData["normalSpeed"]
 	user.stats.sneakSpeed = SaveData["sneakSpeed"]
 	user.stats.dashSpeed = SaveData["dashSpeed"]
+	user.stats.level = SaveData["level"]
 	user.stats.currentXP = SaveData["currentXP"]
 	user.stats.requiredXP = SaveData["requiredXP"]
 	user.stats.overallXP = SaveData["overallXP"]

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=2 format=3 uid="uid://b6uupv4tgubgh"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/CharacterStats.gd" id="1_1hh6n"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_1hh6n")
+Name = "Blue Slime"
+Class = "Slime"
+level = 0
+Strength = 4
+Dexterity = 4
+Perception = 4
+Constitution = 8
+Intelligence = 0
+Wisdom = 0
+Charisma = 0

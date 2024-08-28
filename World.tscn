@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdfqaxbmf3h8s"]
+[gd_scene load_steps=6 format=3 uid="uid://cdfqaxbmf3h8s"]
 
 [ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Fuyuki/Tamaneko.tscn" id="1_strur"]
 [ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
+[ext_resource type="PackedScene" uid="uid://bmhk63jchxjgp" path="res://Scenes/UI/GameOver.tscn" id="4_pgl7f"]
 [ext_resource type="PackedScene" uid="uid://4yqlapdu1p6u" path="res://Scenes/UI/MainMenu.tscn" id="4_taa8q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ep341"]
@@ -18,7 +19,7 @@ position = Vector2(1565, 1041)
 y_sort_enabled = true
 
 [node name="Tamaneko" parent="Characters" instance=ExtResource("1_strur")]
-position = Vector2(1451, 1007)
+position = Vector2(566, 871)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -31,4 +32,6 @@ label_settings = SubResource("LabelSettings_ep341")
 vertical_alignment = 3
 
 [node name="Main Menu" parent="." instance=ExtResource("4_taa8q")]
+
+[node name="GameOver" parent="." instance=ExtResource("4_pgl7f")]
 visible = false

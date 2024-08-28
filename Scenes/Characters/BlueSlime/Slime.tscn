@@ -1,33 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://dmij8h2ybyidq"]
+[gd_scene load_steps=28 format=3 uid="uid://dmij8h2ybyidq"]
 
-[ext_resource type="Resource" uid="uid://b6uupv4tgubgh" path="res://Scenes/Characters/BlueSlime/BlueslimeStats.tres" id="2_mml6n"]
-[ext_resource type="Script" path="res://Scenes/Characters/BlueSlime/BlueSlime.gd" id="2_n0hjf"]
-[ext_resource type="Texture2D" uid="uid://brbri6qakal0v" path="res://Scenes/Characters/BlueSlime/Animations/Spritesheet.png" id="3_f1t86"]
+[ext_resource type="Script" path="res://Scenes/Characters/BlueSlime/Slime.gd" id="1_4vy8l"]
+[ext_resource type="Resource" uid="uid://b6uupv4tgubgh" path="res://Scenes/Characters/BlueSlime/SlimeStats.tres" id="2_ofi64"]
+[ext_resource type="Texture2D" uid="uid://brbri6qakal0v" path="res://Scenes/Characters/BlueSlime/Animations/Spritesheet.png" id="3_efyqn"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sedkg"]
-radius = 5.09902
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gn7i4"]
-size = Vector2(23, 23)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5lk8"]
+size = Vector2(17, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2owh"]
 radius = 11.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1ux1o"]
-radius = 40.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6677"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.443137, 0.0196078, 0.443137, 1)
-border_blend = true
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_scr33"]
 
@@ -247,37 +228,53 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="BlueSlime" type="CharacterBody2D" groups=["NPC", "enemy"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_453ck"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.988235, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jd1p"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.360784)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.988235, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Slime" type="CharacterBody2D" groups=["NPC", "enemy"]]
 y_sort_enabled = true
 collision_mask = 9
 wall_min_slide_angle = 0.0
-script = ExtResource("2_n0hjf")
-stats = ExtResource("2_mml6n")
+script = ExtResource("1_4vy8l")
+stats = ExtResource("2_ofi64")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 y_sort_enabled = true
-texture = ExtResource("3_f1t86")
+texture = ExtResource("3_efyqn")
 flip_h = true
 hframes = 7
 vframes = 5
-frame = 2
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3
 visibility_layer = 3
-position = Vector2(0, 3)
-shape = SubResource("CircleShape2D_sedkg")
+shape = SubResource("RectangleShape2D_m5lk8")
 
 [node name="Areas" type="Node2D" parent="."]
-
-[node name="Hurtbox" type="Area2D" parent="Areas" groups=["enemyHurtbox"]]
-collision_layer = 32
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hurtbox"]
-position = Vector2(-0.5, 0.5)
-shape = SubResource("RectangleShape2D_gn7i4")
 
 [node name="Hitbox" type="Area2D" parent="Areas" groups=["enemyHitbox"]]
 collision_layer = 16
@@ -285,28 +282,6 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hitbox"]
 shape = SubResource("CircleShape2D_g2owh")
-
-[node name="Detectbox" type="Area2D" parent="Areas" groups=["enemyDetectbox"]]
-collision_layer = 64
-collision_mask = 64
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Detectbox"]
-shape = SubResource("CircleShape2D_1ux1o")
-
-[node name="Stealthpanel" type="Panel" parent="Areas/Detectbox"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -41.0
-offset_right = 40.0
-offset_bottom = 41.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_y6677")
 
 [node name="Animations" type="Node2D" parent="."]
 
@@ -332,17 +307,17 @@ libraries = {
 
 [node name="Timers" type="Node" parent="."]
 
-[node name="Regeneration" type="Timer" parent="Timers"]
-wait_time = 1.5
-autostart = true
-
 [node name="StateTimeout" type="Timer" parent="Timers"]
+wait_time = 0.5
+
+[node name="DetectionTimer" type="Timer" parent="Timers"]
 wait_time = 0.5
 autostart = true
 
-[node name="CombatTimer" type="Timer" parent="Timers"]
+[node name="DamagerTimer" type="Timer" parent="Timers"]
 
 [node name="UI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -7.0
@@ -367,7 +342,8 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
-text = "Blue Slime"
+text = "Slime
+lvl:  1"
 label_settings = SubResource("LabelSettings_idkqo")
 horizontal_alignment = 1
 
@@ -379,10 +355,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_7s0su")
 value = 100.0
 show_percentage = false
 
-[connection signal="area_entered" from="Areas/Hurtbox" to="." method="InAttackRange"]
-[connection signal="area_exited" from="Areas/Hurtbox" to="." method="NotInAttackRange"]
-[connection signal="area_entered" from="Areas/Detectbox" to="." method="EnemyDetected"]
-[connection signal="area_exited" from="Areas/Detectbox" to="." method="EnemyNotDetected"]
-[connection signal="timeout" from="Timers/Regeneration" to="." method="Regeneration"]
-[connection signal="timeout" from="Timers/StateTimeout" to="." method="StateMachine"]
-[connection signal="timeout" from="Timers/CombatTimer" to="." method="Combat"]
+[node name="DamageVisual" type="ProgressBar" parent="."]
+visible = false
+offset_left = -28.0
+offset_top = -27.0
+offset_right = 28.0
+offset_bottom = 25.0
+theme_override_styles/background = SubResource("StyleBoxFlat_453ck")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3jd1p")
+value = 50.0
+show_percentage = false
+
+[connection signal="timeout" from="Timers/DetectionTimer" to="." method="DetectionTimeout"]
+[connection signal="timeout" from="Timers/DamagerTimer" to="." method="DamageEnemy"]

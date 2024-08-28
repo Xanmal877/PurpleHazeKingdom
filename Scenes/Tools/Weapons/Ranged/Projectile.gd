@@ -44,13 +44,13 @@ func RangedProperties():
 func EnemyHit(body):
 	if body.is_in_group("enemy"):
 		var enemy = body
-		enemy.health -= 1
+		enemy.stats.health -= 1
 		if enemy.currentState != enemy.COMBAT:
-			enemy.EnemyArray.append(player)
+			enemy.target = player
 			enemy.currentState = enemy.COMBAT
 			enemy.StateMachine()
 			enemy.ui.show()
-		if enemy.health <= 0:
+		if enemy.stats.health <= 0:
 			#player.CurrentXP += enemy.XPValue
 			enemy.queue_free()
 		queue_free()

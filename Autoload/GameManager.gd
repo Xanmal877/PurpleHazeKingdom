@@ -8,7 +8,7 @@ extends Node
 const TAMANEKO = preload("res://Scenes/Characters/Fuyuki/Tamaneko.tscn")
 const AIAUTUMN = preload("res://Scenes/Characters/Autumn/AIAutumn.tscn")
 
-const BLUESLIME = preload("res://Scenes/Characters/BlueSlime/Blueslime.tscn")
+const SLIME = preload("res://Scenes/Characters/BlueSlime/Slime.tscn")
 
 #endregion
 

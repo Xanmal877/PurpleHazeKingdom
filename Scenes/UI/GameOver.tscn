@@ -51,37 +51,51 @@ label_settings = SubResource("LabelSettings_156da")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="playagain" type="Button" parent="Screen/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Control"]
+custom_minimum_size = Vector2(250, 150)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.17
-anchor_top = 0.616
-anchor_right = 0.522
-anchor_bottom = 0.74
-offset_right = -88.0
-offset_bottom = -31.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = 53.0
+offset_right = 123.0
+offset_bottom = 203.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
+
+[node name="Start Over" type="Button" parent="Screen/Control/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_glfiu")
-text = "Play Again"
+text = "Start Over"
 metadata/_edit_use_anchors_ = true
 
-[node name="exitgame" type="Button" parent="Screen/Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.574
-anchor_top = 0.618
-anchor_right = 0.926
-anchor_bottom = 0.742
-offset_right = -88.0
-offset_bottom = -31.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2, 2)
+[node name="VSeparator" type="VSeparator" parent="Screen/Control/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Load Save" type="Button" parent="Screen/Control/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_glfiu")
+disabled = true
+text = "Load Save"
+metadata/_edit_use_anchors_ = true
+
+[node name="VSeparator2" type="VSeparator" parent="Screen/Control/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="exitgame" type="Button" parent="Screen/Control/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_glfiu")
 text = "Exit Game"
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Screen/Control/playagain" to="." method="_on_playagain_pressed"]
-[connection signal="pressed" from="Screen/Control/exitgame" to="." method="_on_exitgame_pressed"]
+[connection signal="pressed" from="Screen/Control/HBoxContainer/Start Over" to="." method="_on_start_over_pressed"]
+[connection signal="pressed" from="Screen/Control/HBoxContainer/Load Save" to="." method="_on_load_save_pressed"]
+[connection signal="pressed" from="Screen/Control/HBoxContainer/exitgame" to="." method="_on_exitgame_pressed"]

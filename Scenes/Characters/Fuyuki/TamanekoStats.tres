@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_2wocn")
 Name = "Fuyuki Tamaneko"
-Class = "Ninja"
-level = 5
-Strength = 10
-Dexterity = 16
-Constitution = 10
-Intelligence = 10
-Wisdom = 10
-Charisma = 10
+Class = "Rogue"
+level = 0
+Strength = 9
+Dexterity = 11
+Perception = 11
+Constitution = 7
+Intelligence = 9
+Wisdom = 9
+Charisma = 9
