@@ -16,7 +16,7 @@ func _on_directional_bindings_pressed():
 	elif Tamaneko.fourDirection == true:
 		directional_bindings.text = "ON"
 		Tamaneko.fourDirection = false
-	print(Tamaneko.fourDirection)
+	#print(Tamaneko.fourDirection)
 
 
 func _on_exitmenu_pressed():

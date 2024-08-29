@@ -1,18 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdfqaxbmf3h8s"]
+[gd_scene load_steps=5 format=3 uid="uid://cdfqaxbmf3h8s"]
 
 [ext_resource type="PackedScene" uid="uid://bj451chfshy60" path="res://Scenes/Characters/Fuyuki/Tamaneko.tscn" id="1_strur"]
 [ext_resource type="PackedScene" uid="uid://bxu4imnysgp6d" path="res://Scenes/Zones/RegionOne.tscn" id="2_qjn5p"]
-[ext_resource type="PackedScene" uid="uid://bmhk63jchxjgp" path="res://Scenes/UI/GameOver.tscn" id="4_pgl7f"]
-[ext_resource type="PackedScene" uid="uid://4yqlapdu1p6u" path="res://Scenes/UI/MainMenu.tscn" id="4_taa8q"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ep341"]
+[ext_resource type="PackedScene" uid="uid://d13w2fbckg5fg" path="res://Autoload/GameManager.tscn" id="3_hp03a"]
+[ext_resource type="PackedScene" uid="uid://c0br65xw5ls7u" path="res://Scenes/Characters/Autumn/AIAutumn.tscn" id="4_kr6lm"]
 
 [node name="SceneManager" type="Node2D" groups=["worldnode"]]
 y_sort_enabled = true
 
+[node name="GameManager" parent="." instance=ExtResource("3_hp03a")]
+
 [node name="RegionOne" parent="." instance=ExtResource("2_qjn5p")]
 
-[node name="AdventurerSpawn" type="Marker2D" parent="." groups=["ASpawn"]]
+[node name="AdventurerSpawn" type="Marker2D" parent="." groups=["ASpawn", "RespawnMarker"]]
 position = Vector2(1565, 1041)
 
 [node name="Characters" type="Node2D" parent="."]
@@ -21,17 +21,7 @@ y_sort_enabled = true
 [node name="Tamaneko" parent="Characters" instance=ExtResource("1_strur")]
 position = Vector2(566, 871)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TimeLabel" type="Label" parent="CanvasLayer"]
-custom_minimum_size = Vector2(80, 20)
-offset_right = 80.0
-offset_bottom = 23.0
-text = "Time: 100"
-label_settings = SubResource("LabelSettings_ep341")
-vertical_alignment = 3
-
-[node name="Main Menu" parent="." instance=ExtResource("4_taa8q")]
-
-[node name="GameOver" parent="." instance=ExtResource("4_pgl7f")]
-visible = false
+[node name="AIAutumn" parent="." node_paths=PackedStringArray("NavAgent", "RespawnMarker") instance=ExtResource("4_kr6lm")]
+position = Vector2(495, 832)
+NavAgent = NodePath("")
+RespawnMarker = NodePath("../AdventurerSpawn")

@@ -16,6 +16,7 @@ static var fourDirection: bool = true
 
 @onready var healthbar = $UI/Bars/Healthbar
 @onready var staminabar = $UI/Bars/Staminabar
+@onready var manabar = $UI/Bars/ManaBar
 @onready var expbar = $UI/Bars/expbar
 
 
@@ -23,6 +24,8 @@ static var fourDirection: bool = true
 
 @onready var GM: GameManager = GameManager
 @export var stats: CharacterStats
+var inmenu: bool = false
+
 
 #endregion
 
@@ -30,23 +33,19 @@ static var fourDirection: bool = true
 #region The Runtimes
 
 func _ready():
-	stats.StatUpdates()
+	stats.CheckForLevelUp()
 	GameManagerReady()
 	await get_tree().create_timer(0.5).timeout
 	#stats.CatchUpLevel()
-	print(
-	"Level:  " + str(stats.level) +
-	"\n" + "Strength:  " + str(stats.Strength) +
-	"\n" + "Dexterity:  " + str(stats.Dexterity) +
-	"\n" + "Perception:  " + str(stats.Perception) +
-	"\n" + "Constitution:  " + str(stats.Constitution) +
-	"\n" + "Intelligence:  " + str(stats.Intelligence)
-	)
+	#print(
+	#"Level:  " + str(stats.level) +
+	#"\n" + "Strength:  " + str(stats.Strength) +
+	#"\n" + "Dexterity:  " + str(stats.Dexterity) +
+	#"\n" + "Perception:  " + str(stats.Perception) +
+	#"\n" + "Constitution:  " + str(stats.Constitution) +
+	#"\n" + "Intelligence:  " + str(stats.Intelligence)
+	#)
 
-
-
-func _process(delta):
-	GM.GameTimer($"../../CanvasLayer/TimeLabel")
 
 func _physics_process(_delta):
 	Movement()
@@ -54,7 +53,6 @@ func _physics_process(_delta):
 
 func _input(_event):
 	UseWeapon()
-	OpenMenus()
 
 
 func GameManagerReady():
@@ -164,48 +162,22 @@ func TakeDamage(Attacker, Attacked, Damage):
 	CheckDeath()
 
 
-func MonsterKilled(Killed, XPvalue, GoldValue):
-	#if Killed != self:
-		#return
+func MonsterKilled(Killer, XPvalue, GoldValue):
+	if Killer != self:
+		return
 	stats.currentXP += XPvalue
 	stats.gold += GoldValue
 	expbar.Status()
-	print("currentXP:  ", stats.currentXP, "  Experience Needed: ", stats.requiredXP)
-	stats.StatUpdates()
+	stats.CheckForLevelUp()
 
 
-@onready var game_over = $"../../GameOver"
+@onready var gameoverscreen = get_tree().get_first_node_in_group("GameOverScreen")
 func CheckDeath():
 	# Death Code
 	if stats.health <= 0:
-		game_over.visible = true
+		gameoverscreen.visible = true
 
 #endregion
-
-
-@onready var character_sheet = $UI/CharacterSheet
-@onready var inventoryui = $UI/Inventory
-@onready var mainmenu = $"../../Main Menu"
-var inmenu: bool = false
-func OpenMenus():
-	if Input.is_action_just_pressed("Inventory"):
-		if inventoryui.visible == false:
-			inventoryui.visible = true
-		else:
-			inventoryui.visible = false
-
-	if Input.is_action_just_pressed("Escape"):
-		mainmenu.visible = !mainmenu.visible
-	
-	if Input.is_action_just_pressed("Character Sheet"):
-		character_sheet.visible = !character_sheet.visible
-
-	if inventoryui.visible or mainmenu.visible:
-		inmenu = true
-		get_tree().paused = true
-	else:
-		inmenu = false
-		get_tree().paused = false
 
 
 #region Animation

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://0b6yeugdcsoi"]
+
+[ext_resource type="PackedScene" uid="uid://b2fkyte1jfbu1" path="res://Scenes/Tools/Weapons/Ranged/Projectile.tscn" id="1_75fks"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfevf"]
+radius = 19.0263
+
+[node name="VoidBolt" groups=["VoidBolt"] instance=ExtResource("1_75fks")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+animation = &"VoidBolt"
+autoplay = "VoidBolt"
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_bfevf")
+
+[node name="Timeout" parent="." index="2"]
+wait_time = 1.0

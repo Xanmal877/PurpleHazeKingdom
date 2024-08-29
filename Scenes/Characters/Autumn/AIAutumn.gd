@@ -1,36 +1,24 @@
 extends CharacterBody2D
 
 
-#region Variables and Signals
-
 #region Variables
 
 @onready var tama = get_tree().get_first_node_in_group("Tamaneko")
 var FollowTama: bool = false
 var target = null
-var isincombat: bool
-
-
-var economy: Dictionary = {
-	"Gold": 0
-}
+var isincombat: bool = false
+var isCasting: bool = false
 
 @export var NavAgent: NavigationAgent2D
 @export var RespawnMarker: Marker2D
 
 @onready var inventory = $UI/Inventory
-@onready var statbars = $Statbars
+@onready var healthbar = $Statbars/VBoxContainer/Healthbar
+@onready var staminabar = $Statbars/VBoxContainer/Staminabar
+@onready var manabar = $Statbars/VBoxContainer/Manabar
+@onready var expbar = $Statbars/VBoxContainer/expbar
 
 @export var stats: CharacterStats
-
-#endregion
-
-
-#region Signals
-
-signal AnimChange(Anim)
-
-#endregion
 
 #endregion
 
@@ -38,23 +26,40 @@ signal AnimChange(Anim)
 #region The Runtimes
 
 func _ready():
-	stats.StatUpdates()
-	GameManager.MonsterKilled.connect(LevelUp)
+	stats.CheckForLevelUp()
+	GameManagerReady()
+	WalkingAnim(false)
+	UpdateBlend()
+	#print(
+	#"Level:  " + str(stats.level) +
+	#"\n" + "Strength:  " + str(stats.Strength) +
+	#"\n" + "Dexterity:  " + str(stats.Dexterity) +
+	#"\n" + "Perception:  " + str(stats.Perception) +
+	#"\n" + "Constitution:  " + str(stats.Constitution) +
+	#"\n" + "Intelligence:  " + str(stats.Intelligence)
+	#)
+
+
 
 
 func _physics_process(_delta):
-	if isincombat == true:
-		velocity = Vector2.ZERO
-		stats.speed = 0
-		WalkingAnim(false)
-		UpdateBlend()
-	else:
-		CastVoidBoltAnim(false)
-		UpdateBlend()
-		WalkingAnim(true)
-		UpdateBlend()
-		stats.speed = stats.normalSpeed
-		velocity = stats.direction * stats.speed
+	if target:
+		if global_position.distance_to(target.global_position) <= 100:
+			velocity = Vector2.ZERO
+			CastVoidBoltAnim(true)
+			UpdateBlend()
+		elif global_position.distance_to(target.global_position) > 70:
+			velocity = Vector2.ZERO
+			CastVoidBoltAnim(false)
+			UpdateBlend()
+			await get_tree().create_timer(1).timeout
+			WalkingAnim(true)
+			UpdateBlend()
+			velocity = stats.direction * stats.speed
+	if !target:
+			WalkingAnim(false)
+			UpdateBlend()
+			velocity = Vector2.ZERO
 	move_and_slide()
 
 
@@ -63,6 +68,10 @@ func _input(event):
 		FollowTama = !FollowTama
 	OpenInventory()
 
+
+func GameManagerReady():
+	GameManager.connect("AttackMade", TakeDamage)
+	GameManager.connect("MonsterKilled", MonsterKilled)
 
 
 #endregion
@@ -81,38 +90,48 @@ func FindItems(area):
 
 
 #region Combat
+const VOID_BOLT = preload("res://Scenes/Tools/Weapons/Ranged/VoidBolt.tscn")
 
-func EnemyDetected(area):
-	if area.is_in_group("enemyDetectbox"):
-		target = area.get_owner()
-		NavAgent.target_position = target.global_position
-
-
-func EnemyNotDetected(area):
-	if area.is_in_group("enemyDetectbox"):
-		target = null
+func ScanForEnemies():
+	var enemies = get_tree().get_nodes_in_group("enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) <= 100:
+			target = enemy
+			isincombat = true
 
 
-#const VOID_BOLT = preload("res://Scenes/Tools/Weapons/Ranged/VoidBolt.tscn")
-#func FireVoidBolt():
-	#var vbolt = VOID_BOLT.instantiate()
-	#vbolt.user = self
-	#add_child(vbolt)
+func ScannerTimeout():
+	ScanForEnemies()
+
+
+func FireVoidBolt():
+	var vbolt = VOID_BOLT.instantiate()
+	vbolt.player = self
+	vbolt.target = target
+	add_sibling(vbolt)
+	vbolt.global_position = self.global_position
+	await get_tree().create_timer(0.5).timeout
 
 
 
-func InDamageRange(area):
-	pass
+func TakeDamage(Attacker, Attacked, Damage):
+	if Attacked != self:
+		return
+	stats.health -= Damage
+	healthbar.Status()
+	staminabar.Status()
+	manabar.Status()
 
 
-func NotInDamageRange(area):
-	if area.is_in_group("enemy"):
-		pass
-
-
-func TakeDamage(area):
-	if area.is_in_group("enemy"):
-		statbars.Status()
+func MonsterKilled(Killer, XPvalue, GoldValue):
+	if Killer != self:
+		return
+	stats.currentXP += XPvalue
+	stats.gold += GoldValue
+	expbar.Status()
+	stats.CheckForLevelUp()
+	isincombat = false
+	target = null
 
 
 #endregion
@@ -128,7 +147,9 @@ func RegenerationTimeout():
 		stats.stamina += stats.staminaRegen
 	if stats.mana < stats.maxMana:
 		stats.mana += stats.manaRegen
-		statbars.Status()
+	healthbar.Status()
+	staminabar.Status()
+	manabar.Status()
 
 #endregion
 
@@ -144,6 +165,7 @@ func WalkingAnim(value: bool):
 
 
 func CastVoidBoltAnim(value: bool):
+	isCasting = not value
 	Animation_Tree["parameters/conditions/VoidBolt"] = value
 	Animation_Tree["parameters/conditions/Reset"] = not value
 
@@ -202,16 +224,17 @@ func OpenInventory():
 
 func Respawn():
 	global_position = RespawnMarker.global_position
-	CastVoidBoltAnim(false)
 	stats.health = stats.maxHealth
 	stats.stamina = stats.maxStamina
 	stats.mana = stats.maxMana
 
+
 #endregion
 
 
-func LevelUp(Killer, XPvalue, GoldValue):
-	stats.LevelUp(Killer, XPvalue, GoldValue)
+func LevelUp():
+	stats.LevelUp()
 	stats.Strength += 2
 	stats.Constitution += 2
 	stats.StatUpdates()
+

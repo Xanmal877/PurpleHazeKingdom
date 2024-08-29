@@ -8,7 +8,7 @@ var inrange: bool = false
 @onready var inrangelabel = $inrangelabel
 
 @export var item: ItemResource = ItemResource.new()
-signal ItemPickedup
+#signal ItemPickedup
 
 #endregion
 
@@ -33,7 +33,8 @@ func AreaExited(area):
 
 func PickupItem():
 	if Input.is_action_just_pressed("Interact") and inrange == true:
+		GameManager.emit_signal("ItemPickedUp", item)
 		player.inventory.AddItemtoInventory(item)
 		queue_free()
-		ItemPickedup.emit()
+		#ItemPickedup.emit()
 

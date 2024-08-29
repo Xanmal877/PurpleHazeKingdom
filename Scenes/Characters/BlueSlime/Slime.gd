@@ -16,11 +16,12 @@ var Marker: Vector2
 @onready var nametag = $UI/VBoxContainer/Nametag
 @onready var healthbar = $UI/VBoxContainer/Healthbar
 @onready var animation_tree = $Animations/AnimationTree
+@onready var damager_timer = $Timers/DamagerTimer
 @export var stats: CharacterStats
 
 #endregion
 
-@onready var damager_timer = $Timers/DamagerTimer
+
 
 #region Runtimes
 
@@ -37,8 +38,10 @@ func _physics_process(_delta):
 
 func GameManagement():
 	GameManager.connect("AttackMade", TakeDamage)
+	
 
 #endregion
+
 
 func Movement():
 	if currentState == IDLE:
@@ -89,7 +92,6 @@ func DetectionRadar():
 		if global_position.distance_to(adv.global_position) <= stats.detectionRadius:
 			if target == null:
 				target = adv
-				ui.show()
 				damagevisual.show()
 				damager_timer.start()
 				currentState = COMBAT
@@ -100,7 +102,6 @@ func DetectionRadar():
 			target = null
 			damager_timer.stop()
 			damagevisual.hide()
-			ui.hide()
 
 @onready var damagevisual = $DamageVisual
 
@@ -120,9 +121,16 @@ func TakeDamage(Attacker, Attacked, Damage):
 		return
 
 	stats.health -= Damage
+	HealthStatus()
+	Death()
+	if stats.health <= 0:
+		GameManager.emit_signal("MonsterKilled", Attacker, 35, randi_range(3, 5))
+
+
+func HealthStatus():
 	healthbar.value = stats.health
 	healthbar.max_value = stats.maxHealth
-	Death()
+
 
 
 @onready var worldnode = get_tree().get_first_node_in_group("worldnode")
@@ -132,12 +140,18 @@ func Death():
 		var item1 = SLIME_GOO.instantiate()
 		worldnode.call_deferred("add_child", item1)
 		item1.position = position
-		var goldvalue = randi_range(3,5)
-		GameManager.emit_signal("MonsterKilled", self, 35, goldvalue)
 		queue_free()
 
 
-func LevelUp(Killed, XPvalue, GoldValue):
-	stats.LevelUp(Killed, XPvalue, GoldValue)
+func LevelUp():
+	stats.LevelUp()
 	stats.StatUpdates()
 
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered():
+	ui.show()
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	ui.hide()

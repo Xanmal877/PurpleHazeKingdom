@@ -25,9 +25,9 @@ func _ready():
 
 
 func RegenerateHealth():
-	print("1")
+	#print("1")
 	await Htimerscene.timeout
-	print("2")
+	#print("2")
 	if user.health < user.maxHealth:
 		user.health += user.healthRegen
 

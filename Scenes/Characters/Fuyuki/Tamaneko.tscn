@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bj451chfshy60"]
+[gd_scene load_steps=29 format=3 uid="uid://bj451chfshy60"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Fuyuki/Tamaneko.gd" id="1_3b5nv"]
 [ext_resource type="Texture2D" uid="uid://cc4wv3s28yanh" path="res://Scenes/Characters/Fuyuki/Spritesheet.png" id="2_1o1ws"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cqtu20alqlysd" path="res://Scenes/UI/Inventory/inventory.tscn" id="8_mqokg"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/healthbar.gd" id="10_6qhnr"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/staminabar.gd" id="11_1uase"]
+[ext_resource type="PackedScene" uid="uid://dji0a3xg8uma8" path="res://Scenes/UI/StatBars/manabar.tscn" id="12_e0x04"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/expbar.gd" id="13_m1lo6"]
 [ext_resource type="PackedScene" uid="uid://bl4yc1tvyf34l" path="res://Scenes/UI/CharacterSheet.tscn" id="14_cf856"]
 
@@ -39,6 +40,10 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t4tng"]
 radius = 33.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_55dj7"]
+radius = 6.0
+height = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_es6yj"]
 radius = 36.0
@@ -148,7 +153,7 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uhrje")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(4, 4)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
@@ -199,11 +204,11 @@ collision_mask = 16
 shape = SubResource("CircleShape2D_t4tng")
 
 [node name="Hitbox" type="Area2D" parent="Areas"]
-visible = false
 collision_layer = 16
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Hitbox"]
+shape = SubResource("CapsuleShape2D_55dj7")
 
 [node name="StealthBox" type="Area2D" parent="Areas" groups=["tstealth"]]
 collision_layer = 2
@@ -238,8 +243,10 @@ user = NodePath("../..")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -89.0
-offset_right = 250.0
+offset_left = 3.0
+offset_top = -126.0
+offset_right = 253.0
+offset_bottom = -6.0
 grow_vertical = 0
 
 [node name="Healthbar" type="ProgressBar" parent="UI/Bars" node_paths=PackedStringArray("user")]
@@ -260,6 +267,10 @@ theme_override_styles/background = SubResource("StyleBoxFlat_qi84f")
 theme_override_styles/fill = SubResource("StyleBoxFlat_u3cd2")
 value = 50.0
 script = ExtResource("11_1uase")
+user = NodePath("../../..")
+
+[node name="ManaBar" parent="UI/Bars" node_paths=PackedStringArray("user") instance=ExtResource("12_e0x04")]
+layout_mode = 2
 user = NodePath("../../..")
 
 [node name="expbar" type="ProgressBar" parent="UI/Bars" node_paths=PackedStringArray("user")]

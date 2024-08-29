@@ -4,6 +4,15 @@ extends Control
 @onready var stats = $Panel/Stats
 
 
+
+func _input(event):
+	if Input.is_action_just_pressed("Character Sheet"):
+		visible = !visible
+		if visible:
+			tama.inmenu = true
+		else:
+			tama.inmenu = false
+
 func _process(delta):
 	stats.text = ("Level:  " + str(tama.stats.level) +
 	"\n" + "Strength:  " + str(tama.stats.Strength) +

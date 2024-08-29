@@ -254,7 +254,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="Slime" type="CharacterBody2D" groups=["NPC", "enemy"]]
+[node name="Slime" type="CharacterBody2D" groups=["NPC", "Slime", "enemy"]]
 y_sort_enabled = true
 collision_mask = 9
 wall_min_slide_angle = 0.0
@@ -269,7 +269,6 @@ texture = ExtResource("3_efyqn")
 flip_h = true
 hframes = 7
 vframes = 5
-frame = 3
 
 [node name="Body" type="CollisionShape2D" parent="."]
 light_mask = 3
@@ -369,5 +368,9 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_3jd1p")
 value = 50.0
 show_percentage = false
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="timeout" from="Timers/DetectionTimer" to="." method="DetectionTimeout"]
 [connection signal="timeout" from="Timers/DamagerTimer" to="." method="DamageEnemy"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

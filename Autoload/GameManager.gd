@@ -5,6 +5,7 @@ extends Node
 
 #region Characters
 
+
 const TAMANEKO = preload("res://Scenes/Characters/Fuyuki/Tamaneko.tscn")
 const AIAUTUMN = preload("res://Scenes/Characters/Autumn/AIAutumn.tscn")
 
@@ -12,12 +13,13 @@ const SLIME = preload("res://Scenes/Characters/BlueSlime/Slime.tscn")
 
 #endregion
 
-
-var time: float = 0
+@onready var tama = get_tree().get_first_node_in_group("Tamaneko")
 var saveGame: SaveSystem = SaveSystem.new()
 
 signal AttackMade(Attacker:CharacterBody2D, Attacked:CharacterBody2D, Damage)
-signal MonsterKilled(Killed, XPValue: int, GoldValue: int)
+signal MonsterKilled(Killer:CharacterBody2D, XPValue: int, GoldValue: int)
+signal ItemPickedUp(item)
+
 
 #endregion
 
@@ -35,16 +37,6 @@ func SetCameraLimits(tilemap: TileMap, camera: Camera2D):
 	camera.limit_top = top_left.y
 	camera.limit_right = bottom_right.x - cell_size.x
 	camera.limit_bottom = bottom_right.y - cell_size.y
-
-
-func GameTimer(timeLabel: Label):
-	time += 0.02
-	var hours = int(time) / 3600
-	var minutes = (int(time) % 3600) / 60
-	var seconds = int(time) % 60
-
-	timeLabel.text = "Time: %02d:%02d:%02d" % [hours, minutes, seconds]
-
 
 #endregion
 

@@ -19,7 +19,6 @@ var GMSaveState = GM.saveGame
 #region Runtimes
 
 func _ready():
-	get_tree().paused = true
 	new_game.visible = true
 	save_game.visible = false
 	load_game.visible = false
@@ -29,12 +28,10 @@ func _ready():
 
 func _process(_delta):
 	if visible:
-		get_tree().paused = true
 		tama.healthbar.visible = false
 		tama.staminabar.visible = false
 		tama.expbar.visible = false
 	else:
-		get_tree().paused = false
 		tama.healthbar.visible = true
 		tama.staminabar.visible = true
 		tama.expbar.visible = true
@@ -42,6 +39,10 @@ func _process(_delta):
 func _input(event):
 	if Input.is_action_just_pressed("Escape"):
 		visible = !visible
+		if visible:
+			tama.inmenu = true
+		else:
+			tama.inmenu = false
 
 #endregion
 
@@ -59,6 +60,8 @@ func _on_new_game_pressed():
 	tama.healthbar.visible = true
 	tama.staminabar.visible = true
 
+	$"../WorldOverlay".visible = true
+	
 	visible = false
 
 
@@ -66,6 +69,7 @@ func _on_save_game_pressed():
 	tama.stats.StatUpdates()
 	GMSaveState.SaveGame(tama)
 	visible = false
+
 
 func _on_load_game_pressed():
 	if FileAccess.file_exists("user://savegame.data"):

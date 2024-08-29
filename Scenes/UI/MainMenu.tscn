@@ -56,7 +56,6 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="Main Menu" type="CanvasLayer"]
-process_mode = 2
 script = ExtResource("1_dgdh6")
 
 [node name="Panel" type="Panel" parent="."]

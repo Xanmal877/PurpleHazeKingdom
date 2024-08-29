@@ -8,19 +8,19 @@ extends Panel
 
 
 func _ready():
-	healthbar.max_value = user.maxHealth
-	healthbar.value = user.health
-	staminabar.max_value = user.maxStamina
-	staminabar.value = user.stamina
-	manabar.max_value = user.maxMana
-	manabar.value = user.mana
+	healthbar.max_value = user.stats.maxHealth
+	healthbar.value = user.stats.health
+	staminabar.max_value = user.stats.maxStamina
+	staminabar.value = user.stats.stamina
+	manabar.max_value = user.stats.maxMana
+	manabar.value = user.stats.mana
 
 
 
 func Status():
-	healthbar.max_value = user.maxHealth
-	healthbar.value = user.health
-	staminabar.max_value = user.maxStamina
-	staminabar.value = user.stamina
-	manabar.max_value = user.maxMana
-	manabar.value = user.mana
+	healthbar.max_value = user.stats.maxHealth
+	healthbar.value = user.stats.health
+	staminabar.max_value = user.stats.maxStamina
+	staminabar.value = user.stats.stamina
+	manabar.max_value = user.stats.maxMana
+	manabar.value = user.stats.mana

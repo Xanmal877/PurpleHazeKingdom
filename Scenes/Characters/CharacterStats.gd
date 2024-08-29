@@ -59,26 +59,25 @@ var currentXP: float
 var requiredXP: float
 var overallXP: float
 
-func LevelUp(Killer, XPvalue, GoldValue):
-	if Killer == self:
-		currentXP += XPvalue
-		gold += GoldValue
-
-
-
 
 func CatchUpLevel():
 	for i in range(level):
 		StatUpdates()
 
 
-func StatUpdates():
+func CheckForLevelUp():
 	requiredXP = (level * 1.5) * 100
 	if currentXP >= requiredXP:
-		level += 1
+		currentXP -= requiredXP
 		currentXP += overallXP
-		currentXP = 0
+		
+		level += 1
+		
+	StatUpdates()
 
+
+
+func StatUpdates():
 		Strength += 1
 		Dexterity += 1
 		Perception += 1

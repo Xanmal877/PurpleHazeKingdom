@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://d13w2fbckg5fg"]
+
+[ext_resource type="Script" path="res://Autoload/GameManager.gd" id="1_d30c7"]
+[ext_resource type="PackedScene" uid="uid://4yqlapdu1p6u" path="res://Scenes/UI/MainMenu.tscn" id="2_s4kxc"]
+[ext_resource type="PackedScene" uid="uid://bmhk63jchxjgp" path="res://Scenes/UI/GameOver.tscn" id="3_ojcdm"]
+[ext_resource type="Script" path="res://Scenes/WorldOverlay.gd" id="4_e0es0"]
+[ext_resource type="PackedScene" uid="uid://b1xrdliwrt51d" path="res://Scenes/UI/Questing/Quest Menus/QuestBox.tscn" id="5_0vvkr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kf00b"]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_d30c7")
+
+[node name="Main Menu" parent="." instance=ExtResource("2_s4kxc")]
+visible = false
+
+[node name="GameOver" parent="." groups=["GameOverScreen"] instance=ExtResource("3_ojcdm")]
+visible = false
+
+[node name="WorldOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("4_e0es0")
+
+[node name="TimeLabel" type="Label" parent="WorldOverlay"]
+custom_minimum_size = Vector2(80, 20)
+offset_right = 80.0
+offset_bottom = 23.0
+text = "Time: 100"
+label_settings = SubResource("LabelSettings_kf00b")
+vertical_alignment = 3
+
+[node name="QuestBox" parent="." instance=ExtResource("5_0vvkr")]
+visible = false
