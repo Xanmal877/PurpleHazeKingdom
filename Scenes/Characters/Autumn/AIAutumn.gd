@@ -60,7 +60,7 @@ func _physics_process(_delta):
 			WalkingAnim(false)
 			UpdateBlend()
 			velocity = Vector2.ZERO
-	move_and_slide()
+	move_and_collide(velocity)
 
 
 func _input(event):

@@ -136,7 +136,6 @@ corner_radius_bottom_left = 100
 y_sort_enabled = true
 collision_mask = 9
 input_pickable = true
-wall_min_slide_angle = 0.0
 safe_margin = 0.8
 script = ExtResource("1_3b5nv")
 Sprite = NodePath("Sprite2D")
@@ -153,7 +152,7 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uhrje")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 

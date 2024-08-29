@@ -1,19 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxu4imnysgp6d"]
+[gd_scene load_steps=7 format=3 uid="uid://bxu4imnysgp6d"]
 
 [ext_resource type="TileSet" uid="uid://d20lmkbestn0w" path="res://Assets/Tilesets/RegionOneTileset.tres" id="1_c8a7s"]
 [ext_resource type="PackedScene" uid="uid://0rvwgwyb6npi" path="res://Scenes/spawnpoint.tscn" id="3_tsu31"]
 [ext_resource type="PackedScene" uid="uid://uq35a3lhcepf" path="res://Scenes/Characters/BlueSlime/Spawners/SlimeSpawner.tscn" id="3_y2yrc"]
 [ext_resource type="PackedScene" uid="uid://c618dtyg4rkxj" path="res://Scenes/Characters/TutorialNPC.tscn" id="4_7ylps"]
-[ext_resource type="Texture2D" uid="uid://c6f7n8fw3ffmq" path="res://Assets/Items/ManaGems/RedManaGem.png" id="4_k3fjq"]
 [ext_resource type="Script" path="res://YT Test/quest.gd" id="5_8bo4o"]
-[ext_resource type="Script" path="res://Scenes/Zones/TutorialNPC2.gd" id="5_yc1rg"]
 [ext_resource type="PackedScene" uid="uid://ds7n2x4rvmbko" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tscn" id="8_4adlm"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mujrl"]
-radius = 7.07107
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_iqsfo"]
-radius = 20.0
 
 [node name="RegionOne" type="TileMap" groups=["tilemap"]]
 y_sort_enabled = true
@@ -197,36 +189,18 @@ position = Vector2(903, 1902)
 [node name="SpawnPoint53" parent="Slime Fields Spawner/Markers" instance=ExtResource("3_tsu31")]
 position = Vector2(1081, 1898)
 
-[node name="TutorialNPC" parent="." instance=ExtResource("4_7ylps")]
-position = Vector2(431, 935)
-
-[node name="TutorialNPC2" type="CharacterBody2D" parent="." node_paths=PackedStringArray("quest") groups=["QuestNPC"]]
-position = Vector2(604, 950)
-script = ExtResource("5_yc1rg")
-quest = NodePath("FindTheBranch")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialNPC2"]
-shape = SubResource("CircleShape2D_mujrl")
-
-[node name="RedManaGem" type="Sprite2D" parent="TutorialNPC2"]
-texture = ExtResource("4_k3fjq")
-
-[node name="interact" type="Area2D" parent="TutorialNPC2"]
-collision_layer = 4
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialNPC2/interact"]
-shape = SubResource("CircleShape2D_iqsfo")
-
-[node name="FindTheBranch" type="Node2D" parent="TutorialNPC2"]
-script = ExtResource("5_8bo4o")
-questName = "Missing Branch"
-questDescription = "I Have lost my trust branch Steve! Please find Steve my Trust branch and bring him back to me! it would mean the world to me!"
-reachedGoalText = "You have found a random branch on the ground. Bring it back to the weird glowing gem?"
-Experience = 100
-Gold = 5
-
 [node name="Branch" parent="." instance=ExtResource("8_4adlm")]
 position = Vector2(893, 781)
 
-[connection signal="area_entered" from="TutorialNPC2/interact" to="TutorialNPC2" method="_on_interact_area_entered"]
+[node name="TutorialNPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("4_7ylps")]
+position = Vector2(1526, 996)
+quest = NodePath("KillQuest(Slimes)")
+
+[node name="KillQuest(Slimes)" type="Node2D" parent="TutorialNPC"]
+script = ExtResource("5_8bo4o")
+questName = "Slime Time Showdown"
+questDescription = "\"Help! These slimes are everywhere, and they’re causing chaos! I need you to take care of ten of them. I know it sounds like a slimy task, but someone’s got to do it. I promise you, defeating these slimes will be a big help!\""
+reachedGoalText = "You've defeated all ten slimes and now stand among their gooey remains, wondering if they were even worth the effort. The slimes were no match for you, and the area is finally free of their mess. You can't help but think, \"Was it really this easy?\" Time to head back and turn in the quest—hopefully, the reward is worth the slimy adventure."
+FinishedQuestText = "\"Fantastic! You’ve vanquished all ten slimes. I knew you could do it! Here’s your reward, Some gold for your efforts. And don’t worry, the next quest won’t be as gooey—probably.\""
+Experience = 1000
+Gold = 100

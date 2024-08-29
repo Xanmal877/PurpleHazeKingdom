@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c618dtyg4rkxj"]
+[gd_scene load_steps=5 format=3 uid="uid://c618dtyg4rkxj"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/TutorialNPC.gd" id="1_pitqb"]
 [ext_resource type="Texture2D" uid="uid://c6f7n8fw3ffmq" path="res://Assets/Items/ManaGems/RedManaGem.png" id="2_ggudp"]
-[ext_resource type="Script" path="res://YT Test/quest.gd" id="3_ywfrd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mujrl"]
 radius = 7.07107
@@ -10,23 +9,14 @@ radius = 7.07107
 [sub_resource type="CircleShape2D" id="CircleShape2D_iqsfo"]
 radius = 20.0
 
-[node name="TutorialNPC" type="CharacterBody2D" node_paths=PackedStringArray("quest") groups=["QuestNPC"]]
+[node name="TutorialNPC" type="CharacterBody2D" groups=["QuestNPC"]]
 script = ExtResource("1_pitqb")
-quest = NodePath("KillQuest(Slimes)")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mujrl")
 
 [node name="RedManaGem" type="Sprite2D" parent="."]
 texture = ExtResource("2_ggudp")
-
-[node name="KillQuest(Slimes)" type="Node2D" parent="."]
-script = ExtResource("3_ywfrd")
-questName = "Kill Slimes"
-questDescription = "Please Kill 10 Slimes!"
-reachedGoalText = "You have Killed 10 Slimes!"
-Experience = 1000
-Gold = 100
 
 [node name="interact" type="Area2D" parent="."]
 collision_layer = 4
@@ -36,3 +26,4 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_iqsfo")
 
 [connection signal="area_entered" from="interact" to="." method="_on_interact_area_entered"]
+[connection signal="area_exited" from="interact" to="." method="_on_interact_area_exited"]

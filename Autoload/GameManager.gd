@@ -19,7 +19,8 @@ var saveGame: SaveSystem = SaveSystem.new()
 signal AttackMade(Attacker:CharacterBody2D, Attacked:CharacterBody2D, Damage)
 signal MonsterKilled(Killer:CharacterBody2D, XPValue: int, GoldValue: int)
 signal ItemPickedUp(item)
-
+signal QuestDecision(choice: bool)
+signal QuestCompleted
 
 #endregion
 

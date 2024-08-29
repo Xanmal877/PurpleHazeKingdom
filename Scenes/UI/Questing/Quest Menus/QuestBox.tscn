@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1xrdliwrt51d"]
+[gd_scene load_steps=4 format=3 uid="uid://b1xrdliwrt51d"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Questing/Quest Menus/QuestBox.gd" id="1_cbnoi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cau38"]
 draw_center = false
@@ -9,50 +11,98 @@ border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
 border_blend = true
 
+[sub_resource type="LabelSettings" id="LabelSettings_ubbox"]
+font_size = 18
+
 [node name="QuestBox" type="CanvasLayer" groups=["QuestBox"]]
+script = ExtResource("1_cbnoi")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(200, 350)
-anchors_preset = -1
-anchor_left = 0.0818561
-anchor_top = 0.136893
-anchor_right = 0.255467
-anchor_bottom = 0.677016
-offset_left = 838.0
-offset_top = 14.2936
-offset_right = 838.0
-offset_bottom = 14.2936
-metadata/_edit_use_anchors_ = true
-
-[node name="QuestTitle" type="RichTextLabel" parent="." groups=["QuestTitle"]]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(300, 500)
 anchors_preset = -1
 anchor_left = 0.0815972
-anchor_top = 0.137346
-anchor_right = 0.256076
-anchor_bottom = 0.291667
-offset_left = 838.0
-offset_top = 14.2936
+anchor_top = 0.136893
+anchor_right = 0.255208
+anchor_bottom = 0.772695
+offset_left = 738.0
+offset_top = -70.7067
 offset_right = 838.0
-offset_bottom = 14.2936
+offset_bottom = 79.2936
+metadata/_edit_use_anchors_ = true
+
+[node name="QuestTitle" type="Label" parent="." groups=["QuestTitle"]]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = -1
+anchor_left = 0.722222
+anchor_top = 0.0277778
+anchor_right = 0.984375
+anchor_bottom = 0.182099
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_cau38")
-fit_content = true
+label_settings = SubResource("LabelSettings_ubbox")
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="QuestDescription" type="RichTextLabel" parent="." groups=["QuestDescription"]]
 custom_minimum_size = Vector2(0, 100)
 anchors_preset = -1
-anchor_left = 0.0815972
-anchor_top = 0.328704
-anchor_right = 0.25434
-anchor_bottom = 0.675926
-offset_left = 838.0
-offset_top = 14.2936
-offset_right = 838.0
-offset_bottom = 14.2936
+anchor_left = 0.725694
+anchor_top = 0.195988
+anchor_right = 0.982639
+anchor_bottom = 0.572531
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_cau38")
 metadata/_edit_use_anchors_ = true
+
+[node name="Rewards" type="Label" parent="." groups=["QuestRewardText"]]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = -1
+anchor_left = 0.721354
+anchor_top = 0.598765
+anchor_right = 0.983507
+anchor_bottom = 0.753086
+offset_bottom = -3.05176e-05
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_cau38")
+label_settings = SubResource("LabelSettings_ubbox")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Accept" type="Button" parent="." groups=["QAcceptButton"]]
+custom_minimum_size = Vector2(100, 30)
+anchors_preset = -1
+anchor_left = 0.731771
+anchor_top = 0.807099
+anchor_right = 0.838542
+anchor_bottom = 0.887346
+text = "Accept"
+metadata/_edit_use_anchors_ = true
+
+[node name="Decline" type="Button" parent="." groups=["QDeclineButton"]]
+custom_minimum_size = Vector2(100, 30)
+anchors_preset = -1
+anchor_left = 0.87066
+anchor_top = 0.807099
+anchor_right = 0.97309
+anchor_bottom = 0.884259
+text = "Decline"
+metadata/_edit_use_anchors_ = true
+
+[node name="Complete" type="Button" parent="." groups=["QCompleteButton"]]
+visible = false
+custom_minimum_size = Vector2(200, 50)
+offset_left = 878.0
+offset_top = 505.0
+offset_right = 1078.0
+offset_bottom = 555.0
+theme_override_font_sizes/font_size = 25
+text = "Complete"
+
+[connection signal="pressed" from="Accept" to="." method="_on_accept_pressed"]
+[connection signal="pressed" from="Decline" to="." method="_on_decline_pressed"]
+[connection signal="pressed" from="Complete" to="." method="_on_complete_pressed"]

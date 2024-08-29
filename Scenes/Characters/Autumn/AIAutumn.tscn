@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c0br65xw5ls7u"]
+[gd_scene load_steps=26 format=3 uid="uid://c0br65xw5ls7u"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Autumn/AIAutumn.gd" id="1_vo3u4"]
 [ext_resource type="Resource" uid="uid://b4c527txu6lh0" path="res://Scenes/Characters/Autumn/AIAutumnStats.tres" id="2_6jf6g"]
@@ -12,14 +12,9 @@
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/staminabar.gd" id="10_w2a7e"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/manabar.gd" id="11_xpsxw"]
 [ext_resource type="Script" path="res://Scenes/UI/StatBars/expbar.gd" id="12_7wrum"]
-[ext_resource type="Script" path="res://BehaviorTree/Base/BTreeBase.gd" id="14_xh21e"]
-[ext_resource type="Script" path="res://BehaviorTree/Composite/CompositeTree.gd" id="15_b2f4s"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/FindSlimes.gd" id="16_0wuve"]
-[ext_resource type="Script" path="res://BehaviorTree/Actions/GoToLocation.gd" id="17_o56ku"]
-[ext_resource type="Script" path="res://Scenes/Characters/Autumn/Attackenemy.gd" id="18_04xn1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cxy"]
-size = Vector2(8.33332, 5.55556)
+size = Vector2(12.2222, 35.5556)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uga1"]
 radius = 21.1111
@@ -165,7 +160,6 @@ y_sort_enabled = true
 scale = Vector2(0.9, 0.9)
 collision_mask = 9
 input_pickable = true
-safe_margin = 20.0
 script = ExtResource("1_vo3u4")
 NavAgent = NodePath("NavigationAgent2D")
 stats = ExtResource("2_6jf6g")
@@ -177,7 +171,7 @@ vframes = 13
 frame = 85
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.11111, 11.1111)
+position = Vector2(0.555556, 5.55556)
 shape = SubResource("RectangleShape2D_s1cxy")
 
 [node name="Areas" type="Node2D" parent="." groups=["AutumnAreas"]]
@@ -239,6 +233,7 @@ autostart = true
 [node name="CombatTimer" type="Timer" parent="Timers"]
 
 [node name="Statbars" type="Panel" parent="."]
+visible = false
 custom_minimum_size = Vector2(30, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -313,29 +308,6 @@ user = NodePath("../../..")
 process_mode = 3
 visible = false
 user = NodePath("../..")
-
-[node name="BehaviorTreeBase" type="Node" parent="." node_paths=PackedStringArray("user")]
-script = ExtResource("14_xh21e")
-user = NodePath("..")
-
-[node name="CompositeLeaf" type="Node" parent="BehaviorTreeBase" node_paths=PackedStringArray("user")]
-script = ExtResource("15_b2f4s")
-user = NodePath("../..")
-
-[node name="FindSlimes" type="Node" parent="BehaviorTreeBase/CompositeLeaf" node_paths=PackedStringArray("user")]
-script = ExtResource("16_0wuve")
-user = NodePath("../../..")
-time = 20.0
-
-[node name="GoToLocationAction" type="Node" parent="BehaviorTreeBase/CompositeLeaf" node_paths=PackedStringArray("NavAgent", "user")]
-script = ExtResource("17_o56ku")
-NavAgent = NodePath("../../../NavigationAgent2D")
-user = NodePath("../../..")
-
-[node name="Attackenemy" type="Node" parent="BehaviorTreeBase/CompositeLeaf" node_paths=PackedStringArray("user")]
-script = ExtResource("18_04xn1")
-user = NodePath("../../..")
-time = 3.0
 
 [connection signal="mouse_entered" from="Areas/InteractBox" to="." method="MouseOn"]
 [connection signal="mouse_exited" from="Areas/InteractBox" to="." method="MouseOff"]

@@ -19,9 +19,7 @@ position = Vector2(1565, 1041)
 y_sort_enabled = true
 
 [node name="Tamaneko" parent="Characters" instance=ExtResource("1_strur")]
-position = Vector2(566, 871)
+position = Vector2(1482, 1162)
 
-[node name="AIAutumn" parent="." node_paths=PackedStringArray("NavAgent", "RespawnMarker") instance=ExtResource("4_kr6lm")]
-position = Vector2(495, 832)
-NavAgent = NodePath("")
-RespawnMarker = NodePath("../AdventurerSpawn")
+[node name="AIAutumn" parent="Characters" instance=ExtResource("4_kr6lm")]
+position = Vector2(1476, 995)
