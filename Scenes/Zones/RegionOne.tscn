@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://0rvwgwyb6npi" path="res://Scenes/spawnpoint.tscn" id="3_tsu31"]
 [ext_resource type="PackedScene" uid="uid://uq35a3lhcepf" path="res://Scenes/Characters/BlueSlime/Spawners/SlimeSpawner.tscn" id="3_y2yrc"]
 [ext_resource type="PackedScene" uid="uid://c618dtyg4rkxj" path="res://Scenes/Characters/TutorialNPC.tscn" id="4_7ylps"]
-[ext_resource type="Script" path="res://YT Test/quest.gd" id="5_8bo4o"]
+[ext_resource type="Script" path="res://Scenes/QuestSystem/quest.gd" id="5_8bo4o"]
 [ext_resource type="PackedScene" uid="uid://ds7n2x4rvmbko" path="res://Scenes/Tools/Items/GatherableMaterials/Branch.tscn" id="8_4adlm"]
 
 [node name="RegionOne" type="TileMap" groups=["tilemap"]]
@@ -192,9 +192,8 @@ position = Vector2(1081, 1898)
 [node name="Branch" parent="." instance=ExtResource("8_4adlm")]
 position = Vector2(893, 781)
 
-[node name="TutorialNPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("4_7ylps")]
+[node name="TutorialNPC" parent="." instance=ExtResource("4_7ylps")]
 position = Vector2(1526, 996)
-quest = NodePath("KillQuest(Slimes)")
 
 [node name="KillQuest(Slimes)" type="Node2D" parent="TutorialNPC"]
 script = ExtResource("5_8bo4o")
@@ -202,5 +201,18 @@ questName = "Slime Time Showdown"
 questDescription = "\"Help! These slimes are everywhere, and they’re causing chaos! I need you to take care of ten of them. I know it sounds like a slimy task, but someone’s got to do it. I promise you, defeating these slimes will be a big help!\""
 reachedGoalText = "You've defeated all ten slimes and now stand among their gooey remains, wondering if they were even worth the effort. The slimes were no match for you, and the area is finally free of their mess. You can't help but think, \"Was it really this easy?\" Time to head back and turn in the quest—hopefully, the reward is worth the slimy adventure."
 FinishedQuestText = "\"Fantastic! You’ve vanquished all ten slimes. I knew you could do it! Here’s your reward, Some gold for your efforts. And don’t worry, the next quest won’t be as gooey—probably.\""
+Experience = 1000
+Gold = 100
+
+[node name="TutorialNPC2" parent="." instance=ExtResource("4_7ylps")]
+position = Vector2(1374, 1000)
+
+[node name="Find Branchy" type="Node2D" parent="TutorialNPC2"]
+script = ExtResource("5_8bo4o")
+questName = "Find Branchy!"
+questDescription = "Please Help me Find my branch!
+	"
+reachedGoalText = "There we go, found a branch..."
+FinishedQuestText = "Thank you for my branch!"
 Experience = 1000
 Gold = 100

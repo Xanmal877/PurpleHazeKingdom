@@ -25,5 +25,5 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interact"]
 shape = SubResource("CircleShape2D_iqsfo")
 
-[connection signal="area_entered" from="interact" to="." method="_on_interact_area_entered"]
-[connection signal="area_exited" from="interact" to="." method="_on_interact_area_exited"]
+[connection signal="area_entered" from="interact" to="." method="InteractAreaEntered"]
+[connection signal="area_exited" from="interact" to="." method="InteractAreaExited"]
