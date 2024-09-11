@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://4yqlapdu1p6u" path="res://Scenes/UI/MainMenu.tscn" id="2_s4kxc"]
 [ext_resource type="PackedScene" uid="uid://bmhk63jchxjgp" path="res://Scenes/UI/GameOver.tscn" id="3_ojcdm"]
 [ext_resource type="Script" path="res://Scenes/UI/WorldOverlay.gd" id="4_hj40d"]
-[ext_resource type="PackedScene" uid="uid://b1xrdliwrt51d" path="res://Scenes/UI/Questing/Quest Menus/QuestBox.tscn" id="5_0vvkr"]
+[ext_resource type="PackedScene" uid="uid://b1xrdliwrt51d" path="res://Scenes/QuestSystem/QuestUI/Quest Menus/QuestBox.tscn" id="5_0vvkr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kf00b"]
 
@@ -27,10 +27,6 @@ offset_bottom = 23.0
 text = "Time: 100"
 label_settings = SubResource("LabelSettings_kf00b")
 vertical_alignment = 3
-
-[node name="Label" type="Label" parent="WorldOverlay"]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [node name="QuestBox" parent="." instance=ExtResource("5_0vvkr")]
 visible = false

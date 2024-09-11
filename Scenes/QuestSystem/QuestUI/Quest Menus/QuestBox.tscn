@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1xrdliwrt51d"]
 
-[ext_resource type="Script" path="res://Scenes/UI/Questing/Quest Menus/QuestBox.gd" id="1_cbnoi"]
+[ext_resource type="Script" path="res://Scenes/QuestSystem/QuestUI/Quest Menus/QuestBox.gd" id="1_cbnoi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cau38"]
 draw_center = false

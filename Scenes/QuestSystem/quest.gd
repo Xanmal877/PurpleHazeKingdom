@@ -1,19 +1,22 @@
 class_name Quest extends QuestManager
 
 @onready var tama = get_tree().get_first_node_in_group("Tamaneko")
+var user
 
 func _ready():
 	GameManager.QuestDecision.connect(StartQuest)
+	GameManager.QuestCompleted.connect(FinishQuestText)
 
 
 func StartQuestText():
-	QuestBox.visible = true
-	QuestTitle.text = questName
-	QuestDescription.text = questDescription
-	QuestReward.text = "Rewards:  " + "\n" + "Gold: " + str(Gold) + "\n" + "XP: " + str(Experience)
-	AcceptButton.show()
-	DeclineButton.show()
-	CompleteButton.hide()
+	if questStatus == QuestStatus.available:
+		QuestBox.visible = true
+		QuestTitle.text = questName
+		QuestDescription.text = questDescription
+		QuestReward.text = "Rewards:  " + "\n" + "Gold: " + str(Gold) + "\n" + "XP: " + str(Experience)
+		AcceptButton.show()
+		DeclineButton.show()
+		CompleteButton.hide()
 
 
 func StartQuest(choice) -> void:
@@ -50,6 +53,6 @@ func FinishQuest():
 		QuestDescription.text = ""
 		QuestReward.text = ""
 		CompleteButton.hide()
-		tama.stats.currentXP += Experience
-		tama.stats.CheckForLevelUp()
+		user.stats.currentXP += Experience
+		user.stats.CheckForLevelUp()
 
